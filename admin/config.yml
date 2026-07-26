@@ -1,0 +1,63 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "produtos"
+    label: "Produtos"
+    folder: "_produtos"
+    create: true
+    slug: "{{fields.slug}}"
+    extension: "json"
+    format: "json"
+    identifier_field: "title"
+    fields:
+      - { label: "Nome do Produto", name: "title", widget: "string" }
+      - { label: "Slug (parte da URL, sem espaço/acento, ex: copo-termico-super-pai)", name: "slug", widget: "string" }
+      - label: "Categoria"
+        name: "categoria"
+        widget: "select"
+        options: ["Moda e Vestuário", "Eletrônicos", "Calçados", "Beleza e Cuidados Pessoais", "Eletrodomésticos", "Fitness", "Ferramentas"]
+      - label: "Fotos do produto (até 5)"
+        name: "fotos"
+        widget: "list"
+        max: 5
+        field: { label: "Foto", name: "foto", widget: "image" }
+      - { label: "Preço (ex: 89,90)", name: "preco", widget: "string" }
+      - { label: "Formas de pagamento (ex: Pix, cartão em 12x)", name: "pagamento", widget: "string", required: false }
+      - { label: "Link de afiliado (botão Compre Aqui)", name: "link", widget: "string" }
+      - { label: "Nota de avaliação (ex: 4.8)", name: "nota", widget: "string", required: false }
+      - { label: "Número de avaliações (ex: 419)", name: "avaliacoes", widget: "string", required: false }
+      - { label: "Quantidade vendida (ex: +1 mil vendidos)", name: "vendidos", widget: "string", required: false }
+      - { label: "Descrição do produto", name: "descricao", widget: "text" }
+      - { label: "Marcar como Top 100 (mais vendidos)", name: "top100", widget: "boolean", default: false }
+
+  - name: "posts"
+    label: "Blog - Notícias"
+    folder: "_posts"
+    create: true
+    slug: "{{fields.slug}}"
+    extension: "json"
+    format: "json"
+    identifier_field: "title"
+    fields:
+      - { label: "Título do Post", name: "title", widget: "string" }
+      - { label: "Slug (parte da URL, ex: presentes-dia-das-maes-2026)", name: "slug", widget: "string" }
+      - { label: "Foto de Capa (formato 16:9)", name: "capa", widget: "image" }
+      - { label: "Descrição para o Google (SEO)", name: "description", widget: "text" }
+      - { label: "Texto do Post", name: "body", widget: "markdown" }
+      - { label: "Data de publicação", name: "date", widget: "datetime" }
+      - label: "Produtos deste post (busque pelo nome, até 10)"
+        name: "produtos"
+        widget: "relation"
+        collection: "produtos"
+        search_fields: ["title"]
+        display_fields: ["title"]
+        value_field: "slug"
+        multiple: true
+        min: 0
+        max: 10
+        required: false
