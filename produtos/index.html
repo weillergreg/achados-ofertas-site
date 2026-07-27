@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Produtos | Achadinhos Super Espiã</title>
+<meta name="description" content="Todos os produtos com cupom e oferta relâmpago da Shopee, Mercado Livre, Magalu, Shein e Amazon, organizados por categoria.">
+<link rel="canonical" href="https://achadosofertas.com.br/produtos">
+<link rel="icon" type="image/jpeg" href="/images/logo-achadinhos.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{ --azul:#1B3A6B; --dourado:#D9A441; --rosa:#FF3E8E; --verde:#22C55E; --bg:#FAFAFA; --card-bg:#FFFFFF; --text:#1F2430; --text-muted:#6B7280; --border:#ECECEC; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; line-height:1.6; }
+  h1,h2,h3{ font-family:'Poppins',sans-serif; margin:0; }
+  a{ color:inherit; text-decoration:none; }
+  img{ max-width:100%; display:block; }
+
+  nav{ background:#fff; border-bottom:1px solid var(--border); padding:14px 20px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+  nav a.home{ font-weight:700; color:var(--azul); font-size:14px; }
+  .busca-topo{ display:flex; align-items:center; gap:6px; background:var(--bg); border:1px solid var(--border); border-radius:999px; padding:8px 14px; flex:1; max-width:320px; }
+  .busca-topo input{ border:none; background:none; outline:none; font-size:14px; width:100%; }
+
+  .layout{ max-width:1100px; margin:0 auto; padding:24px 20px 80px; display:flex; gap:28px; align-items:flex-start; }
+  .sidebar{ flex:0 0 220px; background:#fff; border:1px solid var(--border); border-radius:14px; padding:16px; position:sticky; top:80px; }
+  .sidebar h3{ font-size:13px; text-transform:uppercase; letter-spacing:.04em; color:var(--text-muted); margin-bottom:10px; }
+  .cat-item{ margin-bottom:4px; }
+  .cat-row{ display:flex; align-items:center; justify-content:space-between; }
+  .cat-nome{ font-weight:600; font-size:14px; color:var(--azul); padding:8px 6px; flex:1; border-radius:8px; }
+  .cat-nome:hover{ background:var(--bg); }
+  .cat-nome.ativa{ color:var(--rosa); }
+  .cat-seta{ cursor:pointer; border:none; background:none; font-size:12px; color:var(--verde); padding:6px; }
+  .cat-seta.aberta{ color:var(--azul); transform:rotate(180deg); }
+  .sub-lista{ padding-left:16px; display:none; }
+  .sub-lista.mostrar{ display:block; }
+  .sub-lista a{ display:block; font-size:13px; color:var(--text-muted); padding:6px 6px; border-radius:8px; }
+  .sub-lista a:hover{ background:var(--bg); color:var(--azul); }
+
+  main{ flex:1; min-width:0; }
+  h1{ font-size:24px; color:var(--azul); margin-bottom:6px; }
+  p.sub-desc{ font-size:14px; color:var(--text-muted); margin:0 0 22px; }
+
+  .cat-bloco{ margin-bottom:14px; background:#fff; border:1px solid var(--border); border-radius:14px; overflow:hidden; }
+  .cat-bloco-header{ display:flex; align-items:center; justify-content:space-between; padding:16px 18px; }
+  .cat-bloco-header a{ font-weight:700; font-size:16px; color:var(--azul); }
+  .toggle-btn{ border:none; background:none; cursor:pointer; font-size:18px; color:var(--verde); transition:transform .2s ease, color .2s ease; }
+  .toggle-btn.aberto{ color:var(--azul); transform:rotate(180deg); }
+  .cat-bloco-produtos{ display:none; padding:0 18px 18px; }
+  .cat-bloco-produtos.mostrar{ display:grid; grid-template-columns:repeat(auto-fill, minmax(220px,1fr)); gap:14px; }
+
+  .prod-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(220px,1fr)); gap:14px; }
+
+  .prod-card{ background:var(--card-bg); border:1px solid var(--border); border-radius:14px; padding:14px; display:flex; flex-direction:column; gap:8px; }
+  .prod-foto{ width:100%; aspect-ratio:1/1; object-fit:contain; background:#fff; border:1px solid var(--border); border-radius:10px; }
+  .prod-nome{ font-weight:700; font-size:14px; }
+  .prod-desc{ font-size:12px; color:var(--text-muted); }
+  .produto-estrelas{ font-size:12px; }
+  .produto-estrelas .estrelas{ color:var(--dourado); }
+  .produto-estrelas .num-avaliacoes{ color:var(--text-muted); font-size:11px; }
+  .produto-preco{ font-family:'Poppins',sans-serif; font-weight:800; color:var(--rosa); font-size:18px; }
+  .btn-comprar{ background:var(--verde); color:#fff; border:none; font-weight:700; font-size:13px; padding:10px 16px; border-radius:999px; cursor:pointer; }
+
+  .vazio{ text-align:center; color:var(--text-muted); font-size:14px; padding:40px 20px; }
+
+  @media (max-width:820px){
+    .layout{ flex-direction:column; }
+    .sidebar{ position:static; width:100%; flex:none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="home" href="/">🏠 Página Principal</a>
+  <div class="busca-topo">
+    🔍 <input type="text" id="busca-input" placeholder="Buscar produto...">
+  </div>
+</nav>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>Categorias</h3>
+    <div id="lista-categorias">Carregando...</div>
+  </aside>
+
+  <main>
+    <h1 id="titulo-pagina">Todos os Produtos</h1>
+    <p class="sub-desc" id="desc-pagina">Cupom, oferta relâmpago e o menor preço na Shopee, Mercado Livre, Magalu, Shein e Amazon.</p>
+    <div id="conteudo">Carregando produtos...</div>
+  </main>
+</div>
+
+<script src="/js/loja.js"></script>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const categoriaFiltro = params.get("categoria");
+
+  let TODOS_PRODUTOS = [];
+  let TODAS_CATEGORIAS = [];
+  let TODAS_SUBCATEGORIAS = [];
+
+  async function iniciar(){
+    [TODOS_PRODUTOS, TODAS_CATEGORIAS, TODAS_SUBCATEGORIAS] = await Promise.all([
+      carregarProdutos(), carregarCategorias(), carregarSubcategorias()
+    ]);
+    montarSidebar();
+    if (categoriaFiltro) {
+      mostrarCategoriaFiltrada(categoriaFiltro);
+    } else {
+      mostrarTodasCategorias();
+    }
+  }
+
+  function montarSidebar(){
+    const cont = document.getElementById("lista-categorias");
+    cont.innerHTML = "";
+    TODAS_CATEGORIAS.forEach(cat => {
+      const subs = TODAS_SUBCATEGORIAS.filter(s => s.categoria_mae === cat.slug);
+      const item = document.createElement("div");
+      item.className = "cat-item";
+      const ativa = categoriaFiltro === cat.slug ? "ativa" : "";
+      item.innerHTML = `
+        <div class="cat-row">
+          <a class="cat-nome ${ativa}" href="/produtos/?categoria=${cat.slug}">${cat.nome}</a>
+          ${subs.length ? `<button class="cat-seta" onclick="toggleSub(this)">▾</button>` : ""}
+        </div>
+        ${subs.length ? `<div class="sub-lista">${subs.map(s => `<a href="/produtos/?categoria=${cat.slug}&sub=${s.slug}">${s.nome.split(">")[1] ? s.nome.split(">")[1].trim() : s.nome}</a>`).join("")}</div>` : ""}
+      `;
+      cont.appendChild(item);
+    });
+  }
+
+  function toggleSub(btn){
+    btn.classList.toggle("aberta");
+    btn.parentElement.nextElementSibling.classList.toggle("mostrar");
+  }
+
+  function mostrarTodasCategorias(){
+    document.getElementById("titulo-pagina").textContent = "Todos os Produtos";
+    document.getElementById("desc-pagina").textContent = "Clique no nome da categoria pra ver a página dela, ou na seta pra ver os produtos aqui mesmo.";
+    const cont = document.getElementById("conteudo");
+    cont.innerHTML = "";
+    TODAS_CATEGORIAS.forEach(cat => {
+      const produtosCat = TODOS_PRODUTOS.filter(p => p.categoria === cat.slug);
+      const bloco = document.createElement("div");
+      bloco.className = "cat-bloco";
+      bloco.innerHTML = `
+        <div class="cat-bloco-header">
+          <a href="/produtos/?categoria=${cat.slug}">${cat.nome} (${produtosCat.length})</a>
+          <button class="toggle-btn" onclick="toggleCategoria(this)">▾</button>
+        </div>
+        <div class="cat-bloco-produtos">
+          ${produtosCat.length ? produtosCat.map(cardProdutoHTML).join("") : `<p class="vazio">Nenhum produto cadastrado ainda nessa categoria.</p>`}
+        </div>
+      `;
+      cont.appendChild(bloco);
+    });
+  }
+
+  function toggleCategoria(btn){
+    btn.classList.toggle("aberto");
+    btn.closest(".cat-bloco").querySelector(".cat-bloco-produtos").classList.toggle("mostrar");
+  }
+
+  function mostrarCategoriaFiltrada(slug){
+    const cat = TODAS_CATEGORIAS.find(c => c.slug === slug);
+    const subSlug = params.get("sub");
+    let produtos = TODOS_PRODUTOS.filter(p => p.categoria === slug);
+    if (subSlug) produtos = produtos.filter(p => p.subcategoria === subSlug);
+
+    document.getElementById("titulo-pagina").textContent = cat ? cat.nome : "Categoria";
+    document.getElementById("desc-pagina").textContent = `${produtos.length} produto(s) encontrado(s) nessa categoria.`;
+    const cont = document.getElementById("conteudo");
+    cont.innerHTML = `<div class="prod-grid">${produtos.length ? produtos.map(cardProdutoHTML).join("") : `<p class="vazio">Nenhum produto cadastrado ainda nessa categoria.</p>`}</div>`;
+  }
+
+  document.getElementById("busca-input").addEventListener("input", function(){
+    const termo = this.value.trim().toLowerCase();
+    if (!termo) {
+      categoriaFiltro ? mostrarCategoriaFiltrada(categoriaFiltro) : mostrarTodasCategorias();
+      return;
+    }
+    const resultado = TODOS_PRODUTOS.filter(p => p.title.toLowerCase().includes(termo));
+    document.getElementById("titulo-pagina").textContent = `Resultado da busca: "${this.value}"`;
+    document.getElementById("desc-pagina").textContent = `${resultado.length} produto(s) encontrado(s).`;
+    document.getElementById("conteudo").innerHTML = `<div class="prod-grid">${resultado.length ? resultado.map(cardProdutoHTML).join("") : `<p class="vazio">Nenhum produto encontrado.</p>`}</div>`;
+  });
+
+  iniciar();
+</script>
+
+</body>
+</html>
