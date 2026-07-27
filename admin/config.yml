@@ -18,25 +18,6 @@ collections:
       - { label: "Nome da Categoria", name: "nome", widget: "string" }
       - { label: "Slug (parte da URL, ex: moda-e-vestuario)", name: "slug", widget: "string" }
 
-  - name: "subcategorias"
-    label: "Subcategorias"
-    folder: "_subcategorias"
-    create: true
-    slug: "{{fields.slug}}"
-    extension: "json"
-    format: "json"
-    identifier_field: "nome"
-    fields:
-      - { label: "Nome da Subcategoria (inclua a categoria mãe, ex: Eletrônicos > Fone de Ouvido)", name: "nome", widget: "string" }
-      - { label: "Slug (parte da URL, ex: fone-de-ouvido)", name: "slug", widget: "string" }
-      - label: "Categoria Mãe"
-        name: "categoria_mae"
-        widget: "relation"
-        collection: "categorias"
-        search_fields: ["nome"]
-        display_fields: ["nome"]
-        value_field: "slug"
-
   - name: "produtos"
     label: "Produtos"
     folder: "_produtos"
@@ -55,14 +36,6 @@ collections:
         search_fields: ["nome"]
         display_fields: ["nome"]
         value_field: "slug"
-      - label: "Subcategoria"
-        name: "subcategoria"
-        widget: "relation"
-        collection: "subcategorias"
-        search_fields: ["nome"]
-        display_fields: ["nome"]
-        value_field: "slug"
-        required: false
       - label: "Fotos do produto (até 5)"
         name: "fotos"
         widget: "list"
