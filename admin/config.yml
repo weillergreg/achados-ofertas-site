@@ -6,6 +6,31 @@ media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
 collections:
+  - name: "banners"
+    label: "Banner Principal (Home)"
+    folder: "_banners"
+    create: true
+    delete: true
+    slug: "{{fields.slug}}"
+    extension: "json"
+    format: "json"
+    identifier_field: "titulo_interno"
+    fields:
+      - { label: "Nome interno (só pra você identificar na lista, ex: Black Friday Julho)", name: "titulo_interno", widget: "string" }
+      - { label: "Slug (só letras/números/traço, ex: banner-black-friday)", name: "slug", widget: "string" }
+      - { label: "Imagem do banner (tamanho ideal: 1200x500px, até 300kb)", name: "imagem", widget: "image", hint: "Tamanho ideal: 1200x500px (retangular). O site ajusta sozinho pro celular." }
+      - { label: "Link ao clicar na imagem (cole a URL da página, existente ou futura)", name: "link", widget: "string" }
+      - { label: "Ordem de exibição (1, 2, 3...)", name: "ordem", widget: "number", value_type: "int", default: 1 }
+      - label: "Botão de texto sobre o banner (opcional)"
+        name: "botao"
+        widget: "object"
+        required: false
+        collapsed: true
+        fields:
+          - { label: "Texto do botão", name: "texto", widget: "string", required: false }
+          - { label: "Cor do botão (ex: #22C55E)", name: "cor", widget: "string", required: false, default: "#22C55E" }
+          - { label: "Link do botão (se for diferente do link da imagem)", name: "link_botao", widget: "string", required: false }
+
   - name: "categorias"
     label: "Categorias"
     folder: "_categorias"

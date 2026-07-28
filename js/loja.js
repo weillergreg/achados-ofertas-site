@@ -29,6 +29,7 @@ function carregarProdutos() { return carregarPasta("_produtos"); }
 function carregarCategorias() { return carregarPasta("_categorias"); }
 function carregarSubcategorias() { return carregarPasta("_subcategorias"); }
 function carregarPosts() { return carregarPasta("_posts"); }
+function carregarBanners() { return carregarPasta("_banners"); }
 
 /* Redirecionamento com telinha de carregando, sem expor o link de destino no hover */
 function irComCarregando(url) {

@@ -86,6 +86,41 @@
     .cta-group{ margin:0; }
   }
 
+  /* ---------- Carrossel de banner (topo) ---------- */
+  .hero-carousel-wrap{ padding:24px 24px 0; }
+  .hero-carousel{ position:relative; border-radius:20px; overflow:hidden; }
+  .hero-slide{ display:none; }
+  .hero-slide.ativo{ display:block; animation:fadeIn .5s ease; }
+  @keyframes fadeIn{ from{opacity:0;} to{opacity:1;} }
+  .hero-slide-inner{ display:flex; flex-direction:column; align-items:center; text-align:center; gap:20px; padding:32px 8px; }
+  .hero-photo{ width:200px; filter:drop-shadow(0 16px 26px rgba(0,0,0,.18)); }
+  .hero-slide h1{ font-size:28px; color:var(--azul); }
+  .hero-slide h1 span{ color:var(--rosa); }
+  .hero-slide p.lede{ font-size:15px; color:var(--text-muted); max-width:440px; margin:0 auto; }
+
+  .banner-img-slide{ position:relative; }
+  .banner-img-slide img{ width:100%; aspect-ratio:12/5; object-fit:cover; display:block; }
+  .banner-botao-overlay{
+    position:absolute; left:50%; bottom:20px; transform:translateX(-50%);
+    color:#fff; font-weight:700; font-size:14px; padding:12px 22px; border-radius:999px;
+    box-shadow:0 6px 18px rgba(0,0,0,.25);
+  }
+
+  .hero-dots{ display:flex; justify-content:center; gap:8px; padding:14px 0 4px; }
+  .hero-dots .dot{ width:8px; height:8px; border-radius:50%; background:var(--border); cursor:pointer; transition:background .2s ease, transform .2s ease; }
+  .hero-dots .dot.ativo{ background:var(--rosa); transform:scale(1.3); }
+
+  .hero-cta-fixo{ display:flex; flex-direction:column; align-items:center; gap:14px; padding:22px 24px 8px; text-align:center; }
+  .hero-cta-fixo .cta-group{ width:100%; max-width:340px; }
+
+  @media (min-width:820px){
+    .hero-slide-inner{ flex-direction:row; text-align:left; justify-content:space-between; padding:48px 40px; }
+    .hero-slide h1{ font-size:36px; max-width:520px; }
+    .hero-slide p.lede{ margin:0; }
+    .hero-photo{ width:180px; }
+    .hero-cta-fixo{ flex-direction:row; justify-content:center; }
+  }
+
   .relampago{ background:linear-gradient(180deg,#fff, #fdf6e9); }
   .brand-tiles{ display:flex; gap:18px; flex-wrap:wrap; }
   .brand-tile{ flex:1 1 130px; max-width:160px; background:#fff; border:1px solid var(--border); border-radius:16px; padding:18px; text-align:center; transition:transform .25s ease, box-shadow .25s ease; }
@@ -106,10 +141,25 @@
   .cat-overlay a.a-ml{ background:#2D3277; }
   .cat-overlay a.a-magalu{ background:#0086FF; }
 
+  .cat-arrow{
+    position:absolute; top:45%; transform:translateY(-50%); z-index:5;
+    width:36px; height:36px; border-radius:50%; border:1px solid var(--border);
+    background:#fff; color:var(--azul); font-size:18px; cursor:pointer;
+    box-shadow:0 4px 10px rgba(0,0,0,.08);
+  }
+  .cat-arrow-left{ left:0; }
+  .cat-arrow-right{ right:0; }
+  @media (max-width:640px){ .cat-arrow{ display:none; } }
+
+  .cat-dots{ display:flex; justify-content:center; gap:6px; margin-top:10px; }
+  .cat-dots .dot{ width:7px; height:7px; border-radius:50%; background:var(--border); }
+  .cat-dots .dot.ativo{ background:var(--rosa); }
+
   .marcas-grid{ display:flex; gap:18px; flex-wrap:wrap; }
   .marca-tile{ flex:1 1 130px; max-width:150px; background:#fff; border:1px solid var(--border); border-radius:16px; padding:16px; text-align:center; transition:transform .25s ease, box-shadow .25s ease; }
   .marca-tile:hover{ transform:scale(1.06); box-shadow:0 10px 24px rgba(0,0,0,.08); }
   .marca-tile img{ width:100%; height:auto; }
+  .marca-acessar{ margin-top:8px; font-size:12px; font-weight:700; color:var(--verde); }
   .ver-marcas{ display:inline-flex; align-items:center; gap:8px; margin-top:24px; background:var(--azul); color:#fff !important; font-weight:700; font-size:14px; padding:12px 24px; border-radius:999px; }
 
   .vendidos-empty{ background:#fff; border:1px dashed var(--border); border-radius:16px; padding:32px; text-align:center; color:var(--text-muted); font-size:14px; }
@@ -145,7 +195,7 @@
 <body>
 
 <nav>
-  <div class="wrap">
+  <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
     <a class="brand" href="/">
       <img src="images/logo-achadinhos.jpg" alt="Achadinhos Super Espiã">
       <div class="brand-name"><div class="top">Achadinhos</div><div class="sub">SUPER ESPIÃ</div></div>
@@ -158,27 +208,37 @@
       <a href="/listamaisvendidos">Mais Vendidos</a>
       <a class="btn-nav" href="/whatsapp">Entrar no grupo</a>
     </div>
+    <a href="/produtos" aria-label="Buscar produtos" style="font-size:18px;color:var(--azul);opacity:.75;flex-shrink:0;">🔍</a>
   </div>
 </nav>
 
 <div class="topbar">Grupo grátis no WhatsApp e Telegram · Cupom Shopee, Mercado Livre, Magalu, Shein e Amazon</div>
 
-<header class="hero wrap">
-  <div class="hero-inner">
-    <div>
-      <h1>A gente investiga. <span>Você economiza.</span></h1>
-      <p class="lede">Cupom válido hoje, oferta relâmpago e o menor preço na Shopee, Mercado Livre, Magalu, Shein e Amazon — direto no seu WhatsApp e Telegram.</p>
-      <div class="cta-group" style="margin-top:22px;">
-        <a class="cta" href="/whatsapp">💬 Entrar pelo WhatsApp</a>
-        <a class="cta-secondary" href="/telegram">✈️ Entrar pelo Telegram</a>
-      </div>
-      <div class="cta-note" style="margin-top:14px; justify-content:flex-start;">
-        <span>✔ Gratuito</span><span>✔ Sem cadastro</span><span>✔ Saia quando quiser</span>
+<div class="hero-carousel-wrap wrap">
+  <div class="hero-carousel" id="hero-carousel">
+    <div class="hero-slide ativo" data-slide="0">
+      <div class="hero-slide-inner">
+        <div>
+          <h1>A gente investiga. <span>Você economiza.</span></h1>
+          <p class="lede">Cupom válido hoje, oferta relâmpago e o menor preço na Shopee, Mercado Livre, Magalu, Shein e Amazon — direto no seu WhatsApp e Telegram.</p>
+        </div>
+        <img class="hero-photo" src="images/super-espia-foto.jpg" alt="Super Espiã investigando cupom e oferta relâmpago">
       </div>
     </div>
-    <img class="hero-photo" src="images/super-espia-foto.jpg" alt="Super Espiã investigando cupom e oferta relâmpago">
+    <div id="slides-extra"></div>
   </div>
-</header>
+  <div class="hero-dots" id="hero-dots"></div>
+</div>
+
+<div class="hero-cta-fixo wrap">
+  <div class="cta-group">
+    <a class="cta" href="/whatsapp">💬 Entrar pelo WhatsApp</a>
+    <a class="cta-secondary" href="/telegram">✈️ Entrar pelo Telegram</a>
+  </div>
+  <div class="cta-note">
+    <span>✔ Gratuito</span><span>✔ Sem cadastro</span><span>✔ Saia quando quiser</span>
+  </div>
+</div>
 
 <section class="relampago" id="oferta-relampago">
   <div class="wrap">
@@ -198,9 +258,11 @@
   <div class="wrap">
     <span class="eyebrow">🛍️ Escolha o que procura</span>
     <h2 class="section-title">Categorias</h2>
-    <p class="section-desc">Passe o mouse (ou toque, no celular) em cada foto pra ver onde comprar: Magalu, Mercado Livre ou Shopee.</p>
+    <p class="section-desc">Clique na imagem e acesse. Passe o mouse (ou toque, no celular) em cada foto pra ver onde comprar: Magalu, Mercado Livre ou Shopee.</p>
   </div>
-  <div class="wrap">
+  <div class="wrap" style="position:relative;">
+    <button class="cat-arrow cat-arrow-left" onclick="document.getElementById('cat-scroll').scrollBy({left:-200,behavior:'smooth'})" aria-label="Categorias anteriores">‹</button>
+    <button class="cat-arrow cat-arrow-right" onclick="document.getElementById('cat-scroll').scrollBy({left:200,behavior:'smooth'})" aria-label="Próximas categorias">›</button>
     <div class="categorias-scroll" id="cat-scroll">
       <div class="cat-card" tabindex="0">
         <img src="images/categorias/cat-moda.jpg" alt="Categoria Moda e Vestuário">
@@ -266,6 +328,7 @@
         </div>
       </div>
     </div>
+    <div class="cat-dots" id="cat-dots"></div>
   </div>
 </section>
 
@@ -275,11 +338,11 @@
     <h2 class="section-title">Marcas Parceiras</h2>
     <p class="section-desc">Mercado Livre, Shopee, Magalu, Shein e Amazon, selecionamos as melhores ofertas com lojas parceiras reunidas em um só lugar, garanta seu desconto com as promoções do dia. Compre com confiança nas maiores do Brasil. Economia com segurança garantida.</p>
     <div class="marcas-grid">
-      <a class="marca-tile" href="/mercadolivre"><img src="images/marcas/logo-mercadolivre.png" alt="Mercado Livre"></a>
-      <a class="marca-tile" href="/shopee"><img src="images/marcas/logo-shopee.png" alt="Shopee"></a>
-      <a class="marca-tile" href="/magalu"><img src="images/marcas/logo-magalu.png" alt="Magalu"></a>
-      <a class="marca-tile" href="/shein"><img src="images/marcas/logo-shein.png" alt="Shein"></a>
-      <a class="marca-tile" href="/amazon"><img src="images/marcas/logo-amazon.png" alt="Amazon"></a>
+      <a class="marca-tile" href="/mercadolivre"><img src="images/marcas/logo-mercadolivre.png" alt="Mercado Livre"><div class="marca-acessar">Acessar</div></a>
+      <a class="marca-tile" href="/shopee"><img src="images/marcas/logo-shopee.png" alt="Shopee"><div class="marca-acessar">Acessar</div></a>
+      <a class="marca-tile" href="/magalu"><img src="images/marcas/logo-magalu.png" alt="Magalu"><div class="marca-acessar">Acessar</div></a>
+      <a class="marca-tile" href="/shein"><img src="images/marcas/logo-shein.png" alt="Shein"><div class="marca-acessar">Acessar</div></a>
+      <a class="marca-tile" href="/amazon"><img src="images/marcas/logo-amazon.png" alt="Amazon"><div class="marca-acessar">Acessar</div></a>
     </div>
     <a class="ver-marcas" href="/marcas">Ver todas as marcas →</a>
   </div>
@@ -310,6 +373,16 @@
       <div class="post-placeholder">Próximo post em breve ❤️</div>
     </div>
     <a class="confira-mais" href="/blognoticia">Confira mais →</a>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div style="background:var(--azul); border:2px solid var(--verde); border-radius:18px; padding:32px 24px; text-align:center;">
+      <h2 style="color:#fff; font-size:22px; margin-bottom:10px;">Conheça o grupo por dentro</h2>
+      <p style="color:#cbd5e1; font-size:14px; max-width:420px; margin:0 auto 20px;">Veja como funciona o Achadinhos Super Espiã, direto na nossa página de apresentação.</p>
+      <a href="/grupos-canal" style="display:inline-flex; align-items:center; gap:8px; background:var(--verde); color:#fff; font-weight:700; font-size:14px; padding:12px 26px; border-radius:999px;">Veja Mais →</a>
+    </div>
   </div>
 </section>
 
@@ -354,6 +427,7 @@
   <button onclick="document.getElementById('cookie-banner').style.display='none'; localStorage.setItem('cookieOk','1');">Entendi</button>
 </div>
 
+<script src="/js/loja.js"></script>
 <script>
   if (localStorage.getItem('cookieOk') === '1') {
     document.getElementById('cookie-banner').style.display = 'none';
@@ -377,6 +451,69 @@
     else { scrollSpeed = 0; }
   });
   catScroll.addEventListener('mouseleave', function(){ scrollSpeed = 0; });
+
+  /* Pontinhos de posição da rolagem de Categorias */
+  var catCards = document.querySelectorAll('#cat-scroll .cat-card');
+  var dotsWrap = document.getElementById('cat-dots');
+  catCards.forEach(function(_, i){
+    var dot = document.createElement('div');
+    dot.className = 'dot' + (i === 0 ? ' ativo' : '');
+    dotsWrap.appendChild(dot);
+  });
+  catScroll.addEventListener('scroll', function(){
+    var largura = catCards[0].offsetWidth + 16;
+    var indice = Math.round(catScroll.scrollLeft / largura);
+    document.querySelectorAll('#cat-dots .dot').forEach(function(d, i){
+      d.classList.toggle('ativo', i === indice);
+    });
+  });
+
+  /* Carrossel de banner: slide fixo (Achadinhos) + banners cadastrados no painel */
+  async function iniciarCarrosselHero(){
+    const banners = await carregarBanners();
+    banners.sort((a,b) => (a.ordem||0) - (b.ordem||0));
+
+    const extra = document.getElementById("slides-extra");
+    banners.forEach((b, i) => {
+      const slide = document.createElement("div");
+      slide.className = "hero-slide";
+      slide.dataset.slide = i + 1;
+      const botao = b.botao && b.botao.texto
+        ? `<a class="banner-botao-overlay" style="background:${b.botao.cor || '#22C55E'}" href="javascript:void(0)" onclick="event.stopPropagation();irComCarregando('${(b.botao.link_botao || b.link || '').replace(/'/g,"\\'")}')">${b.botao.texto}</a>`
+        : "";
+      slide.innerHTML = `
+        <div class="banner-img-slide" style="cursor:pointer;" onclick="irComCarregando('${(b.link||'').replace(/'/g,"\\'")}')">
+          <img src="${b.imagem}" alt="${b.titulo_interno || 'Banner'}">
+          ${botao}
+        </div>
+      `;
+      extra.appendChild(slide);
+    });
+
+    const totalSlides = 1 + banners.length;
+    const dotsWrap = document.getElementById("hero-dots");
+    if (totalSlides > 1) {
+      for (let i = 0; i < totalSlides; i++) {
+        const dot = document.createElement("div");
+        dot.className = "dot" + (i === 0 ? " ativo" : "");
+        dot.onclick = () => mostrarSlideHero(i);
+        dotsWrap.appendChild(dot);
+      }
+      let atual = 0;
+      setInterval(() => {
+        atual = (atual + 1) % totalSlides;
+        mostrarSlideHero(atual);
+      }, 5000);
+    }
+  }
+
+  function mostrarSlideHero(indice){
+    document.querySelectorAll(".hero-slide").forEach(s => s.classList.remove("ativo"));
+    document.querySelector(`.hero-slide[data-slide="${indice}"]`).classList.add("ativo");
+    document.querySelectorAll(".hero-dots .dot").forEach((d, i) => d.classList.toggle("ativo", i === indice));
+  }
+
+  iniciarCarrosselHero();
 </script>
 
 </body>
