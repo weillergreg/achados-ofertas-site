@@ -130,7 +130,8 @@
   .categorias-scroll{ display:flex; gap:16px; overflow-x:auto; padding:8px 4px 16px; scroll-behavior:smooth; scrollbar-width:none; }
   .categorias-scroll::-webkit-scrollbar{ display:none; }
   .cat-card{ position:relative; flex:0 0 170px; aspect-ratio:3/4; border-radius:16px; overflow:hidden; isolation:isolate; }
-  .cat-card img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform .4s ease, filter .4s ease; }
+  .cat-card{ background:#fff; }
+  .cat-card img{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; background:#fff; transition:transform .4s ease, filter .4s ease; }
   .cat-card:hover img{ transform:scale(1.06); filter:brightness(.45); }
   .cat-label{ position:absolute; left:0; right:0; bottom:0; padding:12px; background:linear-gradient(to top, rgba(0,0,0,.65), transparent); color:#fff; font-weight:700; font-size:14px; transition:opacity .3s ease; }
   .cat-card:hover .cat-label{ opacity:0; }
@@ -163,6 +164,12 @@
   .ver-marcas{ display:inline-flex; align-items:center; gap:8px; margin-top:24px; background:var(--azul); color:#fff !important; font-weight:700; font-size:14px; padding:12px 24px; border-radius:999px; }
 
   .vendidos-empty{ background:#fff; border:1px dashed var(--border); border-radius:16px; padding:32px; text-align:center; color:var(--text-muted); font-size:14px; }
+  .vendidos-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(140px,1fr)); gap:12px; margin-bottom:10px; }
+  .vendido-mini{ background:#fff; border:1px solid var(--border); border-radius:12px; padding:10px; text-align:center; }
+  .vendido-mini img{ width:100%; aspect-ratio:1/1; object-fit:contain; margin-bottom:6px; }
+  .vendido-mini .pos{ font-family:'Poppins',sans-serif; font-weight:800; color:var(--dourado); font-size:12px; }
+  .vendido-mini .nome{ font-size:12px; font-weight:600; margin:2px 0 4px; line-height:1.3; }
+  .vendido-mini .preco{ font-family:'Poppins',sans-serif; font-weight:800; color:var(--rosa); font-size:13px; }
   .confira-mais{ display:inline-flex; margin-top:20px; background:var(--rosa); color:#fff !important; font-weight:700; font-size:14px; padding:12px 24px; border-radius:999px; }
 
   .blog-grid{ display:flex; gap:20px; flex-wrap:wrap; }
@@ -352,7 +359,9 @@
   <div class="wrap">
     <span class="eyebrow">🏆 Atualizado mensalmente</span>
     <h2 class="section-title">10 Mais Vendidos</h2>
-    <div class="vendidos-empty">Em breve: os 10 produtos mais vendidos do mês aparecem aqui, puxados direto da lista completa (Top 100).</div>
+    <div class="vendidos-grid" id="vendidos-grid">
+      <div class="vendidos-empty">Carregando...</div>
+    </div>
     <a class="confira-mais" href="/listamaisvendidos">Confira mais →</a>
   </div>
 </section>
@@ -369,8 +378,10 @@
           <p>Cupom, frete grátis e o menor preço em 5 achados perfeitos pra data.</p>
         </div>
       </a>
-      <div class="post-placeholder">Próximo post em breve ❤️</div>
-      <div class="post-placeholder">Próximo post em breve ❤️</div>
+      <div id="blog-extra-slots" style="display:contents;">
+        <div class="post-placeholder">Próximo post em breve ❤️</div>
+        <div class="post-placeholder">Próximo post em breve ❤️</div>
+      </div>
     </div>
     <a class="confira-mais" href="/blognoticia">Confira mais →</a>
   </div>
@@ -514,6 +525,44 @@
   }
 
   iniciarCarrosselHero();
+
+  /* 10 Mais Vendidos (home) */
+  async function iniciarMaisVendidos(){
+    const produtos = await carregarProdutos();
+    const top10 = produtos.filter(p => p.posicao_top100).sort((a,b) => a.posicao_top100 - b.posicao_top100).slice(0,10);
+    const cont = document.getElementById("vendidos-grid");
+    if (!top10.length) {
+      cont.innerHTML = `<div class="vendidos-empty">Em breve: os 10 produtos mais vendidos do mês aparecem aqui.</div>`;
+      return;
+    }
+    cont.innerHTML = top10.map(p => {
+      const foto = (p.fotos && p.fotos[0] && p.fotos[0].foto) ? p.fotos[0].foto : "/images/logo-achadinhos.jpg";
+      return `
+        <a class="vendido-mini" href="/listamaisvendidos/${p.slug}">
+          <div class="pos">#${p.posicao_top100}</div>
+          <img src="${foto}" alt="${p.title}">
+          <div class="nome">${p.title}</div>
+          ${p.preco ? `<div class="preco">R$ ${p.preco}</div>` : ""}
+        </a>
+      `;
+    }).join("");
+  }
+  iniciarMaisVendidos();
+
+  /* Top Novidades (home) — completa os 2 espaços extras com posts reais, se houver */
+  async function iniciarTopNovidades(){
+    const posts = await carregarPosts();
+    const extras = posts.filter(p => p.slug !== "presentes-dia-dos-pais-2026").slice(0,2);
+    if (!extras.length) return;
+    const cont = document.getElementById("blog-extra-slots");
+    cont.innerHTML = extras.map(p => `
+      <a class="post-card" href="/blognoticia/${p.slug}">
+        <img src="${p.capa}" alt="${p.title}">
+        <div class="post-body"><h3>${p.title}</h3><p>${p.description || ""}</p></div>
+      </a>
+    `).join("");
+  }
+  iniciarTopNovidades();
 </script>
 
 </body>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="titulo-tag">Produto | Achadinhos Super Espiã</title>
+<meta name="description" id="desc-tag" content="">
+<link rel="icon" type="image/jpeg" href="/images/logo-achadinhos.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600" rel="stylesheet">
+<style>
+  :root{ --azul:#1B3A6B; --dourado:#D9A441; --rosa:#FF3E8E; --verde:#22C55E; --bg:#FAFAFA; --card-bg:#FFFFFF; --text:#1F2430; --text-muted:#6B7280; --border:#ECECEC; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; line-height:1.6; }
+  h1{ font-family:'Poppins',sans-serif; color:var(--azul); font-size:22px; margin:16px 0 10px; }
+  a{ color:inherit; text-decoration:none; }
+  nav{ background:#fff; border-bottom:1px solid var(--border); padding:14px 20px; }
+  nav a.home{ font-weight:700; color:var(--azul); font-size:14px; }
+  main{ max-width:640px; margin:0 auto; padding:24px 20px 80px; }
+  .fotos{ display:flex; gap:10px; overflow-x:auto; margin-bottom:10px; }
+  .fotos img{ width:140px; height:140px; object-fit:contain; background:#fff; border:1px solid var(--border); border-radius:12px; flex-shrink:0; }
+  .estrelas{ color:var(--dourado); }
+  .num-avaliacoes{ color:var(--text-muted); font-size:13px; }
+  .preco{ font-family:'Poppins',sans-serif; font-weight:800; color:var(--rosa); font-size:28px; margin:14px 0; }
+  .desc{ font-size:15px; color:#333; margin-bottom:20px; }
+  .btn-comprar{ display:inline-block; background:var(--verde); color:#fff; font-weight:700; font-size:15px; padding:14px 28px; border-radius:999px; border:none; cursor:pointer; }
+</style>
+</head>
+<body>
+
+<nav><a class="home" href="/">🏠 Página Principal</a></nav>
+
+<main id="conteudo">Carregando...</main>
+
+<script src="/js/loja.js"></script>
+<script>
+  const slug = window.location.pathname.split("/").filter(Boolean).pop();
+
+  async function iniciar(){
+    const produtos = await carregarProdutos();
+    const p = produtos.find(x => x.slug === slug);
+    const cont = document.getElementById("conteudo");
+    if (!p) { cont.innerHTML = "<h1>Produto não encontrado</h1>"; return; }
+
+    document.title = p.title + " | Achadinhos Super Espiã";
+    document.getElementById("titulo-tag").textContent = p.title + " | Achadinhos Super Espiã";
+    document.getElementById("desc-tag").setAttribute("content", p.descricao || "");
+
+    const fotos = (p.fotos || []).map(f => `<img src="${f.foto}" alt="${p.title}">`).join("") || `<img src="/images/logo-achadinhos.jpg" alt="${p.title}">`;
+    const estrelas = p.nota ? `<div><span class="estrelas">★★★★★</span> <span class="num-avaliacoes">${p.nota}${p.avaliacoes ? " ("+p.avaliacoes+" avaliações)" : ""}${p.vendidos ? " · "+p.vendidos : ""}</span></div>` : "";
+
+    cont.innerHTML = `
+      <div class="fotos">${fotos}</div>
+      <h1>${p.title}</h1>
+      ${estrelas}
+      ${p.preco ? `<div class="preco">R$ ${p.preco}</div>` : ""}
+      ${p.descricao ? `<p class="desc">${p.descricao}</p>` : ""}
+      ${p.pagamento ? `<p class="desc">💳 ${p.pagamento}</p>` : ""}
+      <button class="btn-comprar" onclick="irComCarregando('${(p.link||"").replace(/'/g,"\\'")}')">Compre aqui</button>
+    `;
+  }
+
+  iniciar();
+</script>
+
+</body>
+</html>

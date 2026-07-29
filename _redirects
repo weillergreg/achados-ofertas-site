@@ -1,6 +1,12 @@
 /whatsapp  https://chat.whatsapp.com/BiVuP9GlMHP9eV9zrdeL4C?s=cl&p=i&ilr=1  302
 /telegram  https://t.me/achadinhosofertasshopeebr  302
 
+# Posts do blog cadastrados pelo painel (o presentes-dia-dos-pais-2026 já tem pasta própria, não é afetado)
+/blognoticia/:slug  /blognoticia/post/index.html  200
+
+# Produtos individuais do Top 100 / catálogo geral
+/listamaisvendidos/:slug  /listamaisvendidos/produto/index.html  200
+
 # Categorias — Moda
 /shcategmoda  https://s.shopee.com.br/8fR1evLiiZ  302
 /mlcategmoda  https://meli.la/2Kr5uBx  302

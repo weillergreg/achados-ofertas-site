@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Top 100 Mais Vendidos | Achadinhos Super Espiã</title>
+<meta name="description" content="Os 100 produtos mais vendidos do mês na Shopee, Mercado Livre, Magalu, Shein e Amazon, atualizados com cupom e o menor preço.">
+<link rel="canonical" href="https://achadosofertas.com.br/listamaisvendidos">
+<link rel="icon" type="image/jpeg" href="/images/logo-achadinhos.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{ --azul:#1B3A6B; --dourado:#D9A441; --rosa:#FF3E8E; --verde:#22C55E; --bg:#FAFAFA; --card-bg:#FFFFFF; --text:#1F2430; --text-muted:#6B7280; --border:#ECECEC; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; line-height:1.6; }
+  h1,h2{ font-family:'Poppins',sans-serif; margin:0; color:var(--azul); }
+  a{ color:inherit; text-decoration:none; }
+  img{ max-width:100%; display:block; }
+  nav{ background:#fff; border-bottom:1px solid var(--border); padding:14px 20px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+  nav a.home{ font-weight:700; color:var(--azul); font-size:14px; }
+  .busca-topo{ display:flex; align-items:center; gap:6px; background:var(--bg); border:1px solid var(--border); border-radius:999px; padding:8px 14px; flex:1; max-width:320px; }
+  .busca-topo input{ border:none; background:none; outline:none; font-size:14px; width:100%; }
+  main{ max-width:900px; margin:0 auto; padding:32px 20px 80px; }
+  h1{ font-size:26px; margin-bottom:8px; }
+  p.sub{ font-size:15px; color:var(--text-muted); margin:0 0 26px; }
+  .lista{ display:flex; flex-direction:column; gap:12px; }
+  .item{ display:flex; align-items:center; gap:16px; background:var(--card-bg); border:1px solid var(--border); border-radius:14px; padding:14px; }
+  .posicao{ flex:0 0 40px; text-align:center; font-family:'Poppins',sans-serif; font-weight:800; font-size:20px; color:var(--dourado); }
+  .item-foto{ width:64px; height:64px; object-fit:contain; background:#fff; border:1px solid var(--border); border-radius:8px; flex-shrink:0; }
+  .item-info{ flex:1; min-width:0; }
+  .item-nome{ font-weight:700; font-size:14px; }
+  .item-preco{ font-family:'Poppins',sans-serif; font-weight:800; color:var(--rosa); font-size:15px; }
+  .btn-ver{ background:var(--verde); color:#fff; font-weight:700; font-size:12px; padding:9px 14px; border-radius:999px; white-space:nowrap; }
+  .vazio{ text-align:center; color:var(--text-muted); font-size:14px; padding:40px 20px; }
+  @media (max-width:520px){ .item{ flex-wrap:wrap; } .btn-ver{ width:100%; text-align:center; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="home" href="/">🏠 Página Principal</a>
+  <div class="busca-topo">🔍 <input type="text" id="busca-input" placeholder="Buscar produto..."></div>
+</nav>
+
+<main>
+  <h1>Top 100 Mais Vendidos</h1>
+  <p class="sub">Atualizado mensalmente, ordenado do 1º ao 100º colocado.</p>
+  <div class="lista" id="lista">Carregando...</div>
+</main>
+
+<script src="/js/loja.js"></script>
+<script>
+  let TODOS = [];
+
+  function itemHTML(p){
+    const foto = (p.fotos && p.fotos[0] && p.fotos[0].foto) ? p.fotos[0].foto : "/images/logo-achadinhos.jpg";
+    return `
+      <div class="item">
+        <div class="posicao">${p.posicao_top100 ? "#" + p.posicao_top100 : "-"}</div>
+        <img class="item-foto" src="${foto}" alt="${p.title}">
+        <div class="item-info">
+          <div class="item-nome">${p.title}</div>
+          ${p.preco ? `<div class="item-preco">R$ ${p.preco}</div>` : ""}
+        </div>
+        <a class="btn-ver" href="/listamaisvendidos/${p.slug}">Ver produto</a>
+      </div>
+    `;
+  }
+
+  function renderizar(lista){
+    document.getElementById("lista").innerHTML = lista.length ? lista.map(itemHTML).join("") : `<p class="vazio">Nenhum produto no Top 100 ainda.</p>`;
+  }
+
+  async function iniciar(){
+    const produtos = await carregarProdutos();
+    TODOS = produtos.filter(p => p.posicao_top100).sort((a,b) => a.posicao_top100 - b.posicao_top100);
+    renderizar(TODOS);
+  }
+
+  document.getElementById("busca-input").addEventListener("input", function(){
+    const termo = this.value.trim().toLowerCase();
+    renderizar(termo ? TODOS.filter(p => p.title.toLowerCase().includes(termo)) : TODOS);
+  });
+
+  iniciar();
+</script>
+
+</body>
+</html>

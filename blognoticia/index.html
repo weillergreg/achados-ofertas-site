@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog de Ofertas | Achadinhos Super Espiã</title>
+<meta name="description" content="Comparativos de produtos, dicas de compra e notícias de ofertas com cupom e oferta relâmpago na Shopee, Mercado Livre, Magalu, Shein e Amazon.">
+<link rel="canonical" href="https://achadosofertas.com.br/blognoticia">
+<link rel="icon" type="image/jpeg" href="/images/logo-achadinhos.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{ --azul:#1B3A6B; --dourado:#D9A441; --rosa:#FF3E8E; --verde:#22C55E; --bg:#FAFAFA; --text:#1F2430; --text-muted:#6B7280; --border:#ECECEC; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; line-height:1.6; }
+  h1,h2,h3{ font-family:'Poppins',sans-serif; margin:0; color:var(--azul); }
+  a{ color:inherit; text-decoration:none; }
+  img{ max-width:100%; display:block; }
+  nav{ background:#fff; border-bottom:1px solid var(--border); padding:14px 20px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+  nav a.home{ font-weight:700; color:var(--azul); font-size:14px; }
+  .busca-topo{ display:flex; align-items:center; gap:6px; background:var(--bg); border:1px solid var(--border); border-radius:999px; padding:8px 14px; flex:1; max-width:320px; }
+  .busca-topo input{ border:none; background:none; outline:none; font-size:14px; width:100%; }
+
+  main{ max-width:1080px; margin:0 auto; padding:32px 20px 80px; }
+  h1{ font-size:26px; margin-bottom:8px; }
+  p.sub{ font-size:15px; color:var(--text-muted); margin:0 0 26px; }
+
+  .posts-scroll{ display:flex; gap:18px; overflow-x:auto; padding:6px 4px 16px; scroll-behavior:smooth; scrollbar-width:none; }
+  .posts-scroll::-webkit-scrollbar{ display:none; }
+  .post-card{ flex:0 0 280px; background:#fff; border:1px solid var(--border); border-radius:16px; overflow:hidden; }
+  .post-card img{ width:100%; aspect-ratio:16/9; object-fit:cover; }
+  .post-body{ padding:16px; }
+  .post-card h3{ font-size:15px; margin-bottom:8px; line-height:1.35; }
+  .post-card p{ font-size:13px; color:var(--text-muted); margin:0; }
+  .vazio{ text-align:center; color:var(--text-muted); font-size:14px; padding:40px 20px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="home" href="/">🏠 Página Principal</a>
+  <div class="busca-topo">🔍 <input type="text" id="busca-input" placeholder="Buscar post..."></div>
+</nav>
+
+<main>
+  <h1>Blog de Ofertas</h1>
+  <p class="sub">Comparativos, dicas de compra e as novidades com cupom e oferta relâmpago.</p>
+  <div class="posts-scroll" id="posts-scroll">Carregando...</div>
+</main>
+
+<script src="/js/loja.js"></script>
+<script>
+  const POST_FIXO = {
+    title: "Presentes para o Dia dos Pais 2026 até R$100: os melhores achadinhos",
+    slug: "presentes-dia-dos-pais-2026",
+    capa: "/blognoticia/presentes-dia-dos-pais-2026/capa-16x9.jpg",
+    description: "Cupom, frete grátis e o menor preço em 5 achados perfeitos pra data."
+  };
+
+  function cardPostHTML(p){
+    return `
+      <a class="post-card" href="/blognoticia/${p.slug}">
+        <img src="${p.capa}" alt="${p.title}">
+        <div class="post-body">
+          <h3>${p.title}</h3>
+          <p>${p.description || ""}</p>
+        </div>
+      </a>
+    `;
+  }
+
+  let TODOS_POSTS = [];
+
+  async function iniciar(){
+    const postsCms = await carregarPosts();
+    TODOS_POSTS = [POST_FIXO, ...postsCms];
+    renderizar(TODOS_POSTS);
+  }
+
+  function renderizar(lista){
+    const cont = document.getElementById("posts-scroll");
+    cont.innerHTML = lista.length ? lista.map(cardPostHTML).join("") : `<p class="vazio">Nenhum post encontrado.</p>`;
+  }
+
+  document.getElementById("busca-input").addEventListener("input", function(){
+    const termo = this.value.trim().toLowerCase();
+    renderizar(termo ? TODOS_POSTS.filter(p => p.title.toLowerCase().includes(termo)) : TODOS_POSTS);
+  });
+
+  iniciar();
+</script>
+
+</body>
+</html>
