@@ -31,6 +31,37 @@ collections:
           - { label: "Cor do botão (ex: #22C55E)", name: "cor", widget: "string", required: false, default: "#22C55E" }
           - { label: "Link do botão (se for diferente do link da imagem)", name: "link_botao", widget: "string", required: false }
 
+  - name: "lote_shopee"
+    label: "Produtos Importados (Shopee)"
+    files:
+      - name: "lote"
+        label: "Lote de Produtos Shopee"
+        file: "_data/lote-shopee.json"
+        fields:
+          - name: "produtos"
+            label: "Produtos"
+            widget: "list"
+            summary: "{{title}} — {{categoria}}"
+            fields:
+              - { label: "Nome do Produto", name: "title", widget: "string" }
+              - { label: "Slug", name: "slug", widget: "string" }
+              - { label: "Categoria (slug)", name: "categoria", widget: "string", hint: "moda-e-vestuario, eletronicos, calcados, beleza-e-cuidados-pessoais, eletrodomesticos, fitness ou ferramentas" }
+              - { label: "Subcategoria", name: "subcategoria", widget: "string", required: false }
+              - label: "Fotos"
+                name: "fotos"
+                widget: "list"
+                required: false
+                fields:
+                  - { label: "URL da foto", name: "foto", widget: "string" }
+              - { label: "Preço", name: "preco", widget: "string", required: false }
+              - { label: "Formas de pagamento", name: "pagamento", widget: "string", required: false }
+              - { label: "Link (⚠️ confirme se é seu link de afiliado antes de divulgar)", name: "link", widget: "string" }
+              - { label: "Nota", name: "nota", widget: "string", required: false }
+              - { label: "Avaliações/curtidas", name: "avaliacoes", widget: "string", required: false }
+              - { label: "Vendidos", name: "vendidos", widget: "string", required: false }
+              - { label: "Descrição", name: "descricao", widget: "text", required: false }
+              - { label: "Posição no Top 100", name: "posicao_top100", widget: "number", required: false, value_type: "int", min: 1, max: 100 }
+
   - name: "categorias"
     label: "Categorias"
     folder: "_categorias"

@@ -25,7 +25,13 @@ async function carregarPasta(pasta) {
   }
 }
 
-function carregarProdutos() { return carregarPasta("_produtos"); }
+async function carregarProdutos() {
+  const [individuais, lote] = await Promise.all([
+    carregarPasta("_produtos"),
+    fetch("/_data/lote-shopee.json").then(r => r.ok ? r.json() : []).catch(() => [])
+  ]);
+  return [...individuais, ...lote];
+}
 function carregarCategorias() { return carregarPasta("_categorias"); }
 function carregarSubcategorias() { return carregarPasta("_subcategorias"); }
 function carregarPosts() { return carregarPasta("_posts"); }
