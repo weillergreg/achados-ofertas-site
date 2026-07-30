@@ -9,6 +9,18 @@ media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
 collections:
+  - name: "configuracoes"
+    label: "⚙️ Configurações do Site"
+    files:
+      - name: "links"
+        label: "Links e Contato"
+        file: "_config/links.json"
+        fields:
+          - { label: "Link do grupo WhatsApp (ex: https://chat.whatsapp.com/...)", name: "whatsapp_link", widget: "string", hint: "Cole o link de convite do seu grupo do WhatsApp" }
+          - { label: "Link do canal Telegram (ex: https://t.me/...)", name: "telegram_link", widget: "string", hint: "Cole o link do seu canal do Telegram" }
+          - { label: "Gerar QR Code para WhatsApp", name: "whatsapp_qr", widget: "string", required: false, hint: "QR Code é gerado automaticamente — deixe este campo em branco" }
+          - { label: "Gerar QR Code para Telegram", name: "telegram_qr", widget: "string", required: false, hint: "QR Code é gerado automaticamente — deixe este campo em branco" }
+
   - name: "banners"
     label: "Banner Principal (Home)"
     folder: "_banners"
