@@ -121,9 +121,16 @@ src="https://www.facebook.com/tr?id=1704419260601707&ev=PageView&noscript=1"
   .final h2{ font-size:22px; margin-bottom:18px; }
 
   footer{ padding:28px 0 40px; text-align:center; font-size:12px; color:var(--text-muted); opacity:.7; }
+
+  /* Skip Link e Foco para Acessibilidade */
+  .skip-link{ position:absolute; top:-40px; left:0; background:var(--green); color:#fff; padding:8px 16px; text-decoration:none; z-index:100; border-radius:0 0 4px 0; }
+  .skip-link:focus{ top:0; }
+  a:focus, button:focus, input:focus{ outline:2px solid var(--pink); outline-offset:2px; }
 </style>
 </head>
 <body>
+
+<a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
 
 <div class="paginaprincipal"><a href="/">🏠 Ir para a Página Principal do site</a></div>
 
@@ -131,7 +138,7 @@ src="https://www.facebook.com/tr?id=1704419260601707&ev=PageView&noscript=1"
   <div class="wrap" style="padding:0;">Grupo gratuito de achadinhos · Mercado Livre e Shopee</div>
 </div>
 
-<header class="hero wrap">
+<header class="hero wrap" id="main-content">
   <div class="brand">
     <img class="brand-badge" src="/images/logo-achadinhos.jpg" alt="Achadinhos Super Espiã">
     <div class="brand-name"><div class="top">Achadinhos</div><div class="sub">SUPER ESPIÃ</div></div>

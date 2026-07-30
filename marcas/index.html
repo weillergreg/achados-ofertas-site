@@ -49,17 +49,26 @@
   .marca-tile img{ width:100%; height:auto; max-width:90px; margin:0 auto; }
   .marca-acessar{ margin-top:10px; font-size:12px; font-weight:700; color:var(--verde); }
   .seo-desc{ margin-top:44px; font-size:14px; color:var(--text-muted); border-top:1px solid var(--border); padding-top:24px; }
+
+  /* Skip Link e Foco para Acessibilidade */
+  .skip-link{ position:absolute; top:-40px; left:0; background:var(--azul); color:#fff; padding:8px 16px; text-decoration:none; z-index:100; border-radius:0 0 4px 0; }
+  .skip-link:focus{ top:0; }
+  a:focus, button:focus, input:focus{ outline:2px solid var(--rosa); outline-offset:2px; }
 </style>
 </head>
 <body>
+
+<a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
 
 <nav>
   <a class="home" href="/">🏠 Página Principal</a>
 </nav>
 
 <main>
+  <div id="main-content">
   <h1>Todas as Marcas Parceiras</h1>
   <p class="sub">Cupom de desconto, oferta relâmpago e o menor preço nas maiores lojas do Brasil — tudo reunido em um só lugar, com segurança garantida.</p>
+  </div>
 
   <div class="grid">
     <a class="marca-tile" href="/mercadolivre"><img src="/images/marcas/logo-mercadolivre.png" alt="Mercado Livre"><div class="marca-acessar">Acessar</div></a>

@@ -56,9 +56,16 @@
   .post-card h3{ font-size:15px; margin-bottom:8px; line-height:1.35; }
   .post-card p{ font-size:13px; color:var(--text-muted); margin:0; }
   .vazio{ text-align:center; color:var(--text-muted); font-size:14px; padding:40px 20px; }
+
+  /* Skip Link e Foco para Acessibilidade */
+  .skip-link{ position:absolute; top:-40px; left:0; background:var(--azul); color:#fff; padding:8px 16px; text-decoration:none; z-index:100; border-radius:0 0 4px 0; }
+  .skip-link:focus{ top:0; }
+  a:focus, button:focus, input:focus{ outline:2px solid var(--rosa); outline-offset:2px; }
 </style>
 </head>
 <body>
+
+<a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
 
 <nav>
   <a class="home" href="/">🏠 Página Principal</a>
@@ -66,8 +73,10 @@
 </nav>
 
 <main>
+  <div id="main-content">
   <h1>Blog de Ofertas</h1>
   <p class="sub">Comparativos, dicas de compra e as novidades com cupom e oferta relâmpago.</p>
+  </div>
   <div class="posts-scroll" id="posts-scroll">Carregando...</div>
 </main>
 

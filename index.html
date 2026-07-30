@@ -216,9 +216,18 @@
   #cookie-banner{ position:fixed; left:16px; right:16px; bottom:16px; z-index:100; background:var(--azul); color:#fff; border-radius:14px; padding:16px 20px; display:flex; gap:16px; align-items:center; flex-wrap:wrap; justify-content:space-between; box-shadow:0 10px 30px rgba(0,0,0,.25); }
   #cookie-banner p{ font-size:13px; margin:0; flex:1 1 260px; }
   #cookie-banner button{ background:var(--verde); color:#fff; border:none; font-weight:700; font-size:13px; padding:10px 18px; border-radius:999px; cursor:pointer; }
+
+  /* Skip Link para Acessibilidade */
+  .skip-link{ position:absolute; top:-40px; left:0; background:var(--azul); color:#fff; padding:8px 16px; text-decoration:none; z-index:100; border-radius:0 0 4px 0; }
+  .skip-link:focus{ top:0; }
+
+  /* Melhorar Foco Visual */
+  a:focus, button:focus, input:focus{ outline:2px solid var(--rosa); outline-offset:2px; }
 </style>
 </head>
 <body>
+
+<a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
 
 <nav>
   <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
@@ -239,6 +248,8 @@
 </nav>
 
 <div class="topbar">Grupo grátis no WhatsApp e Telegram · Cupom Shopee, Mercado Livre, Magalu, Shein e Amazon</div>
+
+<main id="main-content">
 
 <div class="hero-carousel-wrap wrap">
   <div class="hero-carousel" id="hero-carousel">
@@ -604,6 +615,8 @@
   }
   atualizarLinksContato();
 </script>
+
+</main>
 
 </body>
 </html>
