@@ -123,8 +123,9 @@
 
   .relampago{ background:linear-gradient(180deg,#fff, #fdf6e9); }
   .brand-tiles{ display:flex; gap:18px; flex-wrap:wrap; }
-  .brand-tile{ flex:1 1 130px; max-width:160px; background:#fff; border:1px solid var(--border); border-radius:16px; padding:18px; text-align:center; transition:transform .25s ease, box-shadow .25s ease; }
-  .brand-tile img{ width:100%; height:auto; }
+  .brand-tile{ flex:1 1 130px; max-width:160px; background:#fff; border:1px solid var(--border); border-radius:16px; padding:18px; text-align:center; transition:transform .25s ease, box-shadow .25s ease; position:relative; }
+  .brand-tile img{ width:100%; height:auto; margin-bottom:10px; }
+  .brand-tile .marca-acessar{ font-size:12px; font-weight:700; color:var(--verde); margin:0; }
   .brand-tile:hover{ transform:scale(1.06) rotate(-1deg); box-shadow:0 10px 24px rgba(0,0,0,.08); }
 
   .categorias-scroll{ display:flex; gap:16px; overflow-x:auto; padding:8px 4px 16px; scroll-behavior:smooth; scrollbar-width:none; }
@@ -212,7 +213,7 @@
       <a href="/produtos">Produtos</a>
       <a href="/blognoticia">Blog</a>
       <a href="/listamaisvendidos">Mais Vendidos</a>
-      <a class="btn-nav" href="/whatsapp">Entrar no grupo</a>
+      <a class="btn-nav" id="btn-whatsapp-nav" href="/whatsapp">Entrar no grupo</a>
     </div>
     <a href="/produtos" aria-label="Buscar produtos" style="font-size:18px;color:var(--azul);opacity:.75;flex-shrink:0;">🔍</a>
   </div>
@@ -238,8 +239,14 @@
 
 <div class="hero-cta-fixo wrap">
   <div class="cta-group">
-    <a class="cta" href="/whatsapp">💬 Entrar pelo WhatsApp</a>
-    <a class="cta-secondary" href="/telegram">✈️ Entrar pelo Telegram</a>
+    <a class="cta" id="btn-whatsapp-hero" href="/whatsapp">
+      <img id="icon-whatsapp-hero" src="/images/icones/icone-whatsapp.png" alt="WhatsApp" style="width:20px;height:20px;">
+      Entrar pelo WhatsApp
+    </a>
+    <a class="cta-secondary" id="btn-telegram-hero" href="/telegram">
+      <img id="icon-telegram-hero" src="/images/icones/icone-telegram.jpg" alt="Telegram" style="width:20px;height:20px;">
+      Entrar pelo Telegram
+    </a>
   </div>
   <div class="cta-note">
     <span>✔ Gratuito</span><span>✔ Sem cadastro</span><span>✔ Saia quando quiser</span>
@@ -252,10 +259,10 @@
     <h2 class="section-title">Oferta Relâmpago</h2>
     <p class="section-desc">Oferta Relâmpago: cupom de desconto, promoção com frete grátis, o menor preço para sua compra você encontra aqui — Por tempo limitado, clique abaixo e aproveite antes que acabe!</p>
     <div class="brand-tiles">
-      <a class="brand-tile" href="/shoofertasrelampagos"><img src="images/marcas/logo-shopee.png" alt="Oferta relâmpago Shopee"></a>
-      <a class="brand-tile" href="/meliofertasrelampagos"><img src="images/marcas/logo-mercadolivre.png" alt="Oferta relâmpago Mercado Livre"></a>
-      <a class="brand-tile" href="/maluofertasrelampagos"><img src="images/marcas/logo-magalu.png" alt="Oferta relâmpago Magalu"></a>
-      <a class="brand-tile" href="/sheinofertasrelampagos"><img src="images/marcas/logo-shein.png" alt="Oferta relâmpago Shein"></a>
+      <a class="brand-tile" href="/shoofertasrelampagos"><img src="images/marcas/logo-shopee.png" alt="Oferta relâmpago Shopee"><div class="marca-acessar">Acessar</div></a>
+      <a class="brand-tile" href="/meliofertasrelampagos"><img src="images/marcas/logo-mercadolivre.png" alt="Oferta relâmpago Mercado Livre"><div class="marca-acessar">Acessar</div></a>
+      <a class="brand-tile" href="/maluofertasrelampagos"><img src="images/marcas/logo-magalu.png" alt="Oferta relâmpago Magalu"><div class="marca-acessar">Acessar</div></a>
+      <a class="brand-tile" href="/sheinofertasrelampagos"><img src="images/marcas/logo-shein.png" alt="Oferta relâmpago Shein"><div class="marca-acessar">Acessar</div></a>
     </div>
   </div>
 </section>
@@ -562,6 +569,21 @@
     `).join("");
   }
   iniciarTopNovidades();
+
+  /* Atualizar links de WhatsApp e Telegram com configurações dinâmicas */
+  async function atualizarLinksContato() {
+    await inicializarConfiguracao();
+    
+    // Atualizar botões da home
+    if (CONFIG_SITE.whatsapp_link) {
+      document.getElementById("btn-whatsapp-hero").href = CONFIG_SITE.whatsapp_link;
+      document.getElementById("btn-whatsapp-nav").href = CONFIG_SITE.whatsapp_link;
+    }
+    if (CONFIG_SITE.telegram_link) {
+      document.getElementById("btn-telegram-hero").href = CONFIG_SITE.telegram_link;
+    }
+  }
+  atualizarLinksContato();
 </script>
 
 </body>

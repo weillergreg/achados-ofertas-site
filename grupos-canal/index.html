@@ -93,10 +93,11 @@ src="https://www.facebook.com/tr?id=1704419260601707&ev=PageView&noscript=1"
   .cta img{ width:22px; height:22px; border-radius:5px; }
   .cta-note{ margin-top:12px; font-size:12px; color:var(--text-muted); display:flex; justify-content:center; gap:12px; flex-wrap:wrap; }
 
-  .qr-box{ margin-top:26px; background:var(--bg-panel); border-radius:16px; padding:18px; display:inline-flex; align-items:center; gap:14px; text-align:left; max-width:340px; }
-  .qr-box img{ width:76px; height:76px; border-radius:8px; background:#fff; padding:4px; }
-  .qr-box p{ font-size:12px; color:var(--text-muted); }
-  .qr-box strong{ color:#fff; font-size:13px; display:block; margin-bottom:2px; }
+  .qr-box{ margin-top:26px; background:var(--bg-panel); border-radius:16px; padding:24px; display:flex; flex-direction:column; align-items:center; gap:18px; text-align:center; max-width:100%; }
+  .qr-box #qr-whatsapp-container{ width:220px; height:220px; background:#fff; border-radius:12px; padding:6px; display:flex; align-items:center; justify-content:center; }
+  .qr-box #qr-whatsapp-container canvas{ display:block; max-width:100%; }
+  .qr-box p{ font-size:13px; color:var(--text-muted); max-width:280px; margin:0; }
+  .qr-box strong{ color:#fff; font-size:14px; display:block; margin-bottom:4px; }
 
   section{ padding:32px 0; }
   .eyebrow{ display:inline-flex; align-items:center; gap:8px; background:var(--bg-panel-2); color:var(--gold); font-size:12px; font-weight:700; letter-spacing:.5px; padding:8px 14px; border-radius:999px; margin-bottom:16px; }
@@ -140,15 +141,15 @@ src="https://www.facebook.com/tr?id=1704419260601707&ev=PageView&noscript=1"
   <p class="lede">Entre no grupo grátis e receba os achados mais baratos do Mercado Livre e Shopee, investigados antes de chegar até você.</p>
 
   <a class="cta" href="/whatsapp">
-    <img src="/images/icone-whatsapp.png" alt=""> Entrar no grupo agora
+    <img src="/images/icones/icone-whatsapp.png" alt="" style="width:22px;height:22px;"> Entrar no grupo agora
   </a>
   <div class="cta-note">
     <span>✔ 100% grátis</span><span>✔ Sem cartão</span><span>✔ Sem spam</span>
   </div>
 
   <div class="qr-box">
-    <img src="qrcode-whatsapp.png" alt="QR Code para entrar no grupo do WhatsApp">
-    <p><strong>No computador?</strong>Aponte a câmera do celular pro QR Code e entre direto no grupo.</p>
+    <div id="qr-whatsapp-container">Gerando QR Code...</div>
+    <p><strong>Está no computador?</strong> Aponte a câmera do seu celular para o QR Code e entre direto no grupo.</p>
   </div>
 </header>
 
@@ -177,7 +178,7 @@ src="https://www.facebook.com/tr?id=1704419260601707&ev=PageView&noscript=1"
   <div class="final">
     <h2>Pronta pra economizar todo dia?</h2>
     <a class="cta" href="/whatsapp">
-      <img src="/images/icone-whatsapp.png" alt=""> Entrar no grupo agora
+      <img src="/images/icones/icone-whatsapp.png" alt="" style="width:22px;height:22px;"> Entrar no grupo agora
     </a>
   </div>
 </section>
@@ -185,6 +186,36 @@ src="https://www.facebook.com/tr?id=1704419260601707&ev=PageView&noscript=1"
 <footer class="wrap">
   Achadinhos - Super Espiã não é responsável pela disponibilidade dos produtos e preços nos sites parceiros.
 </footer>
+
+<!-- Carregar biblioteca QRCode.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="/js/loja.js"></script>
+<script src="/js/qrcode-generator.js"></script>
+
+<script>
+  /* Atualizar links e gerar QR Code para WhatsApp */
+  async function inicializarGruposCanal() {
+    await inicializarConfiguracao();
+
+    // Atualizar todos os links de WhatsApp
+    const btnsCta = document.querySelectorAll('.cta[href="/whatsapp"]');
+    btnsCta.forEach(btn => {
+      if (CONFIG_SITE.whatsapp_link) {
+        btn.href = CONFIG_SITE.whatsapp_link;
+      }
+    });
+
+    // Gerar QR Code para WhatsApp
+    if (CONFIG_SITE.whatsapp_link) {
+      gerarQRComLogo(CONFIG_SITE.whatsapp_link, 'qr-whatsapp-container', '/images/logo-buynix.png', 210);
+    } else {
+      // Se não houver link, usar um fallback
+      gerarQRComLogo('https://chat.whatsapp.com/SEU_LINK_AQUI', 'qr-whatsapp-container', '/images/logo-buynix.png', 210);
+    }
+  }
+
+  inicializarGruposCanal();
+</script>
 
 </body>
 </html>
