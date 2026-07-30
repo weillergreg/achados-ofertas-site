@@ -37,9 +37,9 @@
 <style>
   :root{
     --azul: #1B3A6B;
-    --dourado: #D9A441;
+    --dourado: #8D6A2A;
     --rosa: #FF3E8E;
-    --verde: #22C55E;
+    --verde: #16803D;
     --bg: #FAFAFA;
     --card-bg: #FFFFFF;
     --text: #1F2430;
@@ -525,7 +525,7 @@
       slide.className = "hero-slide";
       slide.dataset.slide = i + 1;
       const botao = b.botao && b.botao.texto
-        ? `<a class="banner-botao-overlay" style="background:${b.botao.cor || '#22C55E'}" href="javascript:void(0)" onclick="event.stopPropagation();irComCarregando('${(b.botao.link_botao || b.link || '').replace(/'/g,"\\'")}')">${b.botao.texto}</a>`
+        ? `<a class="banner-botao-overlay" style="background:${b.botao.cor || '#16803D'}" href="javascript:void(0)" onclick="event.stopPropagation();irComCarregando('${(b.botao.link_botao || b.link || '').replace(/'/g,"\\'")}')">${b.botao.texto}</a>`
         : "";
       slide.innerHTML = `
         <div class="banner-img-slide" style="cursor:pointer;" onclick="irComCarregando('${(b.link||'').replace(/'/g,"\\'")}')">

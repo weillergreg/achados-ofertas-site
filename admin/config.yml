@@ -43,7 +43,7 @@ collections:
         collapsed: true
         fields:
           - { label: "Texto do botão", name: "texto", widget: "string", required: false }
-          - { label: "Cor do botão (ex: #22C55E)", name: "cor", widget: "string", required: false, default: "#22C55E" }
+          - { label: "Cor do botão (ex: #16803D)", name: "cor", widget: "string", required: false, default: "#16803D" }
           - { label: "Link do botão (se for diferente do link da imagem)", name: "link_botao", widget: "string", required: false }
 
   - name: "lote_shopee"
