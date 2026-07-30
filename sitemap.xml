@@ -1,82 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Página Principal -->
   <url>
     <loc>https://achadosofertas.com.br/</loc>
-    <lastmod>2026-07-30</lastmod>
-    <changefreq>daily</changefreq>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
-  
-  <!-- Páginas Principais -->
   <url>
-    <loc>https://achadosofertas.com.br/produtos</loc>
-    <lastmod>2026-07-30</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://achadosofertas.com.br/blognoticia</loc>
-    <lastmod>2026-07-30</lastmod>
+    <loc>https://achadosofertas.com.br/categorias</loc>
+    <lastmod>2026-07-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://achadosofertas.com.br/listamaisvendidos</loc>
-    <lastmod>2026-07-30</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://achadosofertas.com.br/marcas</loc>
-    <lastmod>2026-07-30</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://achadosofertas.com.br/grupos-canal</loc>
-    <lastmod>2026-07-30</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <!-- Ofertas Relâmpago por Loja -->
-  <url>
-    <loc>https://achadosofertas.com.br/shoofertasrelampagos</loc>
-    <lastmod>2026-07-30</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://achadosofertas.com.br/meliofertasrelampagos</loc>
-    <lastmod>2026-07-30</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://achadosofertas.com.br/maluofertasrelampagos</loc>
-    <lastmod>2026-07-30</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://achadosofertas.com.br/sheinofertasrelampagos</loc>
-    <lastmod>2026-07-30</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <!-- Políticas e Informações -->
-  <url>
-    <loc>https://achadosofertas.com.br/termos-e-privacidade</loc>
-    <lastmod>2026-07-30</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://achadosofertas.com.br/troca-e-reembolso</loc>
-    <lastmod>2026-07-30</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
   </url>
 </urlset>
