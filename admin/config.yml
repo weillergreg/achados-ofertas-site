@@ -1,6 +1,9 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: weillergreg/achados-ofertas-site
   branch: main
+  base_url: https://achadosofertas.com.br
+  auth_endpoint: auth
 
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
