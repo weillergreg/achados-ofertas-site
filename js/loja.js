@@ -28,7 +28,7 @@ async function carregarPasta(pasta) {
 async function carregarProdutos() {
   const [individuais, lote] = await Promise.all([
     carregarPasta("_produtos"),
-    fetch("/_data/lote-shopee.json").then(r => r.ok ? r.json() : []).catch(() => [])
+    fetch("/_data/lote-shopee.json").then(r => r.ok ? r.json() : { produtos: [] }).then(d => d.produtos || []).catch(() => [])
   ]);
   return [...individuais, ...lote];
 }
@@ -36,6 +36,25 @@ function carregarCategorias() { return carregarPasta("_categorias"); }
 function carregarSubcategorias() { return carregarPasta("_subcategorias"); }
 function carregarPosts() { return carregarPasta("_posts"); }
 function carregarBanners() { return carregarPasta("_banners"); }
+
+/* Carregar configurações (links de WhatsApp e Telegram) */
+async function carregarConfiguracao() {
+  try {
+    const resp = await fetch("/_config/links.json");
+    if (resp.ok) return await resp.json();
+    return { whatsapp_link: "", telegram_link: "" };
+  } catch (e) {
+    console.error("Erro ao carregar configuração:", e);
+    return { whatsapp_link: "", telegram_link: "" };
+  }
+}
+
+/* Armazenar configurações globais */
+let CONFIG_SITE = { whatsapp_link: "", telegram_link: "" };
+
+async function inicializarConfiguracao() {
+  CONFIG_SITE = await carregarConfiguracao();
+}
 
 /* Redirecionamento com telinha de carregando, sem expor o link de destino no hover */
 function irComCarregando(url) {
