@@ -72,18 +72,20 @@ function irComCarregando(url) {
 /* Monta o HTML de um card de produto, reaproveitado em todas as páginas */
 function cardProdutoHTML(p) {
   const foto = (p.fotos && p.fotos[0] && p.fotos[0].foto) ? p.fotos[0].foto : "/images/logo-achadinhos.jpg";
-  const estrelas = p.nota ? `<div class="produto-estrelas"><span class="estrelas">★★★★★</span><span class="num-avaliacoes">${p.nota}${p.avaliacoes ? " (" + p.avaliacoes + " avaliações)" : ""}${p.vendidos ? " · " + p.vendidos : ""}</span></div>` : "";
+  const estrelas = p.nota ? `<div class="produto-estrelas"><span class="estrelas">★★★★★</span><span class="num-avaliacoes">${p.nota}${p.avaliacoes ? " (" + p.avaliacoes + ")" : ""}${p.vendidos ? " · " + p.vendidos : ""}</span></div>` : "";
   const preco = p.preco ? `<div class="produto-preco">R$ ${p.preco}</div>` : "";
+  const urlDetalhe = `/produto/${p.slug}`;
   return `
     <div class="prod-card">
-      <img class="prod-foto" src="${foto}" alt="${p.title}">
-      <div class="prod-info">
-        <div class="prod-nome">${p.title}</div>
-        ${p.descricao ? `<div class="prod-desc">${p.descricao}</div>` : ""}
-        ${estrelas}
-        ${preco}
-        <button class="btn-comprar" onclick="irComCarregando('${(p.link || "").replace(/'/g, "\\'")}')">Compre aqui</button>
-      </div>
+      <a class="prod-link" href="${urlDetalhe}">
+        <img class="prod-foto" src="${foto}" alt="${p.title}">
+        <div class="prod-info">
+          <div class="prod-nome">${p.title}</div>
+          ${estrelas}
+          ${preco}
+        </div>
+      </a>
+      <button class="btn-comprar" onclick="window.location.href='${urlDetalhe}'">Compre aqui</button>
     </div>
   `;
 }

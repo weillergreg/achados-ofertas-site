@@ -3,14 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Produtos | Achadinhos Super Espiã</title>
-<meta name="description" content="Todos os produtos com cupom e oferta relâmpago da Shopee, Mercado Livre, Magalu, Shein e Amazon, organizados por categoria.">
+<title>Produtos com Cupom e Oferta Relâmpago | Achadinhos Super Espiã</title>
+<meta name="description" content="Todos os produtos com cupom e oferta relâmpago da Shopee, Mercado Livre, Magalu, Shein e Amazon, organizados por categoria. Compre com o menor preço.">
 <link rel="canonical" href="https://achadosofertas.com.br/produtos">
 <link rel="icon" type="image/jpeg" href="/images/logo-achadinhos.jpg">
+
+<!-- Schema.org Breadcrumb -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://achadosofertas.com.br/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Produtos",
+      "item": "https://achadosofertas.com.br/produtos"
+    }
+  ]
+}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{ --azul:#1B3A6B; --dourado:#D9A441; --rosa:#FF3E8E; --verde:#22C55E; --bg:#FAFAFA; --card-bg:#FFFFFF; --text:#1F2430; --text-muted:#6B7280; --border:#ECECEC; }
+  :root{ --azul:#1B3A6B; --dourado:#8D6A2A; --rosa:#FF3E8E; --verde:#16803D; --bg:#FAFAFA; --card-bg:#FFFFFF; --text:#1F2430; --text-muted:#6B7280; --border:#ECECEC; }
   *{ box-sizing:border-box; }
   body{ margin:0; background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; line-height:1.6; }
   h1,h2,h3{ font-family:'Poppins',sans-serif; margin:0; }
@@ -52,16 +75,21 @@
   .prod-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(220px,1fr)); gap:14px; }
 
   .prod-card{ background:var(--card-bg); border:1px solid var(--border); border-radius:14px; padding:14px; display:flex; flex-direction:column; gap:8px; }
+  .prod-link{ display:flex; flex-direction:column; gap:8px; color:inherit; text-decoration:none; }
   .prod-foto{ width:100%; aspect-ratio:1/1; object-fit:contain; background:#fff; border:1px solid var(--border); border-radius:10px; }
-  .prod-nome{ font-weight:700; font-size:14px; }
-  .prod-desc{ font-size:12px; color:var(--text-muted); }
+  .prod-nome{ font-weight:700; font-size:14px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; min-height:2.6em; }
   .produto-estrelas{ font-size:12px; }
   .produto-estrelas .estrelas{ color:var(--dourado); }
   .produto-estrelas .num-avaliacoes{ color:var(--text-muted); font-size:11px; }
   .produto-preco{ font-family:'Poppins',sans-serif; font-weight:800; color:var(--rosa); font-size:18px; }
-  .btn-comprar{ background:var(--verde); color:#fff; border:none; font-weight:700; font-size:13px; padding:10px 16px; border-radius:999px; cursor:pointer; }
+  .btn-comprar{ background:var(--verde); color:#fff; border:none; font-weight:700; font-size:13px; padding:10px 16px; border-radius:999px; cursor:pointer; width:100%; }
 
   .vazio{ text-align:center; color:var(--text-muted); font-size:14px; padding:40px 20px; }
+
+  /* Skip Link e Foco para Acessibilidade */
+  .skip-link{ position:absolute; top:-40px; left:0; background:var(--azul); color:#fff; padding:8px 16px; text-decoration:none; z-index:100; border-radius:0 0 4px 0; }
+  .skip-link:focus{ top:0; }
+  a:focus, button:focus, input:focus{ outline:2px solid var(--rosa); outline-offset:2px; }
 
   @media (max-width:820px){
     .layout{ flex-direction:column; }
@@ -70,6 +98,8 @@
 </style>
 </head>
 <body>
+
+<a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
 
 <nav>
   <a class="home" href="/">🏠 Página Principal</a>
@@ -85,8 +115,10 @@
   </aside>
 
   <main>
+    <div id="main-content">
     <h1 id="titulo-pagina">Todos os Produtos</h1>
     <p class="sub-desc" id="desc-pagina">Cupom, oferta relâmpago e o menor preço na Shopee, Mercado Livre, Magalu, Shein e Amazon.</p>
+    </div>
     <div id="conteudo">Carregando produtos...</div>
   </main>
 </div>
