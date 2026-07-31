@@ -1,0 +1,5 @@
+functions/
+worker.js
+wrangler.jsonc
+.assetsignore
+SETUP_ICONES.md
