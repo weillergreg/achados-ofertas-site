@@ -4,14 +4,16 @@
 # Posts do blog cadastrados pelo painel
 # IMPORTANTE: posts com página própria (feitos à mão) precisam de uma regra explícita
 # ANTES da regra genérica abaixo, senão o wildcard "rouba" a rota e mostra o template vazio.
-/blognoticia/presentes-dia-dos-pais-2026  /blognoticia/presentes-dia-dos-pais-2026/index.html  200
-/blognoticia/:slug  /blognoticia/post/index.html  200
+# IMPORTANTE 2: o destino usa barra no final (/pasta/) e NÃO "index.html" explícito —
+# apontar direto pro index.html faz o Cloudflare redirecionar de novo e perder o slug.
+/blognoticia/presentes-dia-dos-pais-2026  /blognoticia/presentes-dia-dos-pais-2026/  200
+/blognoticia/:slug  /blognoticia/post/  200
 
 # Produtos individuais do Top 100 / catálogo geral
-/listamaisvendidos/:slug  /listamaisvendidos/produto/index.html  200
+/listamaisvendidos/:slug  /listamaisvendidos/produto/  200
 
 # Página de detalhes de produto (usada pela página /produtos)
-/produto/:slug  /produto/index.html  200
+/produto/:slug  /produto/  200
 
 # Categorias — Moda
 /shcategmoda  https://s.shopee.com.br/8fR1evLiiZ  302
