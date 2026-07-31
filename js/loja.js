@@ -85,7 +85,7 @@ function cardProdutoHTML(p) {
           ${preco}
         </div>
       </a>
-      <button class="btn-comprar" onclick="window.location.href='${urlDetalhe}'">Compre aqui</button>
+      <button class="btn-comprar" onclick="irComCarregando('${(p.link || "").replace(/'/g, "\\'")}')">Compre aqui</button>
     </div>
   `;
 }

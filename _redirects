@@ -1,9 +1,17 @@
 /whatsapp  https://chat.whatsapp.com/BiVuP9GlMHP9eV9zrdeL4C?s=cl&p=i&ilr=1  302
 /telegram  https://t.me/achadinhosofertasshopeebr  302
 
-# Posts do blog e produtos individuais agora são resolvidos pelas Functions
-# (functions/blognoticia/[slug].js e functions/listamaisvendidos/[slug].js),
-# porque a Cloudflare não suporta regra de reescrita com status 200 como a Netlify.
+# Posts do blog cadastrados pelo painel
+# IMPORTANTE: posts com página própria (feitos à mão) precisam de uma regra explícita
+# ANTES da regra genérica abaixo, senão o wildcard "rouba" a rota e mostra o template vazio.
+/blognoticia/presentes-dia-dos-pais-2026  /blognoticia/presentes-dia-dos-pais-2026/index.html  200
+/blognoticia/:slug  /blognoticia/post/index.html  200
+
+# Produtos individuais do Top 100 / catálogo geral
+/listamaisvendidos/:slug  /listamaisvendidos/produto/index.html  200
+
+# Página de detalhes de produto (usada pela página /produtos)
+/produto/:slug  /produto/index.html  200
 
 # Categorias — Moda
 /shcategmoda  https://s.shopee.com.br/8fR1evLiiZ  302
