@@ -19,7 +19,7 @@ export default {
 
       const resposta = await fetch("https://github.com/login/oauth/access_token", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        headers: { "Content-Type": "application/json", Accept: "application/json", "User-Agent": "achados-ofertas-site-worker" },
         body: JSON.stringify({
           client_id: env.GITHUB_CLIENT_ID,
           client_secret: env.GITHUB_CLIENT_SECRET,
@@ -27,10 +27,24 @@ export default {
         }),
       });
 
-      const dados = await resposta.json();
+      const textoBruto = await resposta.text();
+      let dados;
+      try {
+        dados = JSON.parse(textoBruto);
+      } catch (e) {
+        return new Response(
+          "Erro ao autenticar (debug - resposta não é JSON). Status: " + resposta.status +
+          " | Corpo bruto: " + textoBruto,
+          { status: 400 }
+        );
+      }
 
       if (dados.error) {
-        return new Response("Erro ao autenticar (debug): " + JSON.stringify(dados), { status: 400 });
+        return new Response(
+          "Erro ao autenticar (debug). Status: " + resposta.status +
+          " | Corpo: " + JSON.stringify(dados),
+          { status: 400 }
+        );
       }
 
       const html = `
