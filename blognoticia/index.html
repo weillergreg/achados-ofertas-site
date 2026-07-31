@@ -3,14 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Blog de Ofertas | Achadinhos Super Espiã</title>
-<meta name="description" content="Comparativos de produtos, dicas de compra e notícias de ofertas com cupom e oferta relâmpago na Shopee, Mercado Livre, Magalu, Shein e Amazon.">
+<title>Blog de Ofertas, Cupons e Dicas de Compra | Achadinhos Super Espiã</title>
+<meta name="description" content="Blog com comparativos de produtos, dicas de compra inteligente e notícias de ofertas com cupom e oferta relâmpago na Shopee, Mercado Livre, Magalu, Shein e Amazon.">
 <link rel="canonical" href="https://achadosofertas.com.br/blognoticia">
 <link rel="icon" type="image/jpeg" href="/images/logo-achadinhos.jpg">
+
+<!-- Schema.org Breadcrumb -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://achadosofertas.com.br/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://achadosofertas.com.br/blognoticia"
+    }
+  ]
+}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{ --azul:#1B3A6B; --dourado:#D9A441; --rosa:#FF3E8E; --verde:#22C55E; --bg:#FAFAFA; --text:#1F2430; --text-muted:#6B7280; --border:#ECECEC; }
+  :root{ --azul:#1B3A6B; --dourado:#8D6A2A; --rosa:#FF3E8E; --verde:#16803D; --bg:#FAFAFA; --text:#1F2430; --text-muted:#6B7280; --border:#ECECEC; }
   *{ box-sizing:border-box; }
   body{ margin:0; background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; line-height:1.6; }
   h1,h2,h3{ font-family:'Poppins',sans-serif; margin:0; color:var(--azul); }
@@ -33,9 +56,16 @@
   .post-card h3{ font-size:15px; margin-bottom:8px; line-height:1.35; }
   .post-card p{ font-size:13px; color:var(--text-muted); margin:0; }
   .vazio{ text-align:center; color:var(--text-muted); font-size:14px; padding:40px 20px; }
+
+  /* Skip Link e Foco para Acessibilidade */
+  .skip-link{ position:absolute; top:-40px; left:0; background:var(--azul); color:#fff; padding:8px 16px; text-decoration:none; z-index:100; border-radius:0 0 4px 0; }
+  .skip-link:focus{ top:0; }
+  a:focus, button:focus, input:focus{ outline:2px solid var(--rosa); outline-offset:2px; }
 </style>
 </head>
 <body>
+
+<a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
 
 <nav>
   <a class="home" href="/">🏠 Página Principal</a>
@@ -43,12 +73,14 @@
 </nav>
 
 <main>
+  <div id="main-content">
   <h1>Blog de Ofertas</h1>
   <p class="sub">Comparativos, dicas de compra e as novidades com cupom e oferta relâmpago.</p>
+  </div>
   <div class="posts-scroll" id="posts-scroll">Carregando...</div>
 </main>
 
-<script src="/js/loja.js"></script>
+<script src="/js/loja.js?v=2"></script>
 <script>
   const POST_FIXO = {
     title: "Presentes para o Dia dos Pais 2026 até R$100: os melhores achadinhos",

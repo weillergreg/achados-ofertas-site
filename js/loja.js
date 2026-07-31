@@ -28,7 +28,7 @@ async function carregarPasta(pasta) {
 async function carregarProdutos() {
   const [individuais, lote] = await Promise.all([
     carregarPasta("_produtos"),
-    fetch("/_data/lote-shopee.json").then(r => r.ok ? r.json() : { produtos: [] }).then(d => d.produtos || []).catch(() => [])
+    fetch("/_data/lote-shopee.json", { cache: "no-store" }).then(r => r.ok ? r.json() : { produtos: [] }).then(d => d.produtos || []).catch(() => [])
   ]);
   return [...individuais, ...lote];
 }
@@ -40,7 +40,7 @@ function carregarBanners() { return carregarPasta("_banners"); }
 /* Carregar configurações (links de WhatsApp e Telegram) */
 async function carregarConfiguracao() {
   try {
-    const resp = await fetch("/_config/links.json");
+    const resp = await fetch("/_config/links.json", { cache: "no-store" });
     if (resp.ok) return await resp.json();
     return { whatsapp_link: "", telegram_link: "" };
   } catch (e) {
