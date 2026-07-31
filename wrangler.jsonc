@@ -3,6 +3,9 @@
   "name": "achados-ofertas-site",
   "compatibility_date": "2026-07-30",
   "main": "worker.js",
+  "vars": {
+    "GITHUB_CLIENT_ID": "Ov23liz4Z1zFyaADCOsY"
+  },
   "assets": {
     "directory": "./",
     "binding": "ASSETS",
