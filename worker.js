@@ -30,7 +30,7 @@ export default {
       const dados = await resposta.json();
 
       if (dados.error) {
-        return new Response("Erro ao autenticar: " + dados.error_description, { status: 400 });
+        return new Response("Erro ao autenticar (debug): " + JSON.stringify(dados), { status: 400 });
       }
 
       const html = `
