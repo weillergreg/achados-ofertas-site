@@ -9,51 +9,72 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600" rel="stylesheet">
 <style>
-  :root{ --azul:#1B3A6B; --dourado:#8D6A2A; --rosa:#FF3E8E; --verde:#16803D; --bg:#FAFAFA; --card-bg:#FFFFFF; --text:#1F2430; --text-muted:#6B7280; --border:#ECECEC; }
+  :root{ --azul:#1B3A6B; --dourado:#8D6A2A; --rosa:#FF3E8E; --verde:#16803D; --bg:#EBEBEB; --card-bg:#FFFFFF; --text:#1F2430; --text-muted:#6B7280; --border:#ECECEC; }
   *{ box-sizing:border-box; }
   body{ margin:0; background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; line-height:1.6; }
-  h1{ font-family:'Poppins',sans-serif; color:var(--azul); font-size:20px; font-weight:600; margin:0 0 10px; }
+  h1{ font-family:'Poppins',sans-serif; color:var(--text); font-size:20px; font-weight:600; margin:0 0 10px; }
   a{ color:inherit; text-decoration:none; }
   nav{ background:#fff; border-bottom:1px solid var(--border); padding:14px 20px; }
   nav a.home{ font-weight:700; color:var(--azul); font-size:14px; }
 
-  main{ max-width:1100px; margin:0 auto; padding:24px 20px 80px; }
+  main{ max-width:1100px; margin:0 auto; padding:24px 16px 80px; }
 
-  /* Layout estilo Mercado Livre: galeria à esquerda, informações à direita */
-  .produto-grid{ display:grid; grid-template-columns: 90px 1fr; gap:16px; }
-  .miniaturas{ display:flex; flex-direction:column; gap:10px; max-height:520px; overflow-y:auto; }
+  /* Layout estilo Mercado Livre: 3 colunas — miniaturas | foto grande | informações,
+     cada bloco em uma "caixinha" branca separada */
+  .produto-grid{ display:grid; grid-template-columns: 88px minmax(0,1fr) 360px; gap:16px; align-items:start; }
+
+  .caixa{ background:var(--card-bg); border-radius:10px; }
+
+  .miniaturas{ display:flex; flex-direction:column; gap:10px; max-height:520px; overflow-y:auto; padding:2px; }
   .miniaturas img{ width:100%; aspect-ratio:1/1; object-fit:contain; background:#fff; border:2px solid var(--border); border-radius:8px; cursor:pointer; padding:4px; }
   .miniaturas img.ativa{ border-color:var(--azul); }
 
-  /* Imagem principal com zoom tipo lupa (segue o mouse) */
-  .imagem-principal{ position:relative; background:#fff; border:1px solid var(--border); border-radius:12px; overflow:hidden; aspect-ratio:1/1; cursor:zoom-in; }
+  /* Imagem principal com zoom tipo lupa (segue o mouse) + clique abre maior */
+  .imagem-principal{ position:relative; padding:20px; }
+  .imagem-principal .foto-wrap{ position:relative; aspect-ratio:1/1; overflow:hidden; border-radius:8px; cursor:zoom-in; }
   .imagem-principal img{ width:100%; height:100%; object-fit:contain; display:block; }
   .lupa-zoom{ position:absolute; top:0; left:0; width:100%; height:100%; background-repeat:no-repeat; opacity:0; pointer-events:none; transition:opacity .15s ease; }
-  .imagem-principal.zoom-ativo .lupa-zoom{ opacity:1; }
-  .imagem-principal.zoom-ativo img{ opacity:0; }
+  .foto-wrap.zoom-ativo .lupa-zoom{ opacity:1; }
+  .foto-wrap.zoom-ativo img{ opacity:0; }
+  .dica-zoom{ text-align:center; font-size:12px; color:var(--text-muted); margin-top:10px; }
 
-  .coluna-info{ display:flex; flex-direction:column; gap:10px; }
+  .coluna-info{ padding:20px; }
   .estrelas{ color:var(--dourado); }
   .num-avaliacoes{ color:var(--text-muted); font-size:13px; }
-  .preco{ font-family:'Poppins',sans-serif; font-weight:800; color:var(--text); font-size:34px; margin:6px 0; }
-  .preco-parcelas{ color:var(--verde); font-size:14px; font-weight:600; }
-  .desc-titulo{ font-weight:700; font-size:16px; margin:20px 0 8px; }
+  .preco{ font-family:'Poppins',sans-serif; font-weight:800; color:var(--text); font-size:34px; margin:10px 0 4px; }
+  .desc-titulo{ font-weight:700; font-size:16px; margin:0 0 8px; }
   .desc{ font-size:15px; color:#333; white-space:pre-line; }
   .pagamento{ font-size:14px; color:var(--text-muted); margin-top:6px; }
-  .btn-comprar{ display:block; text-align:center; background:var(--verde); color:#fff; font-weight:700; font-size:16px; padding:16px 28px; border-radius:10px; border:none; cursor:pointer; margin-top:14px; width:100%; }
+  .btn-comprar{ display:block; text-align:center; background:var(--verde); color:#fff; font-weight:700; font-size:16px; padding:16px 28px; border-radius:10px; border:none; cursor:pointer; margin-top:16px; width:100%; }
   .btn-comprar:hover{ filter:brightness(1.08); }
-  .selo-confianca{ display:flex; gap:10px; margin-top:16px; font-size:13px; color:var(--text-muted); flex-wrap:wrap; }
-  .selo-confianca span{ display:flex; align-items:center; gap:6px; }
+  .selo-confianca{ display:flex; flex-direction:column; gap:8px; margin-top:16px; font-size:13px; color:var(--text-muted); border-top:1px solid var(--border); padding-top:14px; }
 
-  /* Galeria em faixa horizontal no celular */
-  @media (max-width: 720px) {
+  .caixa-descricao{ margin-top:16px; padding:20px; grid-column: 1 / -1; }
+
+  /* Lightbox: foto ampliada com setas */
+  .lightbox{ position:fixed; inset:0; background:rgba(0,0,0,.92); z-index:999; display:none; align-items:center; justify-content:center; }
+  .lightbox.aberto{ display:flex; }
+  .lightbox img{ max-width:88vw; max-height:85vh; object-fit:contain; }
+  .lightbox-fechar{ position:absolute; top:18px; right:24px; background:none; border:none; color:#fff; font-size:32px; cursor:pointer; line-height:1; }
+  .lightbox-seta{ position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.15); border:none; color:#fff; font-size:28px; width:52px; height:52px; border-radius:50%; cursor:pointer; }
+  .lightbox-seta:hover{ background:rgba(255,255,255,.3); }
+  .lightbox-seta.esquerda{ left:18px; }
+  .lightbox-seta.direita{ right:18px; }
+  .lightbox-contador{ position:absolute; bottom:18px; left:50%; transform:translateX(-50%); color:#fff; font-size:13px; opacity:.8; }
+
+  /* Empilhado no celular */
+  @media (max-width: 860px) {
     .produto-grid{ grid-template-columns: 1fr; }
     .miniaturas{ flex-direction:row; overflow-x:auto; overflow-y:visible; max-height:none; order:2; }
     .miniaturas img{ width:64px; flex-shrink:0; }
-    .imagem-principal{ order:1; cursor:default; }
-    .imagem-principal.zoom-ativo .lupa-zoom{ opacity:0; }
-    .imagem-principal.zoom-ativo img{ opacity:1; }
+    .imagem-principal{ order:1; }
+    .imagem-principal .foto-wrap{ cursor:default; }
+    .foto-wrap.zoom-ativo .lupa-zoom{ opacity:0; }
+    .foto-wrap.zoom-ativo img{ opacity:1; }
+    .dica-zoom{ display:none; }
+    .coluna-info{ order:3; }
     .preco{ font-size:28px; }
+    .lightbox-seta{ width:42px; height:42px; font-size:22px; }
   }
 </style>
 </head>
@@ -63,12 +84,22 @@
 
 <main id="conteudo">Carregando...</main>
 
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-fechar" onclick="fecharLightbox()" aria-label="Fechar">✕</button>
+  <button class="lightbox-seta esquerda" onclick="navegarLightbox(-1)" aria-label="Foto anterior">‹</button>
+  <img id="lightbox-img" src="" alt="">
+  <button class="lightbox-seta direita" onclick="navegarLightbox(1)" aria-label="Próxima foto">›</button>
+  <div class="lightbox-contador" id="lightbox-contador"></div>
+</div>
+
 <script src="/js/loja.js?v=3"></script>
 <script>
   const slug = window.location.pathname.split("/").filter(Boolean).pop();
+  let FOTOS_PRODUTO = [];
+  let INDICE_ATUAL = 0;
 
   function montarZoom(fotoUrl) {
-    const box = document.getElementById("imagem-principal");
+    const box = document.getElementById("foto-wrap");
     const lupa = document.getElementById("lupa-zoom");
     if (!box || !lupa) return;
     lupa.style.backgroundImage = `url('${fotoUrl}')`;
@@ -84,13 +115,38 @@
     box.onmouseleave = () => box.classList.remove("zoom-ativo");
   }
 
-  function trocarFotoPrincipal(fotoUrl) {
+  function trocarFotoPrincipal(indice) {
+    INDICE_ATUAL = indice;
+    const fotoUrl = FOTOS_PRODUTO[indice];
     document.getElementById("foto-principal").src = fotoUrl;
-    document.querySelectorAll(".miniaturas img").forEach(img => {
-      img.classList.toggle("ativa", img.dataset.foto === fotoUrl);
+    document.querySelectorAll(".miniaturas img").forEach((img, i) => {
+      img.classList.toggle("ativa", i === indice);
     });
     montarZoom(fotoUrl);
   }
+
+  function abrirLightbox(indice) {
+    INDICE_ATUAL = indice;
+    atualizarLightbox();
+    document.getElementById("lightbox").classList.add("aberto");
+  }
+  function fecharLightbox() {
+    document.getElementById("lightbox").classList.remove("aberto");
+  }
+  function navegarLightbox(direcao) {
+    INDICE_ATUAL = (INDICE_ATUAL + direcao + FOTOS_PRODUTO.length) % FOTOS_PRODUTO.length;
+    atualizarLightbox();
+  }
+  function atualizarLightbox() {
+    document.getElementById("lightbox-img").src = FOTOS_PRODUTO[INDICE_ATUAL];
+    document.getElementById("lightbox-contador").textContent = `${INDICE_ATUAL + 1} / ${FOTOS_PRODUTO.length}`;
+  }
+  document.addEventListener("keydown", (e) => {
+    if (!document.getElementById("lightbox").classList.contains("aberto")) return;
+    if (e.key === "Escape") fecharLightbox();
+    if (e.key === "ArrowLeft") navegarLightbox(-1);
+    if (e.key === "ArrowRight") navegarLightbox(1);
+  });
 
   async function iniciar(){
     const produtos = await carregarProdutos();
@@ -102,23 +158,28 @@
     document.getElementById("titulo-tag").textContent = p.title + " | Achadinhos Super Espiã";
     document.getElementById("desc-tag").setAttribute("content", p.descricao || "");
 
-    const listaFotos = (p.fotos && p.fotos.length) ? p.fotos.map(f => f.foto) : ["/images/logo-achadinhos.jpg"];
-    const fotoInicial = listaFotos[0];
+    FOTOS_PRODUTO = (p.fotos && p.fotos.length) ? p.fotos.map(f => f.foto) : ["/images/logo-achadinhos.jpg"];
+    const fotoInicial = FOTOS_PRODUTO[0];
 
-    const miniaturasHTML = listaFotos.map((foto, i) =>
-      `<img src="${foto}" data-foto="${foto}" class="${i === 0 ? 'ativa' : ''}" alt="${p.title} - foto ${i + 1}" onclick="trocarFotoPrincipal('${foto}')">`
+    const miniaturasHTML = FOTOS_PRODUTO.map((foto, i) =>
+      `<img src="${foto}" class="${i === 0 ? 'ativa' : ''}" alt="${p.title} - foto ${i + 1}" onclick="trocarFotoPrincipal(${i})">`
     ).join("");
 
     const estrelas = p.nota ? `<div><span class="estrelas">★★★★★</span> <span class="num-avaliacoes">${p.nota}${p.avaliacoes ? " (" + p.avaliacoes + " avaliações)" : ""}${p.vendidos ? " · " + p.vendidos + " vendidos" : ""}</span></div>` : "";
 
     cont.innerHTML = `
       <div class="produto-grid">
-        <div class="miniaturas">${miniaturasHTML}</div>
-        <div class="imagem-principal" id="imagem-principal">
-          <img id="foto-principal" src="${fotoInicial}" alt="${p.title}">
-          <div class="lupa-zoom" id="lupa-zoom"></div>
+        <div class="miniaturas caixa">${miniaturasHTML}</div>
+
+        <div class="imagem-principal caixa">
+          <div class="foto-wrap" id="foto-wrap" onclick="abrirLightbox(INDICE_ATUAL)">
+            <img id="foto-principal" src="${fotoInicial}" alt="${p.title}">
+            <div class="lupa-zoom" id="lupa-zoom"></div>
+          </div>
+          <div class="dica-zoom">🔍 Passe o mouse pra dar zoom · clique pra ampliar</div>
         </div>
-        <div class="coluna-info">
+
+        <div class="coluna-info caixa">
           <h1>${p.title}</h1>
           ${estrelas}
           ${p.preco ? `<div class="preco">R$ ${p.preco}</div>` : ""}
@@ -128,8 +189,13 @@
             <span>✅ Oferta verificada</span>
             <span>🚚 Envio pela loja parceira</span>
           </div>
-          ${p.descricao ? `<div><div class="desc-titulo">Descrição</div><p class="desc">${p.descricao}</p></div>` : ""}
         </div>
+
+        ${p.descricao ? `
+        <div class="caixa-descricao caixa">
+          <div class="desc-titulo">Descrição</div>
+          <p class="desc">${p.descricao}</p>
+        </div>` : ""}
       </div>
     `;
 
