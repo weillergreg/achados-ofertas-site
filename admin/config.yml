@@ -9,6 +9,17 @@ media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
 collections:
+  - name: "configuracoes"
+    label: "⚙️ Configurações do Site"
+    files:
+      - name: "links"
+        label: "Links e Contato"
+        file: "_config/links.json"
+        fields:
+          - { label: "Link do grupo WhatsApp (ex: https://chat.whatsapp.com/...)", name: "whatsapp_link", widget: "string", hint: "Cole o link de convite do seu grupo do WhatsApp" }
+          - { label: "Link do canal Telegram (ex: https://t.me/...)", name: "telegram_link", widget: "string", hint: "Cole o link do seu canal do Telegram" }
+          - { label: "Logo no centro do QR Code", name: "buynix_logo", widget: "image", required: false, hint: "Aparece no meio do QR Code de WhatsApp/Telegram na página /grupos-canal" }
+
   - name: "banners"
     label: "Banner Principal (Home)"
     folder: "_banners"
@@ -31,7 +42,7 @@ collections:
         collapsed: true
         fields:
           - { label: "Texto do botão", name: "texto", widget: "string", required: false }
-          - { label: "Cor do botão (ex: #22C55E)", name: "cor", widget: "string", required: false, default: "#22C55E" }
+          - { label: "Cor do botão (ex: #16803D)", name: "cor", widget: "string", required: false, default: "#16803D" }
           - { label: "Link do botão (se for diferente do link da imagem)", name: "link_botao", widget: "string", required: false }
 
   - name: "lote_shopee"
