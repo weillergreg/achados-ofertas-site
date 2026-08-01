@@ -6,51 +6,28 @@ function gerarQRComLogo(url, elementId, logoUrl = "/images/buynix/logo-buynix.pn
     const container = document.getElementById(elementId);
     if (!container) return console.error(`Elemento ${elementId} não encontrado`);
 
-    // Limpar conteúdo anterior
     container.innerHTML = "";
+    container.style.position = "relative";
+    container.style.width = tamanho + "px";
+    container.style.height = tamanho + "px";
 
-    // Criar canvas para o QR
-    const canvas = document.createElement("canvas");
-    canvas.id = `${elementId}-canvas`;
-    container.appendChild(canvas);
-
-    // Gerar QR code usando a biblioteca
-    const qr = new QRCode({
+    // A biblioteca qrcodejs desenha direto dentro do container passado
+    new QRCode(container, {
       text: url,
       width: tamanho,
       height: tamanho,
       colorDark: "#000000",
       colorLight: "#ffffff",
-      correctLevel: QRCode.CorrectLevel.H, // Alto nível de correção para comportar logo
+      correctLevel: QRCode.CorrectLevel.H,
     });
 
-    // Obter a imagem do QR
-    const qrImage = qr.createImage();
-    const qrCanvas = qrImage.canvas || qrImage;
-
-    // Preparar canvas final (maior para caber a logo)
-    canvas.width = tamanho;
-    canvas.height = tamanho;
-    const ctx = canvas.getContext("2d");
-
-    // Desenhar QR no canvas
-    ctx.drawImage(qrCanvas, 0, 0, tamanho, tamanho);
-
-    // Adicionar logo Buynix no centro
-    const logoImg = new Image();
-    logoImg.onload = function () {
-      const logoTamanho = tamanho * 0.25; // Logo ocupa 25% do QR
-      const logoX = (tamanho - logoTamanho) / 2;
-      const logoY = (tamanho - logoTamanho) / 2;
-
-      // Fundo branco para a logo (quadrado)
-      ctx.fillStyle = "#ffffff";
-      ctx.fillRect(logoX - 4, logoY - 4, logoTamanho + 8, logoTamanho + 8);
-
-      // Desenhar logo
-      ctx.drawImage(logoImg, logoX, logoY, logoTamanho, logoTamanho);
-    };
-    logoImg.src = logoUrl;
+    // Logo sobreposta no centro (elemento separado por cima do QR)
+    const logoTamanho = tamanho * 0.22;
+    const logo = document.createElement("img");
+    logo.src = logoUrl;
+    logo.alt = "";
+    logo.style.cssText = `position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:${logoTamanho}px; height:${logoTamanho}px; background:#fff; border-radius:6px; padding:4px; box-sizing:content-box; box-shadow:0 0 0 4px #fff;`;
+    container.appendChild(logo);
   } catch (e) {
     console.error("Erro ao gerar QR Code:", e);
   }
