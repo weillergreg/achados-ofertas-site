@@ -158,7 +158,7 @@
     document.getElementById("titulo-tag").textContent = p.title + " | Achadinhos Super Espiã";
     document.getElementById("desc-tag").setAttribute("content", p.descricao || "");
 
-    FOTOS_PRODUTO = (p.fotos && p.fotos.length) ? p.fotos.map(f => f.foto) : ["/images/logo-achadinhos.jpg"];
+    FOTOS_PRODUTO = (p.fotos && p.fotos.length) ? p.fotos.map(f => typeof f === "string" ? f : f.foto) : ["/images/logo-achadinhos.jpg"];
     const fotoInicial = FOTOS_PRODUTO[0];
 
     const miniaturasHTML = FOTOS_PRODUTO.map((foto, i) =>

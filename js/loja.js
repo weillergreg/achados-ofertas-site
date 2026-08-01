@@ -73,7 +73,8 @@ function irComCarregando(url) {
 
 /* Monta o HTML de um card de produto, reaproveitado em todas as páginas */
 function cardProdutoHTML(p) {
-  const foto = (p.fotos && p.fotos[0] && p.fotos[0].foto) ? p.fotos[0].foto : "/images/logo-achadinhos.jpg";
+  const primeiraFoto = p.fotos && p.fotos[0];
+  const foto = primeiraFoto ? (typeof primeiraFoto === "string" ? primeiraFoto : primeiraFoto.foto) : "/images/logo-achadinhos.jpg";
   const estrelas = p.nota ? `<div class="produto-estrelas"><span class="estrelas">★★★★★</span><span class="num-avaliacoes">${p.nota}${p.avaliacoes ? " (" + p.avaliacoes + ")" : ""}${p.vendidos ? " · " + p.vendidos : ""}</span></div>` : "";
   const preco = p.preco ? `<div class="produto-preco">R$ ${p.preco}</div>` : "";
   const urlDetalhe = `/produto/${p.slug}`;

@@ -86,7 +86,8 @@
   let TODOS = [];
 
   function itemHTML(p){
-    const foto = (p.fotos && p.fotos[0] && p.fotos[0].foto) ? p.fotos[0].foto : "/images/logo-achadinhos.jpg";
+    const primeiraFoto = p.fotos && p.fotos[0];
+    const foto = primeiraFoto ? (typeof primeiraFoto === "string" ? primeiraFoto : primeiraFoto.foto) : "/images/logo-achadinhos.jpg";
     return `
       <div class="item">
         <div class="posicao">${p.posicao_top100 ? "#" + p.posicao_top100 : "-"}</div>
@@ -95,7 +96,7 @@
           <div class="item-nome">${p.title}</div>
           ${p.preco ? `<div class="item-preco">R$ ${p.preco}</div>` : ""}
         </div>
-        <a class="btn-ver" href="/listamaisvendidos/${p.slug}">Ver produto</a>
+        <a class="btn-ver" href="/produto/${p.slug}">Ver produto</a>
       </div>
     `;
   }

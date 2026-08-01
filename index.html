@@ -570,11 +570,12 @@
       cont.innerHTML = `<div class="vendidos-empty">Em breve: os 10 produtos mais vendidos do mês aparecem aqui.</div>`;
       return;
     }
-    cont.innerHTML = top10.map(p => {
-      const foto = (p.fotos && p.fotos[0] && p.fotos[0].foto) ? p.fotos[0].foto : "/images/logo-achadinhos.jpg";
+    cont.innerHTML = top10.map((p, i) => {
+      const primeiraFoto = p.fotos && p.fotos[0];
+      const foto = primeiraFoto ? (typeof primeiraFoto === "string" ? primeiraFoto : primeiraFoto.foto) : "/images/logo-achadinhos.jpg";
       return `
-        <a class="vendido-mini" href="/listamaisvendidos/${p.slug}">
-          <div class="pos">#${p.posicao_top100}</div>
+        <a class="vendido-mini" href="/produto/${p.slug}">
+          <div class="pos">#${i + 1}</div>
           <img src="${foto}" alt="${p.title}">
           <div class="nome">${p.title}</div>
           ${p.preco ? `<div class="preco">R$ ${p.preco}</div>` : ""}

@@ -46,7 +46,7 @@
     document.getElementById("titulo-tag").textContent = p.title + " | Achadinhos Super Espiã";
     document.getElementById("desc-tag").setAttribute("content", p.descricao || "");
 
-    const fotos = (p.fotos || []).map(f => `<img src="${f.foto}" alt="${p.title}">`).join("") || `<img src="/images/logo-achadinhos.jpg" alt="${p.title}">`;
+    const fotos = (p.fotos || []).map(f => `<img src="${typeof f === "string" ? f : f.foto}" alt="${p.title}">`).join("") || `<img src="/images/logo-achadinhos.jpg" alt="${p.title}">`;
     const estrelas = p.nota ? `<div><span class="estrelas">★★★★★</span> <span class="num-avaliacoes">${p.nota}${p.avaliacoes ? " ("+p.avaliacoes+" avaliações)" : ""}${p.vendidos ? " · "+p.vendidos : ""}</span></div>` : "";
 
     cont.innerHTML = `
