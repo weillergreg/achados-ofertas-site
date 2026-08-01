@@ -200,17 +200,9 @@ src="https://www.facebook.com/tr?id=1704419260601707&ev=PageView&noscript=1"
 <script src="/js/qrcode-generator.js"></script>
 
 <script>
-  /* Atualizar links e gerar QR Code para WhatsApp */
+  /* Gerar QR Code para WhatsApp */
   async function inicializarGruposCanal() {
     await inicializarConfiguracao();
-
-    // Atualizar todos os links de WhatsApp
-    const btnsCta = document.querySelectorAll('.cta[href="/whatsapp"]');
-    btnsCta.forEach(btn => {
-      if (CONFIG_SITE.whatsapp_link) {
-        btn.href = CONFIG_SITE.whatsapp_link;
-      }
-    });
 
     // Gerar QR Code para WhatsApp
     if (CONFIG_SITE.whatsapp_link) {
