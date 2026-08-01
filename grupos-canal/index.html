@@ -214,10 +214,10 @@ src="https://www.facebook.com/tr?id=1704419260601707&ev=PageView&noscript=1"
 
     // Gerar QR Code para WhatsApp
     if (CONFIG_SITE.whatsapp_link) {
-      gerarQRComLogo(CONFIG_SITE.whatsapp_link, 'qr-whatsapp-container', '/images/buynix/logo-buynix.png', 210);
+      gerarQRComLogo(CONFIG_SITE.whatsapp_link, 'qr-whatsapp-container', CONFIG_SITE.buynix_logo || '/images/buynix/logo-buynix.png', 210);
     } else {
       // Se não houver link, usar um fallback
-      gerarQRComLogo('https://chat.whatsapp.com/SEU_LINK_AQUI', 'qr-whatsapp-container', '/images/buynix/logo-buynix.png', 210);
+      gerarQRComLogo('https://chat.whatsapp.com/SEU_LINK_AQUI', 'qr-whatsapp-container', CONFIG_SITE.buynix_logo || '/images/buynix/logo-buynix.png', 210);
     }
   }
 
