@@ -123,7 +123,7 @@
   </main>
 </div>
 
-<script src="/js/loja.js?v=2"></script>
+<script src="/js/loja.js?v=3"></script>
 <script>
   const params = new URLSearchParams(window.location.search);
   const categoriaFiltro = params.get("categoria");
@@ -180,9 +180,9 @@
       bloco.innerHTML = `
         <div class="cat-bloco-header">
           <a href="/produtos/?categoria=${cat.slug}">${cat.nome} (${produtosCat.length})</a>
-          <button class="toggle-btn" onclick="toggleCategoria(this)">▾</button>
+          <button class="toggle-btn aberto" onclick="toggleCategoria(this)">▾</button>
         </div>
-        <div class="cat-bloco-produtos">
+        <div class="cat-bloco-produtos mostrar">
           ${produtosCat.length ? produtosCat.map(cardProdutoHTML).join("") : `<p class="vazio">Nenhum produto cadastrado ainda nessa categoria.</p>`}
         </div>
       `;

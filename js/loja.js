@@ -2,7 +2,7 @@
    Lê os arquivos JSON direto do GitHub (repositório público), sem precisar de servidor. */
 
 const REPO = "weillergreg/achados-ofertas-site";
-const API_BASE = `https://api.github.com/repos/${REPO}/contents`;
+const API_BASE = `/gh-api/repos/${REPO}/contents`;
 
 async function carregarPasta(pasta) {
   try {
@@ -13,7 +13,9 @@ async function carregarPasta(pasta) {
       arquivos
         .filter(a => a.name.endsWith(".json"))
         .map(async a => {
-          const r = await fetch(a.download_url);
+          const r = await fetch(`${API_BASE}/${pasta}/${a.name}`, {
+            headers: { Accept: "application/vnd.github.raw" }
+          });
           const dados = await r.json();
           return dados;
         })
