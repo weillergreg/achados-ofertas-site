@@ -126,6 +126,18 @@ src="https://www.facebook.com/tr?id=1704419260601707&ev=PageView&noscript=1"
   .skip-link{ position:absolute; top:-40px; left:0; background:var(--green); color:#fff; padding:8px 16px; text-decoration:none; z-index:100; border-radius:0 0 4px 0; }
   .skip-link:focus{ top:0; }
   a:focus, button:focus, input:focus{ outline:2px solid var(--pink); outline-offset:2px; }
+
+  /* Layout mais largo em telas de computador (a página era pensada só pra celular) */
+  @media (min-width: 700px) {
+    .wrap{ max-width: 760px; }
+    .hero h1{ font-size: 38px; }
+    .hero p.lede{ max-width: 480px; }
+    .cta{ max-width: 420px; margin: 0 auto; }
+    .cards{ flex-direction: row; flex-wrap: wrap; }
+    .cards .card{ flex: 1 1 calc(50% - 7px); }
+    .qr-box{ flex-direction: row; text-align: left; justify-content: center; }
+    .qr-box p{ max-width: 320px; }
+  }
 </style>
 </head>
 <body>
