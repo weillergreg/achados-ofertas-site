@@ -86,6 +86,11 @@
   .btn-nav{ background:var(--verde); color:#fff !important; padding:10px 20px; border-radius:999px; font-weight:700; font-size:13px; }
   @media (max-width:760px){ .nav-links{ display:none; } }
 
+  .busca-home{ display:flex; align-items:center; gap:6px; background:var(--bg); border:1px solid var(--border); border-radius:999px; padding:8px 14px; width:200px; flex-shrink:0; }
+  .busca-home input{ border:none; background:none; outline:none; font-size:13px; width:100%; color:var(--text); }
+  .busca-home button{ background:none; border:none; cursor:pointer; font-size:15px; padding:0; flex-shrink:0; }
+  @media (max-width:600px){ .busca-home{ width:130px; } }
+
   .topbar{ background:var(--azul); color:#fff; text-align:center; font-size:13px; padding:8px 16px; }
 
   .hero{ padding:56px 0; }
@@ -148,15 +153,15 @@
 
   .categorias-scroll{ display:flex; gap:16px; overflow-x:auto; padding:8px 4px 16px; scroll-behavior:smooth; scrollbar-width:none; }
   .categorias-scroll::-webkit-scrollbar{ display:none; }
-  .cat-card{ position:relative; flex:0 0 170px; aspect-ratio:3/4; border-radius:16px; overflow:hidden; isolation:isolate; }
-  .cat-card{ background:#fff; }
-  .cat-card img{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; background:#fff; transition:transform .4s ease, filter .4s ease; }
+  .cat-card{ position:relative; flex:0 0 110px; isolation:isolate; text-align:center; }
+  .cat-card{ background:#fff; border:1px solid var(--border); border-radius:16px; aspect-ratio:1/1; overflow:hidden; padding:14px; }
+  .cat-card img{ position:absolute; inset:14px; width:calc(100% - 28px); height:calc(100% - 46px); object-fit:contain; background:#fff; transition:transform .4s ease, filter .4s ease; }
   .cat-card:hover img{ transform:scale(1.06); filter:brightness(.45); }
-  .cat-label{ position:absolute; left:0; right:0; bottom:0; padding:12px; background:linear-gradient(to top, rgba(0,0,0,.65), transparent); color:#fff; font-weight:700; font-size:14px; transition:opacity .3s ease; }
+  .cat-label{ position:absolute; left:0; right:0; bottom:6px; padding:0 6px; color:var(--text); font-weight:700; font-size:11.5px; line-height:1.2; transition:opacity .3s ease; }
   .cat-card:hover .cat-label{ opacity:0; }
-  .cat-overlay{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; opacity:0; transition:opacity .3s ease; padding:12px; }
+  .cat-overlay{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; opacity:0; transition:opacity .3s ease; padding:10px; background:rgba(255,255,255,.97); }
   .cat-card:hover .cat-overlay, .cat-card:focus-within .cat-overlay{ opacity:1; }
-  .cat-overlay a{ width:100%; max-width:120px; text-align:center; font-size:12px; font-weight:700; padding:8px 10px; border-radius:999px; color:#fff; }
+  .cat-overlay a{ width:100%; max-width:120px; text-align:center; font-size:11px; font-weight:700; padding:6px 8px; border-radius:999px; color:#fff; }
   .cat-overlay a.a-shopee{ background:#EE4D2D; }
   .cat-overlay a.a-ml{ background:#2D3277; }
   .cat-overlay a.a-magalu{ background:#0086FF; }
@@ -242,7 +247,10 @@
       <a href="/listamaisvendidos/">Mais Vendidos</a>
       <a class="btn-nav" id="btn-whatsapp-nav" href="/whatsapp">Entrar no grupo</a>
     </div>
-    <a href="/produtos/" aria-label="Buscar produtos" style="font-size:18px;color:var(--azul);opacity:.75;flex-shrink:0;">🔍</a>
+    <form class="busca-home" action="/produtos/" onsubmit="event.preventDefault(); window.location.href='/produtos/?busca=' + encodeURIComponent(document.getElementById('busca-home-input').value);">
+      <input id="busca-home-input" type="text" placeholder="Buscar produto..." aria-label="Buscar produto">
+      <button type="submit" aria-label="Buscar">🔍</button>
+    </form>
   </div>
 </nav>
 
@@ -255,8 +263,8 @@
     <div class="hero-slide ativo" data-slide="0">
       <div class="hero-slide-inner">
         <div>
-          <h1>A gente investiga. <span>Você economiza.</span></h1>
-          <p class="lede">Cupom válido hoje, oferta relâmpago e o menor preço na Shopee, Mercado Livre, Magalu, Shein e Amazon — direto no seu WhatsApp e Telegram.</p>
+          <h1>Cupom de Desconto Verificado, <span>Oferta Relâmpago e Frete Grátis</span> — Todo Dia</h1>
+          <p class="lede">Toda oferta que a Super Espiã encontra passa por conferência antes de chegar até você: cupom testado, preço comparado e link direto pra loja oficial. Entra no grupo — é grátis e sem enrolação.</p>
         </div>
         <img class="hero-photo" src="images/super-espia-foto.jpg" alt="Super Espiã investigando cupom e oferta relâmpago">
       </div>

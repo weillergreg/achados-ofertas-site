@@ -12,33 +12,58 @@
   :root{ --azul:#1B3A6B; --dourado:#8D6A2A; --rosa:#FF3E8E; --verde:#16803D; --bg:#EBEBEB; --card-bg:#FFFFFF; --text:#1F2430; --text-muted:#6B7280; --border:#ECECEC; }
   *{ box-sizing:border-box; }
   body{ margin:0; background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; line-height:1.6; }
-  h1{ font-family:'Poppins',sans-serif; color:var(--text); font-size:20px; font-weight:600; margin:0 0 10px; }
+  h1{ font-family:'Poppins',sans-serif; color:var(--text); font-size:20px; font-weight:600; margin:0; }
   a{ color:inherit; text-decoration:none; }
-  nav{ background:#fff; border-bottom:1px solid var(--border); padding:14px 20px; }
+  .convite-grupo{ font-size:13px; color:var(--text-muted); font-weight:600; }
+  .btns-grupo-topo{ display:flex; gap:8px; }
+  .btns-grupo-topo a{ display:flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:50%; }
+  .btns-grupo-topo a.wa{ background:#00E676; }
+  .btns-grupo-topo a.tg{ background:#2FA9FF; }
+  .btns-grupo-topo img{ width:16px; height:16px; }
+
+  nav{ background:#fff; border-bottom:1px solid var(--border); padding:14px 20px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; }
   nav a.home{ font-weight:700; color:var(--azul); font-size:14px; }
 
   main{ max-width:1100px; margin:0 auto; padding:24px 16px 80px; }
 
-  /* Layout estilo Mercado Livre: 3 colunas — miniaturas | foto grande | informações,
-     cada bloco em uma "caixinha" branca separada */
-  .produto-grid{ display:grid; grid-template-columns: 88px minmax(0,1fr) 360px; gap:16px; align-items:start; }
-
   .caixa{ background:var(--card-bg); border-radius:10px; }
+
+  /* Grid com áreas nomeadas: no celular vira 1 coluna na ordem título > foto > info > descrição;
+     no computador vira o layout de 3 colunas estilo Mercado Livre */
+  .produto-grid{
+    display:grid;
+    gap:16px;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "titulo"
+      "foto"
+      "info"
+      "descricao";
+  }
+  .area-titulo{ grid-area:titulo; padding:4px 4px 0; }
+  .area-mini{ grid-area:mini; display:none; }
+  .area-foto{ grid-area:foto; }
+  .area-info{ grid-area:info; }
+  .area-descricao{ grid-area:descricao; }
 
   .miniaturas{ display:flex; flex-direction:column; gap:10px; max-height:520px; overflow-y:auto; padding:2px; }
   .miniaturas img{ width:100%; aspect-ratio:1/1; object-fit:contain; background:#fff; border:2px solid var(--border); border-radius:8px; cursor:pointer; padding:4px; }
   .miniaturas img.ativa{ border-color:var(--azul); }
 
-  /* Imagem principal com zoom tipo lupa (segue o mouse) + clique abre maior */
+  /* Imagem principal com zoom tipo lupa (desktop) + clique/arraste pra navegar (celular) */
   .imagem-principal{ position:relative; padding:20px; }
-  .imagem-principal .foto-wrap{ position:relative; aspect-ratio:1/1; overflow:hidden; border-radius:8px; cursor:zoom-in; }
+  .imagem-principal .foto-wrap{ position:relative; aspect-ratio:1/1; overflow:hidden; border-radius:8px; cursor:zoom-in; touch-action:pan-y; }
   .imagem-principal img{ width:100%; height:100%; object-fit:contain; display:block; }
   .lupa-zoom{ position:absolute; top:0; left:0; width:100%; height:100%; background-repeat:no-repeat; opacity:0; pointer-events:none; transition:opacity .15s ease; }
   .foto-wrap.zoom-ativo .lupa-zoom{ opacity:1; }
   .foto-wrap.zoom-ativo img{ opacity:0; }
   .dica-zoom{ text-align:center; font-size:12px; color:var(--text-muted); margin-top:10px; }
 
-  .coluna-info{ padding:20px; }
+  /* Bolinhas indicadoras (só aparecem no celular) */
+  .dots-foto{ display:none; justify-content:center; gap:6px; margin-top:12px; }
+  .dots-foto .dot{ width:7px; height:7px; border-radius:50%; background:var(--border); cursor:pointer; }
+  .dots-foto .dot.ativo{ background:var(--azul); width:18px; border-radius:4px; transition:width .2s ease; }
+
   .estrelas{ color:var(--dourado); }
   .num-avaliacoes{ color:var(--text-muted); font-size:13px; }
   .preco{ font-family:'Poppins',sans-serif; font-weight:800; color:var(--text); font-size:34px; margin:10px 0 4px; }
@@ -49,7 +74,8 @@
   .btn-comprar:hover{ filter:brightness(1.08); }
   .selo-confianca{ display:flex; flex-direction:column; gap:8px; margin-top:16px; font-size:13px; color:var(--text-muted); border-top:1px solid var(--border); padding-top:14px; }
 
-  .caixa-descricao{ margin-top:16px; padding:20px; grid-column: 1 / -1; }
+  .area-foto, .area-info, .area-descricao, .area-titulo{ padding:20px; }
+  .area-titulo{ padding-bottom:0; }
 
   /* Lightbox: foto ampliada com setas */
   .lightbox{ position:fixed; inset:0; background:rgba(0,0,0,.92); z-index:999; display:none; align-items:center; justify-content:center; }
@@ -62,25 +88,42 @@
   .lightbox-seta.direita{ right:18px; }
   .lightbox-contador{ position:absolute; bottom:18px; left:50%; transform:translateX(-50%); color:#fff; font-size:13px; opacity:.8; }
 
-  /* Empilhado no celular */
+  /* Celular: mostra as bolinhas, esconde miniaturas e zoom por mouse */
   @media (max-width: 860px) {
-    .produto-grid{ grid-template-columns: 1fr; }
-    .miniaturas{ flex-direction:row; overflow-x:auto; overflow-y:visible; max-height:none; order:2; }
-    .miniaturas img{ width:64px; flex-shrink:0; }
-    .imagem-principal{ order:1; }
+    .dots-foto{ display:flex; }
     .imagem-principal .foto-wrap{ cursor:default; }
     .foto-wrap.zoom-ativo .lupa-zoom{ opacity:0; }
     .foto-wrap.zoom-ativo img{ opacity:1; }
     .dica-zoom{ display:none; }
-    .coluna-info{ order:3; }
     .preco{ font-size:28px; }
     .lightbox-seta{ width:42px; height:42px; font-size:22px; }
+  }
+
+  /* Computador: layout de 3 colunas, título dentro da coluna da direita */
+  @media (min-width: 861px) {
+    .produto-grid{
+      grid-template-columns: 88px minmax(0,1fr) 360px;
+      grid-template-areas:
+        "mini foto titulo"
+        "mini foto info"
+        "descricao descricao descricao";
+    }
+    .area-mini{ display:flex; }
+    .area-titulo{ padding-bottom:0; align-self:end; }
+    .area-titulo h1{ margin-bottom:4px; }
   }
 </style>
 </head>
 <body>
 
-<nav><a class="home" href="/">🏠 Página Principal</a></nav>
+<nav>
+  <a class="home" href="/">🏠 Página Principal</a>
+  <span class="convite-grupo">Entre no Grupo Achadinhos de Ofertas e Cupons</span>
+  <span class="btns-grupo-topo">
+    <a class="wa" href="/whatsapp" aria-label="Entrar no grupo do WhatsApp"><img src="/images/icones/icone-whatsapp.png" alt=""></a>
+    <a class="tg" href="/telegram" aria-label="Entrar no canal do Telegram"><img src="/images/icones/icone-telegram.png" alt=""></a>
+  </span>
+</nav>
 
 <main id="conteudo">Carregando...</main>
 
@@ -115,12 +158,40 @@
     box.onmouseleave = () => box.classList.remove("zoom-ativo");
   }
 
+  function montarSwipe() {
+    const box = document.getElementById("foto-wrap");
+    if (!box) return;
+    let xInicial = null;
+
+    box.addEventListener("touchstart", (e) => {
+      xInicial = e.touches[0].clientX;
+    }, { passive: true });
+
+    box.addEventListener("touchend", (e) => {
+      if (xInicial === null) return;
+      const xFinal = e.changedTouches[0].clientX;
+      const delta = xFinal - xInicial;
+      if (Math.abs(delta) > 40) {
+        delta < 0 ? navegarFotoPrincipal(1) : navegarFotoPrincipal(-1);
+      }
+      xInicial = null;
+    });
+  }
+
+  function navegarFotoPrincipal(direcao) {
+    const novoIndice = (INDICE_ATUAL + direcao + FOTOS_PRODUTO.length) % FOTOS_PRODUTO.length;
+    trocarFotoPrincipal(novoIndice);
+  }
+
   function trocarFotoPrincipal(indice) {
     INDICE_ATUAL = indice;
     const fotoUrl = FOTOS_PRODUTO[indice];
     document.getElementById("foto-principal").src = fotoUrl;
     document.querySelectorAll(".miniaturas img").forEach((img, i) => {
       img.classList.toggle("ativa", i === indice);
+    });
+    document.querySelectorAll(".dots-foto .dot").forEach((dot, i) => {
+      dot.classList.toggle("ativo", i === indice);
     });
     montarZoom(fotoUrl);
   }
@@ -154,9 +225,9 @@
     const cont = document.getElementById("conteudo");
     if (!p) { cont.innerHTML = "<h1>Produto não encontrado</h1>"; return; }
 
-    document.title = p.title + " | Achadinhos Super Espiã";
-    document.getElementById("titulo-tag").textContent = p.title + " | Achadinhos Super Espiã";
-    document.getElementById("desc-tag").setAttribute("content", p.descricao || "");
+    document.title = p.title + " — Menor Preço com Cupom | Achadinhos Super Espiã";
+    document.getElementById("titulo-tag").textContent = p.title + " — Menor Preço com Cupom | Achadinhos Super Espiã";
+    document.getElementById("desc-tag").setAttribute("content", (p.descricao ? p.descricao.slice(0, 155) : `Compre ${p.title} com cupom de desconto e o menor preço. Oferta verificada pela Achadinhos Super Espiã.`));
 
     FOTOS_PRODUTO = (p.fotos && p.fotos.length) ? p.fotos.map(f => typeof f === "string" ? f : f.foto) : ["/images/logo-achadinhos.jpg"];
     const fotoInicial = FOTOS_PRODUTO[0];
@@ -165,22 +236,28 @@
       `<img src="${foto}" class="${i === 0 ? 'ativa' : ''}" alt="${p.title} - foto ${i + 1}" onclick="trocarFotoPrincipal(${i})">`
     ).join("");
 
+    const dotsHTML = FOTOS_PRODUTO.length > 1
+      ? `<div class="dots-foto">${FOTOS_PRODUTO.map((_, i) => `<span class="dot ${i === 0 ? 'ativo' : ''}" onclick="trocarFotoPrincipal(${i})" aria-label="Foto ${i + 1} de ${FOTOS_PRODUTO.length}"></span>`).join("")}</div>`
+      : "";
+
     const estrelas = p.nota ? `<div><span class="estrelas">★★★★★</span> <span class="num-avaliacoes">${p.nota}${p.avaliacoes ? " (" + p.avaliacoes + " avaliações)" : ""}${p.vendidos ? " · " + p.vendidos + " vendidos" : ""}</span></div>` : "";
 
     cont.innerHTML = `
       <div class="produto-grid">
-        <div class="miniaturas caixa">${miniaturasHTML}</div>
+        <div class="area-titulo"><h1>${p.title}</h1></div>
 
-        <div class="imagem-principal caixa">
+        <div class="area-mini miniaturas caixa">${miniaturasHTML}</div>
+
+        <div class="area-foto imagem-principal caixa">
           <div class="foto-wrap" id="foto-wrap" onclick="abrirLightbox(INDICE_ATUAL)">
             <img id="foto-principal" src="${fotoInicial}" alt="${p.title}">
             <div class="lupa-zoom" id="lupa-zoom"></div>
           </div>
+          ${dotsHTML}
           <div class="dica-zoom">🔍 Passe o mouse pra dar zoom · clique pra ampliar</div>
         </div>
 
-        <div class="coluna-info caixa">
-          <h1>${p.title}</h1>
+        <div class="area-info caixa">
           ${estrelas}
           ${p.preco ? `<div class="preco">R$ ${p.preco}</div>` : ""}
           ${p.pagamento ? `<div class="pagamento">💳 ${p.pagamento}</div>` : ""}
@@ -192,7 +269,7 @@
         </div>
 
         ${p.descricao ? `
-        <div class="caixa-descricao caixa">
+        <div class="area-descricao caixa">
           <div class="desc-titulo">Descrição</div>
           <p class="desc">${p.descricao}</p>
         </div>` : ""}
@@ -200,6 +277,7 @@
     `;
 
     montarZoom(fotoInicial);
+    montarSwipe();
   }
 
   iniciar();

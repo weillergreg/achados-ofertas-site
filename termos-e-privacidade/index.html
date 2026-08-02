@@ -16,7 +16,14 @@
   body{ margin:0; background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; line-height:1.7; }
   h1,h2{ font-family:'Poppins',sans-serif; color:var(--azul); }
   a{ color:var(--rosa); }
-  nav{ background:#fff; border-bottom:1px solid var(--border); padding:14px 24px; display:flex; justify-content:space-between; align-items:center; }
+  .convite-grupo{ font-size:13px; color:var(--text-muted); font-weight:600; }
+  .btns-grupo-topo{ display:flex; gap:8px; }
+  .btns-grupo-topo a{ display:flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:50%; }
+  .btns-grupo-topo a.wa{ background:#00E676; }
+  .btns-grupo-topo a.tg{ background:#2FA9FF; }
+  .btns-grupo-topo img{ width:16px; height:16px; }
+
+  nav{ background:#fff; border-bottom:1px solid var(--border); padding:14px 24px; display:flex; justify-content:space-between; align-items:center;  flex-wrap:wrap; gap:10px; }
   nav a.home{ font-weight:700; color:var(--azul); text-decoration:none; }
   nav a.voltar{ background:var(--verde); color:#fff; text-decoration:none; font-size:13px; font-weight:700; padding:9px 16px; border-radius:999px; }
   main{ max-width:720px; margin:0 auto; padding:40px 20px 80px; }
@@ -30,6 +37,11 @@
 
 <nav>
   <a class="home" href="/">🏠 Página Principal</a>
+  <span class="convite-grupo">Entre no Grupo Achadinhos de Ofertas e Cupons</span>
+  <span class="btns-grupo-topo">
+    <a class="wa" href="/whatsapp" aria-label="Entrar no grupo do WhatsApp"><img src="/images/icones/icone-whatsapp.png" alt=""></a>
+    <a class="tg" href="/telegram" aria-label="Entrar no canal do Telegram"><img src="/images/icones/icone-telegram.png" alt=""></a>
+  </span>
   <a class="voltar" href="/">← Voltar</a>
 </nav>
 
