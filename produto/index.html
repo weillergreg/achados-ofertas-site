@@ -24,21 +24,22 @@
   nav{ background:#fff; border-bottom:1px solid var(--border); padding:14px 20px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; }
   nav a.home{ font-weight:700; color:var(--azul); font-size:14px; }
 
-  main{ max-width:1100px; margin:0 auto; padding:24px 16px 80px; }
+  main{ max-width:1100px; margin:0 auto; padding:24px 16px 80px; width:100%; box-sizing:border-box; }
 
-  .caixa{ background:var(--card-bg); border-radius:10px; }
+  .caixa{ background:var(--card-bg); border-radius:10px; width:100%; }
 
   /* Grid com áreas nomeadas: no celular vira 1 coluna na ordem título > foto > info > descrição;
      no computador vira o layout de 3 colunas estilo Mercado Livre */
   .produto-grid{
     display:grid;
     gap:16px;
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     grid-template-areas:
       "titulo"
       "foto"
       "info"
       "descricao";
+    width:100%;
   }
   .area-titulo{ grid-area:titulo; padding:4px 4px 0; }
   .area-mini{ grid-area:mini; display:none; }
