@@ -40,11 +40,11 @@
   a{ color:inherit; text-decoration:none; }
   img{ max-width:100%; display:block; }
   .convite-grupo{ font-size:13px; color:var(--text-muted); font-weight:600; }
-  .btns-grupo-topo{ display:flex; gap:8px; }
-  .btns-grupo-topo a{ display:flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:50%; }
-  .btns-grupo-topo a.wa{ background:#00E676; }
-  .btns-grupo-topo a.tg{ background:#2FA9FF; }
-  .btns-grupo-topo img{ width:16px; height:16px; }
+  .btns-grupo-topo{ display:flex; gap:8px; flex-wrap:wrap; }
+  .btns-grupo-topo a{ display:flex; align-items:center; gap:6px; padding:7px 14px; border-radius:8px; font-size:12.5px; font-weight:700; white-space:nowrap; }
+  .btns-grupo-topo a.wa{ background:#00E676; color:#08321C; }
+  .btns-grupo-topo a.tg{ background:#2FA9FF; color:#08213D; }
+  .btns-grupo-topo img{ width:15px; height:15px; }
 
   nav{ background:#fff; border-bottom:1px solid var(--border); padding:14px 20px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
   nav a.home{ font-weight:700; color:var(--azul); font-size:14px; }
@@ -79,8 +79,8 @@
   <a class="home" href="/">🏠 Página Principal</a>
   <span class="convite-grupo">Entre no Grupo Achadinhos de Ofertas e Cupons</span>
   <span class="btns-grupo-topo">
-    <a class="wa" href="/whatsapp" aria-label="Entrar no grupo do WhatsApp"><img src="/images/icones/icone-whatsapp.png" alt=""></a>
-    <a class="tg" href="/telegram" aria-label="Entrar no canal do Telegram"><img src="/images/icones/icone-telegram.png" alt=""></a>
+    <a class="wa" href="/whatsapp"><img src="/images/icones/icone-whatsapp.png" alt=""> Grupo WhatsApp</a>
+    <a class="tg" href="/telegram"><img src="/images/icones/icone-telegram.png" alt=""> Grupo Telegram</a>
   </span>
   <div class="busca-topo">🔍 <input type="text" id="busca-input" placeholder="Buscar produto..."></div>
 </nav>

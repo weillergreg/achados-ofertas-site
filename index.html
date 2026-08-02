@@ -91,7 +91,13 @@
   .busca-home button{ background:none; border:none; cursor:pointer; font-size:15px; padding:0; flex-shrink:0; }
   @media (max-width:600px){ .busca-home{ width:130px; } }
 
-  .topbar{ background:var(--azul); color:#fff; text-align:center; font-size:13px; padding:8px 16px; }
+  .topbar{ background:#2E9E5B; color:#fff; text-align:center; font-size:13px; padding:8px 16px; }
+
+  /* Linha colorida delimitando cada seção, alternando entre as cores da marca (intensidade média, estilo Mercado Livre) */
+  section{ border-top:4px solid var(--verde); }
+  section:nth-of-type(4n+2){ border-top-color:var(--dourado); }
+  section:nth-of-type(4n+3){ border-top-color:var(--rosa); }
+  section:nth-of-type(4n){ border-top-color:var(--azul); }
 
   .hero{ padding:56px 0; }
   .hero-inner{ display:flex; flex-direction:column; align-items:center; text-align:center; gap:24px; }
@@ -99,7 +105,8 @@
   .hero h1{ font-size:32px; color:var(--azul); max-width:560px; }
   .hero h1 span{ color:var(--rosa); }
   .hero p.lede{ font-size:16px; color:var(--text-muted); max-width:480px; }
-  .cta-group{ display:flex; flex-direction:column; gap:10px; width:100%; max-width:340px; }
+  .cta-group{ display:flex; flex-direction:row; flex-wrap:wrap; gap:10px; width:100%; max-width:420px; }
+  .cta-group .cta, .cta-group .cta-secondary{ flex:1; white-space:nowrap; }
   .cta{ display:flex; align-items:center; justify-content:center; gap:10px; background:var(--verde); color:#fff; font-weight:700; font-size:16px; padding:16px 22px; border-radius:999px; }
   .cta-secondary{ display:flex; align-items:center; justify-content:center; gap:10px; background:#fff; color:#1B6FB8; font-weight:700; font-size:15px; padding:14px 22px; border-radius:999px; border:1.5px solid #1B6FB8; }
   .cta-note{ font-size:13px; color:var(--text-muted); display:flex; gap:14px; flex-wrap:wrap; justify-content:center; }
@@ -153,15 +160,15 @@
 
   .categorias-scroll{ display:flex; gap:16px; overflow-x:auto; padding:8px 4px 16px; scroll-behavior:smooth; scrollbar-width:none; }
   .categorias-scroll::-webkit-scrollbar{ display:none; }
-  .cat-card{ position:relative; flex:0 0 110px; isolation:isolate; text-align:center; }
-  .cat-card{ background:#fff; border:1px solid var(--border); border-radius:16px; aspect-ratio:1/1; overflow:hidden; padding:14px; }
-  .cat-card img{ position:absolute; inset:14px; width:calc(100% - 28px); height:calc(100% - 46px); object-fit:contain; background:#fff; transition:transform .4s ease, filter .4s ease; }
+  .cat-card{ position:relative; flex:0 0 170px; aspect-ratio:3/4; border-radius:16px; overflow:hidden; isolation:isolate; }
+  .cat-card{ background:#fff; }
+  .cat-card img{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; background:#fff; transition:transform .4s ease, filter .4s ease; }
   .cat-card:hover img{ transform:scale(1.06); filter:brightness(.45); }
-  .cat-label{ position:absolute; left:0; right:0; bottom:6px; padding:0 6px; color:var(--text); font-weight:700; font-size:11.5px; line-height:1.2; transition:opacity .3s ease; }
+  .cat-label{ position:absolute; left:0; right:0; bottom:0; padding:12px; background:linear-gradient(to top, rgba(0,0,0,.65), transparent); color:#fff; font-weight:700; font-size:14px; transition:opacity .3s ease; }
   .cat-card:hover .cat-label{ opacity:0; }
-  .cat-overlay{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; opacity:0; transition:opacity .3s ease; padding:10px; background:rgba(255,255,255,.97); }
+  .cat-overlay{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; opacity:0; transition:opacity .3s ease; padding:12px; }
   .cat-card:hover .cat-overlay, .cat-card:focus-within .cat-overlay{ opacity:1; }
-  .cat-overlay a{ width:100%; max-width:120px; text-align:center; font-size:11px; font-weight:700; padding:6px 8px; border-radius:999px; color:#fff; }
+  .cat-overlay a{ width:100%; max-width:120px; text-align:center; font-size:12px; font-weight:700; padding:8px 10px; border-radius:999px; color:#fff; }
   .cat-overlay a.a-shopee{ background:#EE4D2D; }
   .cat-overlay a.a-ml{ background:#2D3277; }
   .cat-overlay a.a-magalu{ background:#0086FF; }

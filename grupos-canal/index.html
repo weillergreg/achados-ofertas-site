@@ -79,11 +79,11 @@ src="https://www.facebook.com/tr?id=1704419260601707&ev=PageView&noscript=1"
   .paginaprincipal{ background:var(--bg-panel-2); padding:12px 16px; display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap; font-size:13px; }
   .paginaprincipal a.home-link{ font-weight:700; color:var(--gold); }
   .paginaprincipal .convite{ color:var(--text-muted); }
-  .paginaprincipal .btns-topo{ display:flex; gap:8px; }
-  .paginaprincipal .btns-topo a{ display:flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:50%; }
-  .paginaprincipal .btns-topo a.wa{ background:var(--verde-neon); }
-  .paginaprincipal .btns-topo a.tg{ background:var(--azul-neon); }
-  .paginaprincipal .btns-topo img{ width:16px; height:16px; }
+  .paginaprincipal .btns-topo{ display:flex; gap:8px; flex-wrap:wrap; }
+  .paginaprincipal .btns-topo a{ display:flex; align-items:center; gap:6px; padding:7px 14px; border-radius:8px; font-size:12.5px; font-weight:700; white-space:nowrap; }
+  .paginaprincipal .btns-topo a.wa{ background:var(--verde-neon); color:var(--verde-neon-texto); }
+  .paginaprincipal .btns-topo a.tg{ background:var(--azul-neon); color:var(--azul-neon-texto); }
+  .paginaprincipal .btns-topo img{ width:15px; height:15px; }
 
   .topbar{ background:var(--verde-faixa); padding:10px 24px; font-size:13px; font-weight:700; text-align:center; color:#fff; }
 
@@ -108,6 +108,11 @@ src="https://www.facebook.com/tr?id=1704419260601707&ev=PageView&noscript=1"
 
   /* QR Codes lado a lado */
   .qr-secao{ margin-top:26px; display:flex; flex-direction:column; gap:16px; }
+  .foto-espia-mobile{ display:none; }
+  @media (max-width: 699px) {
+    .foto-espia-mobile{ display:block; width:180px; max-width:60%; margin:0 auto 20px; border-radius:16px; }
+    .qr-secao{ display:none; }
+  }
   .qr-box{ background:var(--bg-panel); border-radius:16px; padding:24px; display:flex; flex-direction:column; align-items:center; gap:14px; text-align:center; }
   .qr-box .qr-canvas{ width:180px; height:180px; background:#fff; border-radius:12px; padding:6px; display:flex; align-items:center; justify-content:center; }
   .qr-box .qr-canvas canvas{ display:block; max-width:100%; }
@@ -179,8 +184,8 @@ src="https://www.facebook.com/tr?id=1704419260601707&ev=PageView&noscript=1"
   <a class="home-link" href="/">🏠 Página Principal</a>
   <span class="convite">Entre no Grupo Achadinhos de Ofertas e Cupons</span>
   <span class="btns-topo">
-    <a class="wa" href="/whatsapp" aria-label="Entrar no grupo do WhatsApp"><img src="/images/icones/icone-whatsapp.png" alt=""></a>
-    <a class="tg" href="/telegram" aria-label="Entrar no canal do Telegram"><img src="/images/icones/icone-telegram.png" alt=""></a>
+    <a class="wa" href="/whatsapp"><img src="/images/icones/icone-whatsapp.png" alt=""> Grupo WhatsApp</a>
+    <a class="tg" href="/telegram"><img src="/images/icones/icone-telegram.png" alt=""> Grupo Telegram</a>
   </span>
 </div>
 
@@ -194,6 +199,8 @@ src="https://www.facebook.com/tr?id=1704419260601707&ev=PageView&noscript=1"
 
   <h1>A espiã achou um <span class="destaque">achadinho</span> que ninguém tá contando</h1>
   <p class="lede">Entre no grupo grátis e receba os achados mais baratos do Mercado Livre e Shopee, investigados antes de chegar até você.</p>
+
+  <img class="foto-espia-mobile" src="/images/super-espia-foto.jpg" alt="Super Espiã investigando ofertas">
 
   <div class="grupo-btns">
     <a class="cta wa" href="/whatsapp">
