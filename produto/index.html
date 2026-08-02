@@ -88,7 +88,7 @@
   .lightbox-seta.direita{ right:18px; }
   .lightbox-contador{ position:absolute; bottom:18px; left:50%; transform:translateX(-50%); color:#fff; font-size:13px; opacity:.8; }
 
-  /* Celular: mostra as bolinhas, esconde miniaturas e zoom por mouse */
+  /* Celular: mostra as bolinhas, esconde miniaturas e zoom por mouse, e reduz espaçamento lateral */
   @media (max-width: 860px) {
     .dots-foto{ display:flex; }
     .imagem-principal .foto-wrap{ cursor:default; }
@@ -97,6 +97,9 @@
     .dica-zoom{ display:none; }
     .preco{ font-size:28px; }
     .lightbox-seta{ width:42px; height:42px; font-size:22px; }
+    main{ padding:12px 10px 60px; }
+    .produto-grid{ gap:10px; }
+    .area-titulo, .area-foto, .area-info, .area-descricao{ padding:14px; }
   }
 
   /* Computador: layout de 3 colunas, título dentro da coluna da direita */
