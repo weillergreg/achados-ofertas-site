@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Grupo Grátis WhatsApp e Telegram | Ofertas Shopee e Mercado Livre | Achadinhos Super Espiã</title>
-<meta name="description" content="Entre grátis no grupo Achadinhos Super Espiã e receba ofertas investigadas da Shopee e Mercado Livre direto no WhatsApp e Telegram, todos os dias. Sem spam, sem cadastro.">
+<title>Grupo de Promoções no WhatsApp e Telegram 100% Grátis | Achadinhos Super Espiã</title>
+<meta name="description" content="Entre no melhor grupo de promoções no WhatsApp e Telegram. Cupom de desconto, oferta relâmpago e frete grátis da Shopee e Mercado Livre, verificados todo dia. Sem spam, sem mensalidade.">
 <meta name="robots" content="noindex">
 <link rel="canonical" href="https://achadosofertas.com.br/grupos-canal">
 <link rel="icon" type="image/jpeg" href="/images/logo-achadinhos.jpg">
@@ -58,10 +58,12 @@ src="https://www.facebook.com/tr?id=1704419260601707&ev=PageView&noscript=1"
     --bg-panel: #191c40;
     --bg-panel-2: #212458;
     --pink: #ff3e8e;
-    --pink-soft: #ff9fc6;
     --gold: #ffb648;
-    --green: #22c55e;
-    --green-deep: #159049;
+    --verde-faixa: #0A7A4C;
+    --verde-neon: #00E676;
+    --verde-neon-texto: #08321C;
+    --azul-neon: #2FA9FF;
+    --azul-neon-texto: #08213D;
     --text: #f1f1fb;
     --text-muted: #a2a6cc;
     --radius: 20px;
@@ -73,35 +75,54 @@ src="https://www.facebook.com/tr?id=1704419260601707&ev=PageView&noscript=1"
   .wrap{ max-width:480px; margin:0 auto; padding:0 24px; }
   a{ color:inherit; text-decoration:none; }
 
-  .paginaprincipal{ background:var(--bg-panel-2); text-align:center; padding:10px; font-size:13px; font-weight:700; color:var(--gold); letter-spacing:.03em; }
-  .paginaprincipal a{ text-decoration:underline; }
+  /* Topo: link pra home + convite pro grupo + botões */
+  .paginaprincipal{ background:var(--bg-panel-2); padding:12px 16px; display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap; font-size:13px; }
+  .paginaprincipal a.home-link{ font-weight:700; color:var(--gold); }
+  .paginaprincipal .convite{ color:var(--text-muted); }
+  .paginaprincipal .btns-topo{ display:flex; gap:8px; }
+  .paginaprincipal .btns-topo a{ display:flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:50%; }
+  .paginaprincipal .btns-topo a.wa{ background:var(--verde-neon); }
+  .paginaprincipal .btns-topo a.tg{ background:var(--azul-neon); }
+  .paginaprincipal .btns-topo img{ width:16px; height:16px; }
 
-  .topbar{ background:linear-gradient(90deg, var(--pink), #c92e6f); padding:10px 24px; font-size:13px; font-weight:600; }
+  .topbar{ background:var(--verde-faixa); padding:10px 24px; font-size:13px; font-weight:700; text-align:center; color:#fff; }
 
   .hero{ padding:40px 0 32px; text-align:center; }
   .brand{ display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom:24px; }
   .brand-badge{ width:46px; height:46px; border-radius:50%; object-fit:cover; box-shadow:0 0 0 3px rgba(255,62,142,.25); }
   .brand-name{ text-align:left; }
   .brand-name .top{ font-family:'Baloo 2'; font-weight:700; font-size:15px; }
-  .brand-name .sub{ font-size:11px; letter-spacing:1.5px; color:var(--pink-soft); font-weight:600; }
+  .brand-name .sub{ font-size:11px; letter-spacing:1.5px; color:var(--pink); font-weight:600; }
 
   .hero h1{ font-size:28px; margin-bottom:16px; color:#fff; }
   .hero h1 .destaque{ color:var(--pink); }
   .hero p.lede{ color:var(--text-muted); font-size:15px; max-width:340px; margin:0 auto 24px; }
 
-  .cta{ display:flex; align-items:center; justify-content:center; gap:10px; background:linear-gradient(180deg,#2fe07a,var(--green-deep)); color:#062814; font-weight:700; font-size:16px; padding:17px 22px; border-radius:999px; box-shadow:0 10px 30px -8px rgba(34,197,94,.55); }
-  .cta img{ width:22px; height:22px; border-radius:5px; }
+  /* Botões de entrada — WhatsApp (verde neon) e Telegram (azul neon), lado a lado */
+  .grupo-btns{ display:flex; flex-direction:column; gap:12px; max-width:340px; margin:0 auto; }
+  .cta{ display:flex; align-items:center; justify-content:center; gap:10px; font-weight:700; font-size:16px; padding:17px 22px; border-radius:999px; }
+  .cta.wa{ background:var(--verde-neon); color:var(--verde-neon-texto); box-shadow:0 10px 30px -8px rgba(0,230,118,.55); }
+  .cta.tg{ background:var(--azul-neon); color:var(--azul-neon-texto); box-shadow:0 10px 30px -8px rgba(47,169,255,.55); }
+  .cta img{ width:22px; height:22px; }
   .cta-note{ margin-top:12px; font-size:12px; color:var(--text-muted); display:flex; justify-content:center; gap:12px; flex-wrap:wrap; }
 
-  .qr-box{ margin-top:26px; background:var(--bg-panel); border-radius:16px; padding:24px; display:flex; flex-direction:column; align-items:center; gap:18px; text-align:center; max-width:100%; }
-  .qr-box #qr-whatsapp-container{ width:220px; height:220px; background:#fff; border-radius:12px; padding:6px; display:flex; align-items:center; justify-content:center; }
-  .qr-box #qr-whatsapp-container canvas{ display:block; max-width:100%; }
+  /* QR Codes lado a lado */
+  .qr-secao{ margin-top:26px; display:flex; flex-direction:column; gap:16px; }
+  .qr-box{ background:var(--bg-panel); border-radius:16px; padding:24px; display:flex; flex-direction:column; align-items:center; gap:14px; text-align:center; }
+  .qr-box .qr-canvas{ width:180px; height:180px; background:#fff; border-radius:12px; padding:6px; display:flex; align-items:center; justify-content:center; }
+  .qr-box .qr-canvas canvas{ display:block; max-width:100%; }
   .qr-box p{ font-size:13px; color:var(--text-muted); max-width:280px; margin:0; }
-  .qr-box strong{ color:#fff; font-size:14px; display:block; margin-bottom:4px; }
+  .qr-box strong{ color:#fff; font-size:14px; display:block; margin-bottom:2px; }
 
   section{ padding:32px 0; }
   .eyebrow{ display:inline-flex; align-items:center; gap:8px; background:var(--bg-panel-2); color:var(--gold); font-size:12px; font-weight:700; letter-spacing:.5px; padding:8px 14px; border-radius:999px; margin-bottom:16px; }
   section h2{ font-size:22px; margin-bottom:20px; }
+
+  /* Ícones de vantagem — inspirado no formato "medalha/ícone circular + título + texto" */
+  .vantagens{ display:grid; grid-template-columns:repeat(2,1fr); gap:22px 14px; text-align:center; }
+  .vantagem .icone{ width:64px; height:64px; border-radius:50%; background:var(--bg-panel-2); display:flex; align-items:center; justify-content:center; font-size:26px; margin:0 auto 10px; }
+  .vantagem h3{ font-size:14px; margin-bottom:4px; }
+  .vantagem p{ font-size:12px; color:var(--text-muted); }
 
   .cards{ display:flex; flex-direction:column; gap:14px; }
   .card{ background:var(--bg-panel); border-radius:var(--radius); padding:20px; display:flex; gap:14px; align-items:flex-start; border:1px solid rgba(255,255,255,.04); }
@@ -119,24 +140,34 @@ src="https://www.facebook.com/tr?id=1704419260601707&ev=PageView&noscript=1"
 
   .final{ text-align:center; background:linear-gradient(180deg,var(--bg-panel-2),var(--bg)); border-radius:24px; padding:36px 22px; }
   .final h2{ font-size:22px; margin-bottom:18px; }
+  .final .grupo-btns{ margin-top:0; }
+
+  /* Bloco de texto SEO — visível, mas discreto, no final da página */
+  .seo-texto{ background:var(--bg-panel); border-radius:var(--radius); padding:26px 22px; }
+  .seo-texto h2{ font-size:19px; margin-bottom:14px; }
+  .seo-texto h3{ font-size:15px; margin:18px 0 6px; color:#fff; }
+  .seo-texto p{ font-size:13.5px; color:var(--text-muted); margin-bottom:10px; }
+  .seo-texto strong{ color:#fff; }
 
   footer{ padding:28px 0 40px; text-align:center; font-size:12px; color:var(--text-muted); opacity:.7; }
 
-  /* Skip Link e Foco para Acessibilidade */
-  .skip-link{ position:absolute; top:-40px; left:0; background:var(--green); color:#fff; padding:8px 16px; text-decoration:none; z-index:100; border-radius:0 0 4px 0; }
+  .skip-link{ position:absolute; top:-40px; left:0; background:var(--verde-neon); color:var(--verde-neon-texto); padding:8px 16px; text-decoration:none; z-index:100; border-radius:0 0 4px 0; }
   .skip-link:focus{ top:0; }
   a:focus, button:focus, input:focus{ outline:2px solid var(--pink); outline-offset:2px; }
 
-  /* Layout mais largo em telas de computador (a página era pensada só pra celular) */
+  /* Layout mais largo em telas de computador */
   @media (min-width: 700px) {
     .wrap{ max-width: 760px; }
     .hero h1{ font-size: 38px; }
     .hero p.lede{ max-width: 480px; }
-    .cta{ max-width: 420px; margin: 0 auto; }
+    .grupo-btns{ flex-direction:row; max-width:600px; }
+    .cta{ flex:1; }
+    .qr-secao{ flex-direction:row; justify-content:center; }
+    .qr-box{ flex:1; max-width:340px; flex-direction:row; text-align:left; }
+    .qr-box p{ max-width:200px; }
     .cards{ flex-direction: row; flex-wrap: wrap; }
     .cards .card{ flex: 1 1 calc(50% - 7px); }
-    .qr-box{ flex-direction: row; text-align: left; justify-content: center; }
-    .qr-box p{ max-width: 320px; }
+    .vantagens{ grid-template-columns:repeat(3,1fr); }
   }
 </style>
 </head>
@@ -144,11 +175,16 @@ src="https://www.facebook.com/tr?id=1704419260601707&ev=PageView&noscript=1"
 
 <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
 
-<div class="paginaprincipal"><a href="/">🏠 Ir para a Página Principal do site</a></div>
-
-<div class="topbar wrap" style="max-width:none;">
-  <div class="wrap" style="padding:0;">Grupo gratuito de achadinhos · Mercado Livre e Shopee</div>
+<div class="paginaprincipal">
+  <a class="home-link" href="/">🏠 Página Principal</a>
+  <span class="convite">Entre no Grupo Achadinhos de Ofertas e Cupons</span>
+  <span class="btns-topo">
+    <a class="wa" href="/whatsapp" aria-label="Entrar no grupo do WhatsApp"><img src="/images/icones/icone-whatsapp.png" alt=""></a>
+    <a class="tg" href="/telegram" aria-label="Entrar no canal do Telegram"><img src="/images/icones/icone-telegram.png" alt=""></a>
+  </span>
 </div>
+
+<div class="topbar">Grupo gratuito de achadinhos · Mercado Livre e Shopee</div>
 
 <header class="hero wrap" id="main-content">
   <div class="brand">
@@ -159,27 +195,40 @@ src="https://www.facebook.com/tr?id=1704419260601707&ev=PageView&noscript=1"
   <h1>A espiã achou um <span class="destaque">achadinho</span> que ninguém tá contando</h1>
   <p class="lede">Entre no grupo grátis e receba os achados mais baratos do Mercado Livre e Shopee, investigados antes de chegar até você.</p>
 
-  <a class="cta" href="/whatsapp">
-    <img src="/images/icones/icone-whatsapp.png" alt="Ícone WhatsApp" style="width:22px;height:22px;"> Entrar no grupo agora
-  </a>
+  <div class="grupo-btns">
+    <a class="cta wa" href="/whatsapp">
+      <img src="/images/icones/icone-whatsapp.png" alt=""> Entrar no WhatsApp
+    </a>
+    <a class="cta tg" href="/telegram">
+      <img src="/images/icones/icone-telegram.png" alt=""> Entrar no Telegram
+    </a>
+  </div>
   <div class="cta-note">
     <span>✔ 100% grátis</span><span>✔ Sem cartão</span><span>✔ Sem spam</span>
   </div>
 
-  <div class="qr-box">
-    <div id="qr-whatsapp-container">Gerando QR Code...</div>
-    <p><strong>Está no computador?</strong> Aponte a câmera do seu celular para o QR Code e entre direto no grupo.</p>
+  <div class="qr-secao">
+    <div class="qr-box">
+      <div class="qr-canvas" id="qr-whatsapp-container">Gerando QR Code...</div>
+      <p><strong>WhatsApp</strong>Está no computador? Aponte a câmera do celular pro QR Code.</p>
+    </div>
+    <div class="qr-box">
+      <div class="qr-canvas" id="qr-telegram-container">Gerando QR Code...</div>
+      <p><strong>Telegram</strong>Está no computador? Aponte a câmera do celular pro QR Code.</p>
+    </div>
   </div>
 </header>
 
 <section class="wrap">
-  <span class="eyebrow">🗂️ Dossiê do grupo</span>
-  <h2>O que a Super Espiã investiga por você</h2>
-  <div class="cards">
-    <div class="card"><div class="icon">🔍</div><div><h3>Achadinhos investigados</h3><p>Só chega pra você o que realmente vale o preço, do Mercado Livre e da Shopee.</p></div></div>
-    <div class="card"><div class="icon">💸</div><div><h3>Cupons e promoções todo dia</h3><p>Descontos que a própria loja às vezes nem divulga direito.</p></div></div>
-    <div class="card"><div class="icon">⚡</div><div><h3>Alertas de oferta relâmpago</h3><p>Você é avisada na hora, antes de esgotar o estoque.</p></div></div>
-    <div class="card"><div class="icon">🎁</div><div><h3>100% grátis, sem pegadinha</h3><p>Sem mensalidade, sem taxa escondida. Só entrar e economizar.</p></div></div>
+  <span class="eyebrow">🏅 Vantagens do grupo</span>
+  <h2>Por que entrar agora</h2>
+  <div class="vantagens">
+    <div class="vantagem"><div class="icone">🥇</div><h3>Tudo em primeira mão</h3><p>Promoções que duram poucos minutos, você fica sabendo na hora.</p></div>
+    <div class="vantagem"><div class="icone">💰</div><h3>Até 90% OFF</h3><p>Produtos de diversas categorias com descontos reais.</p></div>
+    <div class="vantagem"><div class="icone">🔒</div><h3>Sites confiáveis</h3><p>Nossa equipe monitora e seleciona só lojas confiáveis.</p></div>
+    <div class="vantagem"><div class="icone">🚚</div><h3>Frete Grátis</h3><p>Avisamos quando as lojas estão com frete grátis.</p></div>
+    <div class="vantagem"><div class="icone">🏷️</div><h3>Cupons exclusivos</h3><p>Descontos nas lojas mais populares do Brasil.</p></div>
+    <div class="vantagem"><div class="icone">🕵️</div><h3>Sem spam</h3><p>Só os administradores enviam mensagens no grupo.</p></div>
   </div>
 </section>
 
@@ -187,7 +236,7 @@ src="https://www.facebook.com/tr?id=1704419260601707&ev=PageView&noscript=1"
   <span class="eyebrow">📋 Como funciona</span>
   <h2>3 passos e você já tá dentro</h2>
   <div class="steps">
-    <div class="step"><div class="step-num">1</div><div><h3>Toque no botão verde</h3><p>Você é direcionada direto pro WhatsApp, sem cadastro.</p></div></div>
+    <div class="step"><div class="step-num">1</div><div><h3>Toque no botão</h3><p>Você é direcionada direto pro WhatsApp ou Telegram, sem cadastro.</p></div></div>
     <div class="step"><div class="step-num">2</div><div><h3>Entre no grupo</h3><p>Um toque e pronto, você já faz parte da Super Espiã.</p></div></div>
     <div class="step"><div class="step-num">3</div><div><h3>Comece a economizar</h3><p>Receba os achados investigados direto no seu celular.</p></div></div>
   </div>
@@ -196,9 +245,23 @@ src="https://www.facebook.com/tr?id=1704419260601707&ev=PageView&noscript=1"
 <section class="wrap">
   <div class="final">
     <h2>Pronta pra economizar todo dia?</h2>
-    <a class="cta" href="/whatsapp">
-      <img src="/images/icones/icone-whatsapp.png" alt="" style="width:22px;height:22px;"> Entrar no grupo agora
-    </a>
+    <div class="grupo-btns">
+      <a class="cta wa" href="/whatsapp"><img src="/images/icones/icone-whatsapp.png" alt=""> Entrar no WhatsApp</a>
+      <a class="cta tg" href="/telegram"><img src="/images/icones/icone-telegram.png" alt=""> Entrar no Telegram</a>
+    </div>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="seo-texto">
+    <h2>Grupo de Promoções no WhatsApp e Telegram: como funciona</h2>
+    <p>O <strong>Achadinhos Super Espiã</strong> é um grupo de promoções no WhatsApp e canal no Telegram, gratuitos, feitos pra quem quer economizar de verdade nas compras online. Toda oferta compartilhada passa por conferência antes de chegar até você: cupom testado, preço comparado e link direto pra loja oficial — seja da <strong>Shopee</strong>, do <strong>Mercado Livre</strong> ou de outras lojas parceiras confiáveis.</p>
+
+    <h3>O que você recebe entrando no grupo</h3>
+    <p>Cupom de desconto verificado, oferta relâmpago avisada em tempo real, frete grátis identificado antes de você pagar a mais, e achadinhos de diversas categorias — eletrônicos, moda, casa, beleza e muito mais — selecionados por uma equipe que realmente testa cada promoção antes de compartilhar.</p>
+
+    <h3>Por que entrar no WhatsApp ou no Telegram</h3>
+    <p>Você escolhe onde prefere receber: o <strong>grupo do WhatsApp</strong> é ideal pra quem já usa o app todo dia, e o <strong>canal do Telegram</strong> é uma boa opção pra quem quer receber as notificações sem misturar com conversas pessoais. Os dois são 100% gratuitos, sem mensalidade e sem necessidade de cadastro.</p>
   </div>
 </section>
 
@@ -212,17 +275,19 @@ src="https://www.facebook.com/tr?id=1704419260601707&ev=PageView&noscript=1"
 <script src="/js/qrcode-generator.js"></script>
 
 <script>
-  /* Gerar QR Code para WhatsApp */
+  /* Gerar QR Codes para WhatsApp e Telegram */
   async function inicializarGruposCanal() {
     await inicializarConfiguracao();
+    const logo = CONFIG_SITE.buynix_logo || '/images/buynix/logo-buynix.png';
 
-    // Gerar QR Code para WhatsApp
-    if (CONFIG_SITE.whatsapp_link) {
-      gerarQRComLogo(CONFIG_SITE.whatsapp_link, 'qr-whatsapp-container', CONFIG_SITE.buynix_logo || '/images/buynix/logo-buynix.png', 210);
-    } else {
-      // Se não houver link, usar um fallback
-      gerarQRComLogo('https://chat.whatsapp.com/SEU_LINK_AQUI', 'qr-whatsapp-container', CONFIG_SITE.buynix_logo || '/images/buynix/logo-buynix.png', 210);
-    }
+    gerarQRComLogo(
+      CONFIG_SITE.whatsapp_link || 'https://chat.whatsapp.com/SEU_LINK_AQUI',
+      'qr-whatsapp-container', logo, 180
+    );
+    gerarQRComLogo(
+      CONFIG_SITE.telegram_link || 'https://t.me/SEU_CANAL_AQUI',
+      'qr-telegram-container', logo, 180
+    );
   }
 
   inicializarGruposCanal();
