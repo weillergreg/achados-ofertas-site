@@ -73,18 +73,25 @@
 
   nav{
     position:sticky; top:0; z-index:50;
-    background:#fff; border-bottom:1px solid var(--border);
+    background:#1F8449; border-bottom:1px solid rgba(0,0,0,.08);
     padding:14px 0;
   }
   nav .wrap{ display:flex; align-items:center; justify-content:space-between; }
   .brand{ display:flex; align-items:center; gap:10px; }
   .brand img{ width:40px; height:40px; border-radius:50%; object-fit:cover; }
-  .brand-name .top{ font-family:'Poppins',sans-serif; font-weight:700; font-size:15px; color:var(--azul); }
-  .brand-name .sub{ font-size:10px; letter-spacing:1.5px; color:var(--rosa); font-weight:700; }
-  .nav-links{ display:flex; align-items:center; gap:22px; font-size:14px; font-weight:600; color:var(--azul); }
+  .brand-name .top{ font-family:'Poppins',sans-serif; font-weight:700; font-size:15px; color:#fff; }
+  .brand-name .sub{ font-size:10px; letter-spacing:1.5px; color:#EFFFF6; font-weight:700; }
+  .nav-links{ display:flex; align-items:center; gap:22px; font-size:14px; font-weight:600; color:#fff; }
   .nav-links a:hover{ color:var(--rosa); }
   .btn-nav{ background:var(--verde); color:#fff !important; padding:10px 20px; border-radius:999px; font-weight:700; font-size:13px; }
-  @media (max-width:760px){ .nav-links{ display:none; } }
+  .menu-hamburguer{ display:none; background:none; border:none; font-size:24px; color:#fff; cursor:pointer; padding:4px 8px; }
+  .menu-mobile{ display:none; flex-direction:column; gap:2px; background:#fff; border-top:1px solid var(--border); padding:8px 20px 14px; }
+  .menu-mobile a{ padding:12px 4px; font-weight:600; color:var(--azul); font-size:15px; border-bottom:1px solid var(--border); }
+  .menu-mobile.aberto{ display:flex; }
+  @media (max-width:760px){
+    .nav-links{ display:none; }
+    .menu-hamburguer{ display:block; }
+  }
 
   .busca-home{ display:flex; align-items:center; gap:6px; background:var(--bg); border:1px solid var(--border); border-radius:999px; padding:8px 14px; width:200px; flex-shrink:0; }
   .busca-home input{ border:none; background:none; outline:none; font-size:13px; width:100%; color:var(--text); }
@@ -258,6 +265,15 @@
       <input id="busca-home-input" type="text" placeholder="Buscar produto..." aria-label="Buscar produto">
       <button type="submit" aria-label="Buscar">🔍</button>
     </form>
+    <button class="menu-hamburguer" onclick="document.getElementById('menu-mobile').classList.toggle('aberto')" aria-label="Abrir menu">☰</button>
+  </div>
+  <div class="menu-mobile" id="menu-mobile">
+    <a href="#categorias">Categorias</a>
+    <a href="/marcas/">Marcas</a>
+    <a href="/produtos/">Produtos</a>
+    <a href="/blognoticia/">Blog</a>
+    <a href="/listamaisvendidos/">Mais Vendidos</a>
+    <a href="/whatsapp">Entrar no grupo</a>
   </div>
 </nav>
 

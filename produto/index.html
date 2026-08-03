@@ -28,24 +28,15 @@
 
   .caixa{ background:var(--card-bg); border-radius:10px; width:100%; }
 
-  /* Grid com áreas nomeadas: no celular vira 1 coluna na ordem título > foto > info > descrição;
-     no computador vira o layout de 3 colunas estilo Mercado Livre */
-  .produto-grid{
-    display:grid;
-    gap:16px;
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      "titulo"
-      "foto"
-      "info"
-      "descricao";
-    width:100%;
-  }
-  .area-titulo{ grid-area:titulo; padding:4px 4px 0; }
-  .area-mini{ grid-area:mini; display:none; }
-  .area-foto{ grid-area:foto; }
-  .area-info{ grid-area:info; }
-  .area-descricao{ grid-area:descricao; }
+  /* Celular: bloco simples empilhado, na ordem em que os elementos aparecem no HTML
+     (título > foto > info > descrição) — mais confiável que Grid no Safari do iPhone.
+     Computador: vira Grid de 3 colunas estilo Mercado Livre (ver media query abaixo). */
+  .produto-grid{ display:block; width:100%; }
+  .area-titulo{ display:block; padding:4px 4px 0; }
+  .area-mini{ display:none; }
+  .area-foto{ display:block; margin-bottom:16px; }
+  .area-info{ display:block; margin-bottom:16px; }
+  .area-descricao{ display:block; }
 
   .miniaturas{ display:flex; flex-direction:column; gap:10px; max-height:520px; overflow-y:auto; padding:2px; }
   .miniaturas img{ width:100%; aspect-ratio:1/1; object-fit:contain; background:#fff; border:2px solid var(--border); border-radius:8px; cursor:pointer; padding:4px; }
@@ -99,21 +90,26 @@
     .preco{ font-size:28px; }
     .lightbox-seta{ width:42px; height:42px; font-size:22px; }
     main{ padding:12px 10px 60px; }
-    .produto-grid{ gap:10px; }
+    .area-foto, .area-info{ margin-bottom:10px; }
     .area-titulo, .area-foto, .area-info, .area-descricao{ padding:14px; }
   }
 
   /* Computador: layout de 3 colunas, título dentro da coluna da direita */
   @media (min-width: 861px) {
     .produto-grid{
+      display:grid;
+      gap:16px;
       grid-template-columns: 88px minmax(0,1fr) 360px;
       grid-template-areas:
         "mini foto titulo"
         "mini foto info"
         "descricao descricao descricao";
     }
-    .area-mini{ display:flex; }
-    .area-titulo{ padding-bottom:0; align-self:end; }
+    .area-titulo{ grid-area:titulo; padding-bottom:0; align-self:end; margin-bottom:0; }
+    .area-mini{ grid-area:mini; display:flex; }
+    .area-foto{ grid-area:foto; margin-bottom:0; }
+    .area-info{ grid-area:info; margin-bottom:0; }
+    .area-descricao{ grid-area:descricao; }
     .area-titulo h1{ margin-bottom:4px; }
   }
 </style>
