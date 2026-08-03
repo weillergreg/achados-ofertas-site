@@ -13,8 +13,10 @@
     "https://a-static.mlcdn.com.br/1500x1500/notebook-lenovo-ideapad-slim-3i-intel-core-i5-13420h-8gb-ram-512gb-ssd-153-wuxga-windows-11-intel-uhd-graphics-83ns0002br/magazineluiza/240274000/28b9bbe74cc188b146130f9ad5c37407.jpg"
   ],
   "avaliacoes": "720",
-  "categoria": "Eletrônicos",
+  "categoria": "eletronicos",
+  "subcategoria": "eletronicos.informatica",
   "title": "Notebook Lenovo IdeaPad Slim 3i Intel Core i5 13420H 8GB RAM 512GB SSD 15,3\" WUXGA Windows 11 Intel UHD Graphics 83NS0002BR",
   "link": "https://magazineluiza.onelink.me/589508454/2pl1s2zs",
-  "top100": true
+  "top100": true,
+  "posicao_top100": 14
 }
