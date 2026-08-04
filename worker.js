@@ -81,6 +81,60 @@ export default {
       });
     }
 
+    // Busca a foto principal de um produto (Shopee/Mercado Livre) — usado pelo importador de CSV
+    if (url.pathname === "/buscar-imagem") {
+      const urlProduto = url.searchParams.get("url");
+
+      if (!urlProduto) {
+        return new Response(JSON.stringify({ erro: "Faltou o parâmetro 'url'" }), {
+          status: 400, headers: { "Content-Type": "application/json" }
+        });
+      }
+
+      // Só aceita domínios conhecidos, pra essa "portinha" não virar um jeito de
+      // buscar qualquer site da internet através do nosso servidor
+      const dominiosPermitidos = ["shopee.com.br", "s.shopee.com.br", "mercadolivre.com.br", "produto.mercadolivre.com.br", "www.mercadolivre.com.br"];
+      let hostProduto;
+      try {
+        hostProduto = new URL(urlProduto).hostname;
+      } catch (e) {
+        return new Response(JSON.stringify({ erro: "URL inválida" }), {
+          status: 400, headers: { "Content-Type": "application/json" }
+        });
+      }
+      const permitido = dominiosPermitidos.some(d => hostProduto === d || hostProduto.endsWith("." + d));
+      if (!permitido) {
+        return new Response(JSON.stringify({ erro: "Domínio não permitido" }), {
+          status: 403, headers: { "Content-Type": "application/json" }
+        });
+      }
+
+      try {
+        const respostaPagina = await fetch(urlProduto, {
+          headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" },
+          redirect: "follow",
+        });
+        const html = await respostaPagina.text();
+
+        const match = html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i)
+                   || html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']/i);
+
+        if (!match) {
+          return new Response(JSON.stringify({ erro: "Não achei imagem nessa página" }), {
+            status: 404, headers: { "Content-Type": "application/json" }
+          });
+        }
+
+        return new Response(JSON.stringify({ imagem: match[1] }), {
+          headers: { "Content-Type": "application/json", "Cache-Control": "public, max-age=3600" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ erro: "Falha ao buscar a página: " + e.message }), {
+          status: 500, headers: { "Content-Type": "application/json" }
+        });
+      }
+    }
+
     // Qualquer outra rota: serve o site normalmente (arquivos estáticos)
     return env.ASSETS.fetch(request);
   },

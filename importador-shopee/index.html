@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Importador de CSV da Shopee | Achadinhos Super Espiã</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/jpeg" href="/images/logo-achadinhos.jpg">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<style>
+  :root{ --azul:#1B3A6B; --verde:#16803D; --rosa:#FF3E8E; --bg:#FAFAFA; --card-bg:#fff; --border:#ECECEC; --text:#1F2430; --text-muted:#6B7280; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:var(--bg); color:var(--text); font-family:'Inter',system-ui,sans-serif; line-height:1.5; }
+  header{ background:#fff; border-bottom:1px solid var(--border); padding:16px 20px; }
+  header a{ color:var(--azul); font-weight:700; text-decoration:none; font-size:14px; }
+  main{ max-width:900px; margin:0 auto; padding:24px 20px 80px; }
+  h1{ font-size:22px; color:var(--azul); margin:0 0 6px; }
+  .sub{ color:var(--text-muted); font-size:14px; margin-bottom:24px; }
+  .passo{ background:var(--card-bg); border:1px solid var(--border); border-radius:14px; padding:20px; margin-bottom:16px; }
+  .passo h2{ font-size:16px; margin:0 0 10px; color:var(--text); }
+  .passo p{ font-size:13.5px; color:var(--text-muted); margin:0 0 12px; }
+  select, input[type="file"]{ width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:8px; font-size:14px; background:#fff; }
+  .btn{ background:var(--verde); color:#fff; border:none; font-weight:700; font-size:14px; padding:12px 22px; border-radius:999px; cursor:pointer; }
+  .btn:disabled{ background:#ccc; cursor:not-allowed; }
+  .btn-secundario{ background:#fff; color:var(--azul); border:1.5px solid var(--azul); font-weight:700; font-size:14px; padding:12px 22px; border-radius:999px; cursor:pointer; }
+  .status{ font-size:13.5px; margin-top:10px; }
+  .status.erro{ color:#C0392B; }
+  .status.ok{ color:var(--verde); }
+  table{ width:100%; border-collapse:collapse; font-size:12.5px; margin-top:14px; }
+  th, td{ text-align:left; padding:8px 10px; border-bottom:1px solid var(--border); }
+  th{ background:#f5f5f5; }
+  td img{ width:40px; height:40px; object-fit:contain; border-radius:6px; border:1px solid var(--border); background:#fff; }
+  .barra-progresso{ height:8px; background:var(--border); border-radius:999px; overflow:hidden; margin-top:10px; }
+  .barra-progresso .preenchido{ height:100%; background:var(--verde); width:0%; transition:width .3s ease; }
+  .aviso{ background:#FFF7E6; border:1px solid #FFE0A3; border-radius:10px; padding:12px 16px; font-size:13px; color:#8A6300; margin-bottom:16px; }
+</style>
+</head>
+<body>
+
+<header><a href="/">🏠 Página Principal</a></header>
+
+<main>
+  <h1>📦 Importador de CSV da Shopee</h1>
+  <p class="sub">Envie o arquivo que a Shopee gera com os links de afiliado, e a ferramenta monta tudo pronto pra colar no seu projeto — busca a foto de cada produto automaticamente.</p>
+
+  <div class="aviso">
+    ⚠️ Essa página só <strong>gera o arquivo atualizado</strong> pra você baixar. Ela não publica nada sozinha — depois de baixar, é o mesmo processo de sempre: colar na pasta do projeto, <code>git add -A</code>, <code>git commit</code>, <code>git push</code>.
+  </div>
+
+  <div class="passo">
+    <h2>1. Categoria desses produtos</h2>
+    <p>Escolha a categoria que se aplica à maioria dos produtos desse CSV (dá pra editar produto por produto depois, pelo painel).</p>
+    <select id="categoria-select"><option value="">Carregando categorias...</option></select>
+  </div>
+
+  <div class="passo">
+    <h2>2. Envie o arquivo CSV</h2>
+    <p>O arquivo que a Shopee te dá quando você seleciona produtos e gera os links (tem colunas como "Item Name", "Price", "Offer Link").</p>
+    <input type="file" id="csv-input" accept=".csv">
+  </div>
+
+  <div class="passo">
+    <h2>3. Buscar fotos e montar o arquivo</h2>
+    <p>Isso demora alguns segundos por produto (precisa visitar a página de cada um pra pegar a foto). Não feche essa aba enquanto estiver rodando.</p>
+    <button class="btn" id="btn-processar" disabled>Processar CSV</button>
+    <div class="barra-progresso" id="barra" style="display:none;"><div class="preenchido" id="barra-preenchido"></div></div>
+    <div class="status" id="status-processamento"></div>
+  </div>
+
+  <div class="passo" id="passo-resultado" style="display:none;">
+    <h2>4. Conferir e baixar</h2>
+    <p id="resumo-resultado"></p>
+    <button class="btn" id="btn-baixar">⬇️ Baixar lote-shopee.json atualizado</button>
+    <button class="btn-secundario" id="btn-baixar-log" style="margin-left:8px;">Baixar log de erros</button>
+    <div id="tabela-preview"></div>
+  </div>
+</main>
+
+<script>
+const REPO = "weillergreg/achados-ofertas-site";
+let PRODUTOS_CSV = [];
+let PRODUTOS_PRONTOS = [];
+let PRODUTOS_COM_ERRO = [];
+
+// --- Utilitários ---
+function gerarSlug(titulo) {
+  return titulo
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .slice(0, 70);
+}
+
+function converterPreco(precoTexto) {
+  if (!precoTexto) return null;
+  return precoTexto.replace(/\./g, "").replace(",", ".").trim();
+}
+
+// --- Passo 1: carregar categorias existentes ---
+async function carregarCategorias() {
+  const select = document.getElementById("categoria-select");
+  try {
+    const resp = await fetch(`/gh-api/repos/${REPO}/contents/_categorias`);
+    const arquivos = await resp.json();
+    const categorias = await Promise.all(
+      arquivos.filter(a => a.name.endsWith(".json")).map(async a => {
+        const r = await fetch(`/gh-api/repos/${REPO}/contents/_categorias/${a.name}`, { headers: { Accept: "application/vnd.github.raw" } });
+        return await r.json();
+      })
+    );
+    select.innerHTML = categorias.map(c => `<option value="${c.slug}">${c.nome}</option>`).join("");
+  } catch (e) {
+    select.innerHTML = `<option value="">Erro ao carregar — digite manualmente abaixo</option>`;
+  }
+}
+carregarCategorias();
+
+// --- Passo 2: ler CSV ---
+document.getElementById("csv-input").addEventListener("change", function (e) {
+  const arquivo = e.target.files[0];
+  if (!arquivo) return;
+  Papa.parse(arquivo, {
+    header: true,
+    skipEmptyLines: true,
+    complete: function (resultado) {
+      PRODUTOS_CSV = resultado.data.filter(r => r["Item Name"]);
+      document.getElementById("btn-processar").disabled = PRODUTOS_CSV.length === 0;
+      document.getElementById("status-processamento").textContent = `${PRODUTOS_CSV.length} produto(s) encontrado(s) no arquivo.`;
+    }
+  });
+});
+
+// --- Passo 3: buscar fotos e montar produtos ---
+async function buscarImagem(linkProduto) {
+  try {
+    const resp = await fetch(`/buscar-imagem?url=${encodeURIComponent(linkProduto)}`);
+    const dados = await resp.json();
+    return dados.imagem || null;
+  } catch (e) {
+    return null;
+  }
+}
+
+document.getElementById("btn-processar").addEventListener("click", async function () {
+  const categoria = document.getElementById("categoria-select").value;
+  const btn = this;
+  btn.disabled = true;
+
+  const barra = document.getElementById("barra");
+  const barraPreenchido = document.getElementById("barra-preenchido");
+  const status = document.getElementById("status-processamento");
+  barra.style.display = "block";
+
+  PRODUTOS_PRONTOS = [];
+  PRODUTOS_COM_ERRO = [];
+
+  for (let i = 0; i < PRODUTOS_CSV.length; i++) {
+    const linha = PRODUTOS_CSV[i];
+    status.textContent = `Processando ${i + 1} de ${PRODUTOS_CSV.length}: ${linha["Item Name"].slice(0, 50)}...`;
+    barraPreenchido.style.width = `${Math.round(((i + 1) / PRODUTOS_CSV.length) * 100)}%`;
+
+    const linkProduto = linha["Product Link"] || linha["Offer Link"];
+    const foto = await buscarImagem(linkProduto);
+
+    if (!foto) {
+      PRODUTOS_COM_ERRO.push({ titulo: linha["Item Name"], motivo: "Não conseguiu achar a foto (link pode ter mudado ou bloqueado)" });
+    }
+
+    PRODUTOS_PRONTOS.push({
+      title: linha["Item Name"],
+      slug: gerarSlug(linha["Item Name"]),
+      categoria: categoria || null,
+      subcategoria: null,
+      fotos: foto ? [{ foto }] : [],
+      preco: converterPreco(linha["Price"]),
+      pagamento: null,
+      link: linha["Offer Link"] || linha["Product Link"],
+      nota: null,
+      avaliacoes: null,
+      vendidos: linha["Sales"] || null,
+      descricao: null,
+      posicao_top100: null
+    });
+  }
+
+  status.textContent = `Concluído! ${PRODUTOS_PRONTOS.length} produto(s) processado(s), ${PRODUTOS_COM_ERRO.length} sem foto.`;
+  status.className = "status ok";
+  mostrarResultado();
+  btn.disabled = false;
+});
+
+// --- Passo 4: mostrar resultado e permitir download ---
+function mostrarResultado() {
+  document.getElementById("passo-resultado").style.display = "block";
+  document.getElementById("resumo-resultado").textContent =
+    `${PRODUTOS_PRONTOS.length} produtos prontos pra entrar no site. ${PRODUTOS_COM_ERRO.length} ficaram sem foto — confira o log de erros se precisar completar manualmente.`;
+
+  const linhas = PRODUTOS_PRONTOS.map(p => `
+    <tr>
+      <td>${p.fotos[0] ? `<img src="${p.fotos[0].foto}" alt="">` : "—"}</td>
+      <td>${p.title.slice(0, 60)}</td>
+      <td>R$ ${p.preco || "?"}</td>
+      <td>${p.slug}</td>
+    </tr>
+  `).join("");
+
+  document.getElementById("tabela-preview").innerHTML = `
+    <table>
+      <thead><tr><th>Foto</th><th>Título</th><th>Preço</th><th>Slug</th></tr></thead>
+      <tbody>${linhas}</tbody>
+    </table>
+  `;
+}
+
+document.getElementById("btn-baixar").addEventListener("click", async function () {
+  this.disabled = true;
+  this.textContent = "Buscando arquivo atual...";
+  try {
+    const resp = await fetch(`/gh-api/repos/${REPO}/contents/_data/lote-shopee.json`, { headers: { Accept: "application/vnd.github.raw" } });
+    const atual = await resp.json();
+    const produtosAtuais = atual.produtos || [];
+
+    const slugsExistentes = new Set(produtosAtuais.map(p => p.slug));
+    const novosSemDuplicar = PRODUTOS_PRONTOS.filter(p => !slugsExistentes.has(p.slug));
+
+    const final = { produtos: [...produtosAtuais, ...novosSemDuplicar] };
+
+    const blob = new Blob([JSON.stringify(final, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "lote-shopee.json";
+    a.click();
+
+    this.textContent = `✅ Baixado! ${novosSemDuplicar.length} produto(s) novo(s) adicionado(s) aos ${produtosAtuais.length} que já existiam.`;
+  } catch (e) {
+    this.textContent = "Erro ao buscar arquivo atual — tenta de novo";
+    this.disabled = false;
+  }
+});
+
+document.getElementById("btn-baixar-log").addEventListener("click", function () {
+  const texto = PRODUTOS_COM_ERRO.map(p => `${p.titulo} — ${p.motivo}`).join("\n") || "Nenhum erro!";
+  const blob = new Blob([texto], { type: "text/plain" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "log-erros-importacao.txt";
+  a.click();
+});
+</script>
+
+</body>
+</html>
