@@ -9,6 +9,6 @@
   "assets": {
     "directory": "./",
     "binding": "ASSETS",
-    "run_worker_first": ["/auth", "/callback", "/gh-api/*", "/buscar-imagem"]
+    "run_worker_first": ["/auth", "/callback", "/gh-api/*", "/buscar-imagem", "/api/adicionar-produto"]
   }
 }

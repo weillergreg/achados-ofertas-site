@@ -135,6 +135,121 @@ export default {
       }
     }
 
+    // Recebe um produto capturado pela extensão e publica direto no site
+    if (url.pathname === "/api/adicionar-produto" && request.method === "POST") {
+      // Confere o segredo — só a extensão sabe esse valor
+      const segredoRecebido = request.headers.get("X-Extensao-Secret");
+      if (!env.EXTENSAO_SECRET || segredoRecebido !== env.EXTENSAO_SECRET) {
+        return new Response(JSON.stringify({ erro: "Não autorizado" }), {
+          status: 401, headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+      }
+
+      try {
+        const produtoNovo = await request.json();
+
+        if (!produtoNovo.title || !produtoNovo.link) {
+          return new Response(JSON.stringify({ erro: "Faltou título ou link" }), {
+            status: 400, headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+          });
+        }
+
+        const caminhoArquivo = "_data/lote-shopee.json";
+        const urlConteudo = `https://api.github.com/repos/weillergreg/achados-ofertas-site/contents/${caminhoArquivo}`;
+
+        // 1) Busca o arquivo atual (precisa do SHA pra poder atualizar)
+        const respAtual = await fetch(urlConteudo, {
+          headers: {
+            "Authorization": `Bearer ${env.GITHUB_WRITE_TOKEN}`,
+            "User-Agent": "achados-ofertas-site-worker",
+            "Accept": "application/vnd.github+json",
+          },
+        });
+        if (!respAtual.ok) {
+          return new Response(JSON.stringify({ erro: "Não consegui ler o arquivo atual no GitHub" }), {
+            status: 500, headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+          });
+        }
+        const dadosAtuais = await respAtual.json();
+        const conteudoAtual = JSON.parse(atob(dadosAtuais.content));
+        const produtosAtuais = conteudoAtual.produtos || [];
+
+        // 2) Gera o slug e monta o produto no formato do site
+        const slug = (produtoNovo.title || "")
+          .toLowerCase()
+          .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+          .replace(/[^a-z0-9\s-]/g, "")
+          .trim().replace(/\s+/g, "-").replace(/-+/g, "-")
+          .slice(0, 70);
+
+        if (produtosAtuais.some(p => p.slug === slug)) {
+          return new Response(JSON.stringify({ erro: "Esse produto já existe no site (slug repetido)" }), {
+            status: 409, headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+          });
+        }
+
+        const produtoFormatado = {
+          title: produtoNovo.title,
+          slug,
+          categoria: produtoNovo.categoria || null,
+          subcategoria: produtoNovo.subcategoria || null,
+          fotos: produtoNovo.foto ? [{ foto: produtoNovo.foto }] : [],
+          preco: produtoNovo.preco || null,
+          pagamento: null,
+          link: produtoNovo.link,
+          nota: produtoNovo.nota || null,
+          avaliacoes: produtoNovo.avaliacoes || null,
+          vendidos: produtoNovo.vendidos || null,
+          descricao: null,
+          posicao_top100: null,
+        };
+
+        const conteudoNovo = { produtos: [...produtosAtuais, produtoFormatado] };
+
+        // 3) Grava de volta no GitHub (commit direto)
+        const respGravar = await fetch(urlConteudo, {
+          method: "PUT",
+          headers: {
+            "Authorization": `Bearer ${env.GITHUB_WRITE_TOKEN}`,
+            "User-Agent": "achados-ofertas-site-worker",
+            "Accept": "application/vnd.github+json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            message: `feat: adiciona produto via extensão — ${produtoNovo.title}`,
+            content: btoa(unescape(encodeURIComponent(JSON.stringify(conteudoNovo, null, 2)))),
+            sha: dadosAtuais.sha,
+          }),
+        });
+
+        if (!respGravar.ok) {
+          const erroTexto = await respGravar.text();
+          return new Response(JSON.stringify({ erro: "Falha ao gravar no GitHub: " + erroTexto }), {
+            status: 500, headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+          });
+        }
+
+        return new Response(JSON.stringify({ sucesso: true, slug }), {
+          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ erro: "Erro inesperado: " + e.message }), {
+          status: 500, headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+      }
+    }
+
+    // Responde o "pré-voo" (CORS) que o navegador manda antes do POST da extensão
+    if (url.pathname === "/api/adicionar-produto" && request.method === "OPTIONS") {
+      return new Response(null, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "POST, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type, X-Extensao-Secret",
+        },
+      });
+    }
+
     // Qualquer outra rota: serve o site normalmente (arquivos estáticos)
     return env.ASSETS.fetch(request);
   },
