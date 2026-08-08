@@ -146,10 +146,13 @@ export default {
       }
 
       try {
-        const produtoNovo = await request.json();
+        const corpoRecebido = await request.json();
+        // Aceita tanto um produto único quanto uma lista de produtos
+        const produtosRecebidos = Array.isArray(corpoRecebido) ? corpoRecebido : [corpoRecebido];
 
-        if (!produtoNovo.title || !produtoNovo.link) {
-          return new Response(JSON.stringify({ erro: "Faltou título ou link" }), {
+        const validos = produtosRecebidos.filter(p => p.title && p.link);
+        if (validos.length === 0) {
+          return new Response(JSON.stringify({ erro: "Nenhum produto com título e link válidos" }), {
             status: 400, headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
           });
         }
@@ -173,40 +176,64 @@ export default {
         const dadosAtuais = await respAtual.json();
         const conteudoAtual = JSON.parse(atob(dadosAtuais.content));
         const produtosAtuais = conteudoAtual.produtos || [];
+        const slugsExistentes = new Set(produtosAtuais.map(p => p.slug));
+        const idsExistentes = new Set(produtosAtuais.filter(p => p.external_id).map(p => p.external_id));
 
-        // 2) Gera o slug e monta o produto no formato do site
-        const slug = (produtoNovo.title || "")
-          .toLowerCase()
-          .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-          .replace(/[^a-z0-9\s-]/g, "")
-          .trim().replace(/\s+/g, "-").replace(/-+/g, "-")
-          .slice(0, 70);
+        // 2) Formata cada produto novo, gerando slug e pulando repetidos
+        const produtosFormatados = [];
+        const slugsJaUsadosNesseLote = new Set();
+        const idsJaUsadosNesseLote = new Set();
 
-        if (produtosAtuais.some(p => p.slug === slug)) {
-          return new Response(JSON.stringify({ erro: "Esse produto já existe no site (slug repetido)" }), {
+        for (const produtoNovo of validos) {
+          // Se veio o código do produto (MLB...), esse é o jeito mais confiável de checar duplicado —
+          // o título pode variar um pouco, o código não muda
+          if (produtoNovo.itemId) {
+            if (idsExistentes.has(produtoNovo.itemId) || idsJaUsadosNesseLote.has(produtoNovo.itemId)) continue;
+            idsJaUsadosNesseLote.add(produtoNovo.itemId);
+          }
+
+          let slug = (produtoNovo.title || "")
+            .toLowerCase()
+            .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+            .replace(/[^a-z0-9\s-]/g, "")
+            .trim().replace(/\s+/g, "-").replace(/-+/g, "-")
+            .slice(0, 70);
+
+          if (slugsExistentes.has(slug) || slugsJaUsadosNesseLote.has(slug)) continue; // pula duplicado
+          slugsJaUsadosNesseLote.add(slug);
+
+          produtosFormatados.push({
+            title: produtoNovo.title,
+            slug,
+            external_id: produtoNovo.itemId || null,
+            categoria: produtoNovo.categoria || null,
+            subcategoria: produtoNovo.subcategoria || null,
+            fotos: (produtoNovo.fotos && produtoNovo.fotos.length)
+              ? produtoNovo.fotos.map(f => ({ foto: f }))
+              : (produtoNovo.foto ? [{ foto: produtoNovo.foto }] : []),
+            preco: produtoNovo.preco || null,
+            pagamento: null,
+            link: produtoNovo.link,
+            nota: produtoNovo.nota || null,
+            avaliacoes: produtoNovo.avaliacoes || null,
+            vendidos: produtoNovo.vendidos || null,
+            descricao: produtoNovo.descricao || null,
+            posicao_top100: null,
+          });
+        }
+
+        if (produtosFormatados.length === 0) {
+          return new Response(JSON.stringify({ erro: "Todos os produtos já existem no site (slugs repetidos)" }), {
             status: 409, headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
           });
         }
 
-        const produtoFormatado = {
-          title: produtoNovo.title,
-          slug,
-          categoria: produtoNovo.categoria || null,
-          subcategoria: produtoNovo.subcategoria || null,
-          fotos: produtoNovo.foto ? [{ foto: produtoNovo.foto }] : [],
-          preco: produtoNovo.preco || null,
-          pagamento: null,
-          link: produtoNovo.link,
-          nota: produtoNovo.nota || null,
-          avaliacoes: produtoNovo.avaliacoes || null,
-          vendidos: produtoNovo.vendidos || null,
-          descricao: null,
-          posicao_top100: null,
-        };
+        const conteudoNovo = { produtos: [...produtosAtuais, ...produtosFormatados] };
+        const mensagemCommit = produtosFormatados.length === 1
+          ? `feat: adiciona produto via extensão — ${produtosFormatados[0].title}`
+          : `feat: adiciona ${produtosFormatados.length} produtos via extensão`;
 
-        const conteudoNovo = { produtos: [...produtosAtuais, produtoFormatado] };
-
-        // 3) Grava de volta no GitHub (commit direto)
+        // 3) Grava de volta no GitHub (um commit só, com todos os produtos novos)
         const respGravar = await fetch(urlConteudo, {
           method: "PUT",
           headers: {
@@ -216,7 +243,7 @@ export default {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            message: `feat: adiciona produto via extensão — ${produtoNovo.title}`,
+            message: mensagemCommit,
             content: btoa(unescape(encodeURIComponent(JSON.stringify(conteudoNovo, null, 2)))),
             sha: dadosAtuais.sha,
           }),
@@ -229,7 +256,7 @@ export default {
           });
         }
 
-        return new Response(JSON.stringify({ sucesso: true, slug }), {
+        return new Response(JSON.stringify({ sucesso: true, total: produtosFormatados.length, slugs: produtosFormatados.map(p => p.slug) }), {
           headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
         });
       } catch (e) {
